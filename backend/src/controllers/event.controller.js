@@ -49,9 +49,8 @@ export async function createEvent(req, res) {
 
     await eventRepository.save(event);
 
-    res
-    .status(201)
-    .json({message: "Evento creado con éxito",data: event});
+    res.status(201).json({message: "Evento creado con éxito",data: event});
+
     } catch (error) {
     console.error("Error en event.controller.js -> createEvent(): ", error);
     return res.status(500).json({message: "Error interno del servidor", error: error.message});
@@ -62,7 +61,7 @@ export async function updateEventById(req, res) {
     // Obtener el repositorio de evento y buscar un evento por ID
     const eventRepository = AppDataSource.getRepository(Event);
     const { id } = req.params;
-    const { titulo, descripcion, fecha, lugar} = req.body;
+    const { titulo, descripcion, fecha, hora, lugar} = req.body;
     const event = await eventRepository.findOne({ where: { id } });
 
     // Si no se encuentra el evento, devolver un error 404
@@ -74,6 +73,7 @@ export async function updateEventById(req, res) {
     event.titulo = titulo || event.titulo;
     event.descripcion = descripcion || event.descripcion;
     event.fecha = fecha || event.fecha;
+    event.hora = hora || event.hora;
     event.lugar = lugar || event.lugar;
 
     // Guardar los cambios en la base de datos

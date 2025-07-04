@@ -11,26 +11,38 @@ export const MeetingEntity= new EntitySchema({
             primary : true,
             generated : true,
         },
+
         titulo: {
             type : String,
             nullable : false, //no puede estar vacío en la base de datos
         },
+
         descripcion: {
             type: String,
             nullable : false,
         },
+
         fecha: {
             type : Date,
             nullable: false,
         },
+
+        hora: {
+            type: String,
+            length: 5,
+            nullable: false,
+        },
+
         lugar: {
             type: String,
             nullable: false,
         },
+
         createdAt: {
             type: "timestamp",
             default: () => "CURRENT_TIMESTAMP",
         },
+
         updatedAt: {
             type: "timestamp",
             default: () => "CURRENT_TIMESTAMP",

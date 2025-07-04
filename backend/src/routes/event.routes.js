@@ -1,13 +1,14 @@
 "use strict"
 import { Router } from "express";
-import {getEvent, createEvent, updateEvent, deleteEvent} from "../controllers/event.controller.js";
+import {getEvents, getEventById, createEvent, updateEventById, deleteEventById} from "../controllers/event.controller.js";
 
 const router = new Router();
 
-router.get("/", getEvent);
+router.get("/", getEvents);
+router.get("/:id", getEventById);
 
 router.post("/", createEvent);
-router.put("/", updateEvent );
-router.delete("/", deleteEvent);
+router.put("/", updateEventById );
+router.delete("/", deleteEventById);
 
 export default router;

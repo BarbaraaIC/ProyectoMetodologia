@@ -30,10 +30,18 @@ export const eventValidation= Joi.object({
 
     fecha: Joi.string()
     .required()
-    .pattern(/^\d{2}-\d{2}-\d{4}$/)
+    .pattern(/^\d{4}-\d{2}-\d{2}$/)
     .messages({
-        "string.pattern.base": "La fecha del evento debe tener el formato DD-MM-YYYY.",
+        "string.pattern.base": "La fecha debe tener el formato YYYY-MM-DD.",
         "string.empty": "La fecha del evento es obligatoria.",
+    }),
+
+    hora: Joi.string()
+    .required()
+    .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+    .messages({
+        "string.pattern.base": "La hora debe tener el formato HH:mm (por ejemplo, 18:30).",
+        "string.empty": "La hora de la reunión es obligatoria."
     }),
 
     lugar: Joi.string()

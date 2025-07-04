@@ -1,7 +1,7 @@
 "use strict"
 import Meeting from "../entity/meeting.entity.js";
 import { AppDataSource } from "../config/configDb.js";
-import { meetingValidation } from "../validations/event.validation.js";
+import { meetingValidation } from "../validations/meeting.validation.js";
 
 export async function getMeeting(req, res) {
     try {
@@ -62,7 +62,7 @@ export async function updateMeetingById(req, res) {
     // Obtener el repositorio de reunion y buscar una reunion por ID
     const meetingRepository = AppDataSource.getRepository(Meeting);
     const { id } = req.params;
-    const { titulo, descripcion, fecha, lugar} = req.body;
+    const { titulo, descripcion, fecha, hora, lugar} = req.body;
     const meeting = await meetingRepository.findOne({ where: { id } });
 
     // Si no se encuentra ls reunion, devolver un error 404
@@ -74,6 +74,7 @@ export async function updateMeetingById(req, res) {
     meeting.titulo = titulo || meeting.titulo;
     meeting.descripcion = descripcion || meeting.descripcion;
     meeting.fecha = fecha || meeting.fecha;
+    meeting.hora = hora || meeting.hora;
     meeting.lugar = lugar || meeting.lugar;
 
     // Guardar los cambios en la base de datos
