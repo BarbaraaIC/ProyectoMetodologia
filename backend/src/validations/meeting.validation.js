@@ -18,11 +18,10 @@ export const meetingValidation= Joi.object({
     descripcion: Joi.string()
     .min(5)
     .max(15)
-    .required()
+    .optional()
     .pattern(/^[a-zA-Z0-9_]+$/)
     .messages({
-    "string.pattern.base":
-    "La descripcion de la reunion puede contener letras, números y guiones bajos.",
+    "string.pattern.base": "La descripcion de la reunion puede contener letras, números y guiones bajos.",
     "string.min": "La descripcion de la reunion debe tener al menos 5 caracteres.",
     "string.max": "La descripcion de la reunion no puede exceder los 15 caracteres.",
     "string.empty": "La descripcion de la reunion es obligatoria.",

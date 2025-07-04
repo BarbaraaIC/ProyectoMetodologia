@@ -3,8 +3,8 @@ import Joi from "joi";
 //Esquema de validación para la creación de eventos
 export const eventValidation= Joi.object({
     titulo: Joi.string()
-    .min(3)
-    .max(30)
+    .min(5)
+    .max(20)
     .required()
     .pattern(/^[a-zA-Z0-9_]+$/)
     .messages({
@@ -17,7 +17,7 @@ export const eventValidation= Joi.object({
 
     descripcion: Joi.string()
     .min(5)
-    .max(15)
+    .max(100)
     .required()
     .pattern(/^[a-zA-Z0-9_]+$/)
     .messages({
