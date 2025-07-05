@@ -3,13 +3,8 @@ import { Router } from "express";
 import { getUsers, getUserById, getProfile, updateUserById, deleteUserById } from "../controllers/user.controller.js";
 import { authenticateJwt } from "../middleware/authentication.middleware.js";
 import { isAdmin } from "../middleware/authorization.middleware.js";
-import { generatePDFController } from "../controllers/pdf.controller.js";
 
 const router = Router();
-
-
-// ruta para obtener el pdf
-router.get("/", generatePDFController);
 
 // Middleware para autenticar el JWT
 router.use(authenticateJwt);

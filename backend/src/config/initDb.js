@@ -14,27 +14,39 @@ export async function createUsers() {
         if (count > 0) return;
         const users = [
             {
-                username: "Administrador",
-                rut: "12345678-9",
-                email: "admin@gmail.com",
-                password: await encryptPassword("admin123"),
-                role: "administrador"
-            },
-            {
-                username: "Usuario",
-                rut: "98765432-1",
-                email: "usuario@gmail.com",
-                password: await encryptPassword("usuario123"),
-                role: "usuario"
-            }
-        ]
+        username: "Presidente",
+        rut: "11111111-1",
+        email: "presidente@gmail.com",
+        password: await encryptPassword("presidente123"),
+        role: "presidente"
+        },
+        {
+        username: "Secretario",
+        rut: "22222222-2",
+        email: "secretario@gmail.com",
+        password: await encryptPassword("secretario123"),
+        role: "secretario"
+        },
+        {
+        username: "Tesorero",
+        rut: "33333333-3",
+        email: "tesorero@gmail.com",
+        password: await encryptPassword("tesorero123"),
+        role: "tesorero"
+        },
+        {
+        username: "Vecino",
+        rut: "44444444-4",
+        email: "vecino@gmail.com",
+        password: await encryptPassword("vecino123"),
+        role: "vecino"
+        }
+        ];
 
         console.log("Creando usuarios...");
 
         for (const user of users) {
-            await userRepository.save((
-                userRepository.create(user)
-            ));
+            await userRepository.save((userRepository.create(user)));
             console.log(`Usuario '${user.username}' creado exitosamente.`);
         }
     } catch (error) {
