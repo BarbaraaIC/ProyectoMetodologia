@@ -4,6 +4,9 @@ import { generatePDFController } from "../controllers/pdf.controller.js";
 
 const router = Router();
 
+
 router.get("/", generatePDFController);
+
+
 
 export default router;
