@@ -1,8 +1,10 @@
 "use strict";
+import pkg from 'pg';
 import { DataSource } from "typeorm"
 import { HOST, DB_USERNAME, PASSWORD, DATABASE } from "./configEnv.js";
 import { UserEntity } from "../entity/user.entity.js";
 // Configuración de la conexión a la base de datos
+export default pool;
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: HOST,
@@ -26,7 +28,7 @@ export async function connectDB() {
         process.exit(1);
     }
   
-  import pkg from 'pg';
+
 const { Pool } = pkg;
 
 const pool = new Pool({
@@ -37,5 +39,5 @@ const pool = new Pool({
   port: 5432,
 });
 
-export default pool;
+
 }
