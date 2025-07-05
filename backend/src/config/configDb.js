@@ -25,5 +25,17 @@ export async function connectDB() {
         console.error("Error al conectar con la base de datos:", error);
         process.exit(1);
     }
-}
+  
+  import pkg from 'pg';
+const { Pool } = pkg;
 
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'listado_junta_de_vecino',
+  password: 'huachimingo',
+  port: 5432,
+});
+
+export default pool;
+}
