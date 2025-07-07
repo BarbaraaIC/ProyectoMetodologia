@@ -6,10 +6,10 @@ export const meetingValidation= Joi.object({
     .min(3)
     .max(30)
     .required()
-    .pattern(/^[a-zA-Z0-9_]+$/)
+    .pattern(/^[a-zA-Z0-9_, ]+$/)
     .messages({
     "string.pattern.base":
-    "El titulo de la reunion solo puede contener letras, números y guiones bajos.",
+    "El titulo de la reunion puede contener letras, números, guiones bajos, espacios y comas.",
     "string.min": "El titulo de la reunion debe tener al menos 3 caracteres.",
     "string.max": "El titulo de la reunion no puede exceder los 30 caracteres.",
     "string.empty": "El titulo de la reunion es obligatorio.",
@@ -17,13 +17,14 @@ export const meetingValidation= Joi.object({
 
     descripcion: Joi.string()
     .min(5)
-    .max(15)
+    .max(100)
     .optional()
-    .pattern(/^[a-zA-Z0-9_]+$/)
+    .pattern(/^[a-zA-Z0-9_, ]+$/)
     .messages({
-    "string.pattern.base": "La descripcion de la reunion puede contener letras, números y guiones bajos.",
+    "string.pattern.base":
+    "La descripcion de la reunion puede contener letras, números, guiones bajos, espacios y comas.",
     "string.min": "La descripcion de la reunion debe tener al menos 5 caracteres.",
-    "string.max": "La descripcion de la reunion no puede exceder los 15 caracteres.",
+    "string.max": "La descripcion de la reunion no puede exceder los 100 caracteres.",
     "string.empty": "La descripcion de la reunion es obligatoria.",
     }),
     fecha: Joi.string()
@@ -44,12 +45,14 @@ export const meetingValidation= Joi.object({
 
     lugar: Joi.string()
     .min(3)
-    .max(20)
+    .max(100)
     .required()
+    .pattern(/^[a-zA-Z0-9_, ]+$/)
     .messages({
-        "string.base": "El lugar de la reunion debe ser una cadena de texto.",
+        "string.pattern.base":
+        "El lugar de la reunion puede contener letras, números, guiones bajos, espacios y comas.",
         "string.min": "El lugar de la reunion debe tener al menos 3 caracteres.",
-        "string.max": "El lugar de la reunion no puede superar los 20 caracteres.",
+        "string.max": "El lugar de la reunion no puede superar los 100 caracteres.",
         "string.empty": "El lugar de la reunion no puede estar vacío.",
     }),
 })

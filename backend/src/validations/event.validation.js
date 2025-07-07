@@ -4,14 +4,14 @@ import Joi from "joi";
 export const eventValidation= Joi.object({
     titulo: Joi.string()
     .min(5)
-    .max(20)
+    .max(100)
     .required()
-    .pattern(/^[a-zA-Z0-9_]+$/)
+    .pattern(/^[a-zA-Z0-9_, ]+$/)
     .messages({
     "string.pattern.base":
-    "El titulo del evento solo puede contener letras, números y guiones bajos.",
+    "El titulo del evento puede contener letras, números, guiones bajos, espacios y comas.",
     "string.min": "El titulo del evento debe tener al menos 3 caracteres.",
-    "string.max": "El titulo del evento no puede exceder los 30 caracteres.",
+    "string.max": "El titulo del evento no puede exceder los 100 caracteres.",
     "string.empty": "El titulo del evento es obligatorio.",
     }),
 
@@ -19,12 +19,12 @@ export const eventValidation= Joi.object({
     .min(5)
     .max(100)
     .required()
-    .pattern(/^[a-zA-Z0-9_]+$/)
+    .pattern(/^[a-zA-Z0-9_, ]+$/)
     .messages({
     "string.pattern.base":
-    "La descripcion del evento puede contener letras, números y guiones bajos.",
+    "La descripcion del evento puede contener letras, números, guiones bajos, espacios y comas.",
     "string.min": "La descripcion del evento debe tener al menos 5 caracteres.",
-    "string.max": "La descripcion del evento no puede exceder los 15 caracteres.",
+    "string.max": "La descripcion del evento no puede exceder los 100 caracteres.",
     "string.empty": "La descripcion del evento es obligatoria.",
     }),
 
@@ -46,12 +46,13 @@ export const eventValidation= Joi.object({
 
     lugar: Joi.string()
     .min(3)
-    .max(20)
+    .max(100)
     .required()
+    .pattern(/^[a-zA-Z0-9_, ]+$/)
     .messages({
-        "string.base": "El lugar del evento debe ser una cadena de texto.",
+        "string.pattern.base": "El lugar del evento puede contener letras, números, guiones bajos, espacios y comas.",
         "string.min": "El lugar del evento debe tener al menos 3 caracteres.",
-        "string.max": "El lugar del evento no puede superar los 20 caracteres.",
+        "string.max": "El lugar del evento no puede superar los 100 caracteres.",
         "string.empty": "El lugar del evento no puede estar vacío.",
     }),
 
