@@ -1,8 +1,10 @@
 "use strict";
+import pkg from 'pg';
 import { DataSource } from "typeorm"
-import { DATABASE, DB_USERNAME, HOST, PASSWORD } from "./configEnv.js";
-
+import { HOST, DB_USERNAME, PASSWORD, DATABASE } from "./configEnv.js";
+import { UserEntity } from "../entity/user.entity.js";
 // Configuración de la conexión a la base de datos
+
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: `${HOST}`,
@@ -14,7 +16,6 @@ export const AppDataSource = new DataSource({
     synchronize: true,
     logging: false,
 });
-
 // Función para conectar a la base de datos
 export async function connectDB() {
     try {
