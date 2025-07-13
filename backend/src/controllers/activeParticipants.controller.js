@@ -36,7 +36,7 @@ export async function getActiveParticipantById(req, res) {
 export async function createActiveParticipant(req, res) {
   try {
 const participantRepository = AppDataSource.getRepository(Participants);
-    const { rut, nombre, apellido, cargo, activo } = req.body; 
+    const  {rut, nombre, apellido, cargo, activo } = req.body; 
     const newParticipant = participantRepository.create({
       rut,
       nombre,
