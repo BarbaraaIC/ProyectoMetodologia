@@ -2,7 +2,7 @@
 
 import { AppDataSource } from "../config/configDb.js";
 import Participants from "../entity/activeParticipants.entity.js";
-import { activeParticipantSchema } from '../validations/activeParticipants.validation.js';
+import { activeParticipantSchema } from "../validations/activeParticipants.validation.js";
 
 // Obtener todos los participantes activos
 export async function getActiveParticipants(req, res) {
@@ -41,26 +41,28 @@ export async function createActiveParticipant(req, res) {
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
   }
-
   try {
     const participantRepository = AppDataSource.getRepository(Participants);
-    const { rut, nombre, apellido, cargo, activo, user } = req.body;
-
-    // Validación única para presidente
-    if (cargo.toLowerCase() === "presidente") {
-      const existingPresident = await participantRepository.findOne({ where: { cargo: "presidente" } });
-      if (existingPresident) {
-        return res.status(400).json({ message: "Ya existe un presidente. Elimine el actual para agregar uno nuevo." });
-      }
+    const { rut, nombre, apellido, cargo, activo } = req.body;
+    // Validación única para presidente, secretario y tesorero
+  const cargosUnicos = ["presidente", "secretario", "tesorero"];
+  if (cargosUnicos.includes(cargo.toLowerCase())) {
+  const existing = await participantRepository.findOne({ where: { cargo: cargo.toLowerCase() } });
+  if (existing) {
+    return res.status(400).json({ message: `Ya existe un ${cargo.toLowerCase()}. Elimine el actual para agregar uno nuevo.` });
+  }
+}
+    // Verificar si el RUT ya existe
+    const existingParticipant = await participantRepository.findOne({ where: { rut } });
+    if (existingParticipant) {
+      return res.status(400).json({ message: "Ya existe un participante con este RUT." });
     }
-
     const newParticipant = participantRepository.create({
       rut,
       nombre,
       apellido,
       cargo,
       activo: activo ?? true,
-      user,
     });
     const savedParticipant = await participantRepository.save(newParticipant);
     res.status(201).json({ message: "Participante activo creado exitosamente.", data: savedParticipant });
