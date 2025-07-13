@@ -5,6 +5,8 @@ import userRoutes from "./user.routes.js";
 import pdfRoutes from "./pdf.routes.js"
 import eventRoutes from "./event.routes.js";
 import meetingRoutes from "./meeting.routes.js";
+import activeParticipantsRoutes from "./activeParticipants.routes.js";
+import { act } from "react";
 
 
 const router = new Router();
@@ -14,6 +16,7 @@ router.use("/users", userRoutes);
 router.use("/pdf", pdfRoutes);
 router.use("/event", eventRoutes);
 router.use("/meeting", meetingRoutes);
+router.use("/participants", activeParticipantsRoutes);
 
 
 export default router;
