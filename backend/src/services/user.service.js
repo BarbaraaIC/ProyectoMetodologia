@@ -7,9 +7,6 @@ export async function getUsersService(){
 
         const users = await userRepository.find();
 
-        console.log('Usuarios antes del filtro:', users); //duda
-
-
         if(!users || users.length === 0) return [null, "No hay usuarios"];
 
         const usersData = users
@@ -18,8 +15,6 @@ export async function getUsersService(){
             username: user.username,
             rut: user.rut
         }));
-
-        console.log('Usuarios despues del filtro:', usersData); // duda
         
         if(usersData.length === 0)
             return[null, "No hay usuarios validos"];

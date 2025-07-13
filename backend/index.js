@@ -3,7 +3,6 @@ import cors from "cors";
 import express from "express";
 import morgan from "morgan";
 import indexRoutes from "./src/routes/index.routes.js";
-import listRoutes from "./src/routes/list.routes.js";
 import { PORT, HOST } from "./src/config/configEnv.js";
 import { connectDB } from "./src/config/configDb.js";
 import { createUsers } from "./src/config/initDb.js";
@@ -29,7 +28,6 @@ async function setupServer() {
 
   // Configura las rutas de la API
   app.use("/api", indexRoutes);
-  app.use("/api", listRoutes);
 
   // Enciende el servidor
   app.listen(PORT, () => {
