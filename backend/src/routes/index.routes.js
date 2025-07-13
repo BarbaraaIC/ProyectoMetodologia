@@ -6,7 +6,6 @@ import pdfRoutes from "./pdf.routes.js"
 import eventRoutes from "./event.routes.js";
 import meetingRoutes from "./meeting.routes.js";
 import activeParticipantsRoutes from "./activeParticipants.routes.js";
-import { act } from "react";
 
 
 const router = new Router();
