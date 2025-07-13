@@ -56,6 +56,16 @@ export const eventValidation= Joi.object({
         "string.empty": "El lugar del evento no puede estar vacío.",
     }),
 
+    tipo: Joi.string()
+    .valid("evento", "reunion")
+    .required()
+    .messages({
+        "any.only": "El campo 'tipo' solo puede ser 'evento' o 'reunion'.",
+        "string.base": "El campo 'tipo' debe ser un texto.",
+        "string.empty": "El campo 'tipo' no puede estar vacío.",
+        "any.required": "El campo 'tipo' es obligatorio."
+    }),
+
 })
     .unknown(false)
     .messages({
