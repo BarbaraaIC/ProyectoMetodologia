@@ -1,4 +1,3 @@
-import pool from "../config/configDb.js";
 
 // Obtener el listado de vecinos
 export async function getList(req, res) {
