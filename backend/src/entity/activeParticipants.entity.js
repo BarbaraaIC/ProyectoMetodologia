@@ -1,5 +1,3 @@
-"use strict"
-
 import { EntitySchema } from "typeorm";
 
 export const ParticipantsEntity = new EntitySchema({
@@ -11,6 +9,11 @@ export const ParticipantsEntity = new EntitySchema({
             primary : true,
             generated : true,
         },
+        rut: {
+            type: String,
+            unique: true,
+            nullable: false,
+        },
         cargo: {
             type: String,
             nullable: true, 
@@ -20,7 +23,7 @@ export const ParticipantsEntity = new EntitySchema({
             default: true, 
         },
     },
-        relations: {
+    relations: {
         user: {
             target: "User",
             type: "many-to-one",
@@ -29,7 +32,11 @@ export const ParticipantsEntity = new EntitySchema({
             cascade: false,
             eager: true,
         },
+        votes: {
+            target: "Vote",
+            type: "one-to-many",
+            inverseSide: "active",
+        },
     },
 });
-
 export default ParticipantsEntity;

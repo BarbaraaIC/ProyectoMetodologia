@@ -2,6 +2,20 @@
 import Joi from "joi";
 
 export const votationValidation = Joi.object({
+
+    rut: Joi.string()
+    .min(3)
+    .max(20)
+    .required()
+    .pattern(/^[a-zA-Z0-9_]+$/)
+    .messages({
+    "string.pattern.base":
+    "El RUT del usuario solo puede contener letras.",
+    "string.min": "El RUT del usuario debe tener al menos 20 caracteres.",
+    "string.max": "El nombre del usuario no puedo exceder los 20 caraceres.",
+    "string.empty": "El RUT del usuario es obligatorio.",
+    }),
+
     username: Joi.string()
     .min(3)
     .max(20)
@@ -13,19 +27,6 @@ export const votationValidation = Joi.object({
     "string.min": "El nombre del usuario debe tener al menos tres caracteres.",
     "string.max": "El nombre del usuario no puedo exceder los 20 caraceres.",
     "string.empty": "El nombre del usuario es obligatorio.",
-    }),
-
-    apellido: Joi.string()
-    .min(3)
-    .max(20)
-    .required()
-    .pattern(/^[a-zA-Z0-9_]+$/)
-    .messages({
-    "string.pattern.base":
-    "El apellido del usuario solo puede contener letras.",
-    "string.min": "El apellido del usuario debe tener al menos tres caracteres.",
-    "string.max": "El apellido del usuario no puedo exceder los 20 caraceres.",
-    "string.empty": "El apellido del usuario es obligatorio.",
     }),
 
     cargo: Joi.string()

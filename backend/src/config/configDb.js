@@ -4,8 +4,6 @@ import { DATABASE, DB_USERNAME, HOST, PASSWORD } from "./configEnv.js";
 
 // Configuración de la conexión a la base de datos
 
-
-
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: `${HOST}`,

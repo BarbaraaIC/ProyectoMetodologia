@@ -1,44 +1,29 @@
 import PDFDocument from 'pdfkit-table';
 import { getUsersService } from './user.service.js';
+import { getResultadosVotacion } from '../services/votation.service.js';
 
 export async function generatePDF() {
+
+    const resultados = await getResultadosVotacion();
     const doc = new PDFDocument({ margin: 30, size: 'A4' });
 
-    const [usersData, error] = await getUsersService();
-
-    if (error) {
-    throw new Error(error);
-    }
-
-    if (!usersData || usersData.length === 0) {
-    throw new Error("No hay usuarios para generar el PDF");
-    }
-
-    const validUsers = usersData.filter(user => user && user.username && user.rut);
-
-    if (validUsers.length === 0) {
-    throw new Error('No hay usuarios válidos para generar el PDF');
-    }
-
-    const rows = validUsers.map(user => [user.username, user.rut]);
-
-   // const doc = new PDFDocument({ margin: 30, size: 'A4' });
-
-    const pdfBuffer = await new Promise((resolve, reject) => {
-    const buffers = [];
-
-    doc.on('data', buffers.push.bind(buffers));
-    doc.on('end', () => resolve(Buffer.concat(buffers)));
-    doc.on('error', (err) => reject(err));
+    // Tabla de candidatos postulados y votos
+    const candidatosRows = resultados.candidatos.map(c => [c.id, c.username, c.cargo, c.cantidad_votos]);
 
     const table = {
         title: { label: 'Informe de Votaciones', color: 'blue' },
-        headers: ['Nombre de usuario', 'Rut'],
-        rows: usersData.map(user => [user.username, user.rut]),
+        headers: ['ID', 'Usuario', 'Cargo', 'Votos'],
+        rows: candidatosRows,
     };
 
-    doc.table(table, { startY: 50 });
-    doc.end();
+    const pdfBuffer = await new Promise((resolve, reject) => {
+        const buffers = [];
+        doc.on('data', buffers.push.bind(buffers));
+        doc.on('end', () => resolve(Buffer.concat(buffers)));
+        doc.on('error', (err) => reject(err));
+
+        doc.table(table, { startY: 50 });
+        doc.end();
     });
 
     return pdfBuffer;
