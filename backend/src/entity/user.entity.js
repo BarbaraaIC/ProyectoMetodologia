@@ -34,10 +34,6 @@ export const UserEntity = new EntitySchema({
             type: String,
             default: "user",
         },
-        isActive : {
-            type: Boolean,
-            default: false,
-        },
         createdAt: {
             type: "timestamp",
             default: () => "CURRENT_TIMESTAMP",
@@ -47,6 +43,14 @@ export const UserEntity = new EntitySchema({
             default: () => "CURRENT_TIMESTAMP",
             onUpdate: () => "CURRENT_TIMESTAMP",
         },
+        },
+        relations: {
+            participants: {
+            target: "Participants",
+            type: "one-to-many",
+            inverseSide: "user", // Esto debe coincidir con el nombre del campo en ParticipantsEntity
+            cascade: true,
+            },
     },
 });
 
