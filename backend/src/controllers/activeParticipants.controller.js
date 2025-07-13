@@ -36,13 +36,14 @@ export async function getActiveParticipantById(req, res) {
 export async function createActiveParticipant(req, res) {
   try {
 const participantRepository = AppDataSource.getRepository(Participants);
-    const  {rut, nombre, apellido, cargo, activo } = req.body; 
+    const  {rut, nombre, apellido, cargo, activo,user } = req.body; 
     const newParticipant = participantRepository.create({
       rut,
       nombre,
       apellido,
       cargo,
       activo: activo ?? true, // Por defecto, activo es true
+      user,
     });
     const savedParticipant = await participantRepository.save(newParticipant);
     res.status(201).json({ message: "Participante activo creado exitosamente.", data: savedParticipant });
