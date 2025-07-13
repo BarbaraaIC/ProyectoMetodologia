@@ -24,4 +24,4 @@ export async function connectDB() {
         console.error("Error al conectar con la base de datos:", error);
         process.exit(1);
     }
-}
+  }
