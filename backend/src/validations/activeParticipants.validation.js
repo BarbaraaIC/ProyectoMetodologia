@@ -80,5 +80,3 @@ apellido: Joi.string()
 });
 
 export { activeParticipantSchema };
-
-
