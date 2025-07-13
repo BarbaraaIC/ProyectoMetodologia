@@ -34,6 +34,10 @@ export const UserEntity = new EntitySchema({
             type: String,
             default: "user",
         },
+        isActive : {
+            type: Boolean,
+            default: false,
+        },
         createdAt: {
             type: "timestamp",
             default: () => "CURRENT_TIMESTAMP",

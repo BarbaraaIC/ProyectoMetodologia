@@ -19,8 +19,7 @@ export const registerValidation = Joi.object({
     .required()
     .pattern(/^[a-zA-Z0-9_]+$/)
     .messages({
-      "string.pattern.base":
-        "El nombre de usuario solo puede contener letras, números y guiones bajos.",
+      "string.pattern.base": "El nombre de usuario solo puede contener letras, números y guiones bajos.",
       "string.min": "El nombre de usuario debe tener al menos 3 caracteres.",
       "string.max": "El nombre de usuario no puede exceder los 30 caracteres.",
       "string.empty": "El nombre de usuario es obligatorio.",
