@@ -5,11 +5,11 @@ import { getActiveParticipants,getActiveParticipantById ,createActiveParticipant
 const router = Router();
 
 router.get("/", getActiveParticipants);
-router.get("/", createActiveParticipant);
+router.post("/", createActiveParticipant);
 
 router.get("/:id", getActiveParticipantById);
-router.post("/:id", updateActiveParticipantById);
-router.put("/:id", deleteActiveParticipantById);
+router.put("/:id", updateActiveParticipantById);
+router.delete("/:id", deleteActiveParticipantById);
 
 
 export default router;
