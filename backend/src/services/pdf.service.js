@@ -1,8 +1,9 @@
-import PDFDocument from 'pdfkit';
-import 'pdfkit-table';
+import PDFDocument from 'pdfkit-table';
 import { getUsersService } from './user.service.js';
 
 export async function generatePDF() {
+    const doc = new PDFDocument({ margin: 30, size: 'A4' });
+
     const [usersData, error] = await getUsersService();
 
     if (error) {
@@ -21,7 +22,7 @@ export async function generatePDF() {
 
     const rows = validUsers.map(user => [user.username, user.rut]);
 
-    const doc = new PDFDocument({ margin: 30, size: 'A4' });
+   // const doc = new PDFDocument({ margin: 30, size: 'A4' });
 
     const pdfBuffer = await new Promise((resolve, reject) => {
     const buffers = [];
@@ -33,7 +34,7 @@ export async function generatePDF() {
     const table = {
         title: { label: 'Informe de Votaciones', color: 'blue' },
         headers: ['Nombre de usuario', 'Rut'],
-        rows,
+        rows: usersData.map(user => [user.username, user.rut]),
     };
 
     doc.table(table, { startY: 50 });
