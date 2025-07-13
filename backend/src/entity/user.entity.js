@@ -48,10 +48,10 @@ export const UserEntity = new EntitySchema({
             participants: {
             target: "Participants",
             type: "one-to-many",
-            inverseSide: "user", // Esto debe coincidir con el nombre del campo en ParticipantsEntity
+            inverseSide: "user", // Este nombre debe coincidir con el campo en ParticipantsEntity
             cascade: true,
             },
-    },
+        },
 });
 
 export default UserEntity;
