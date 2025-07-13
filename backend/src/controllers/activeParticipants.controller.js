@@ -32,6 +32,25 @@ export async function getActiveParticipantById(req, res) {
     res.status(500).json({ message: "Error interno del servidor." });
   }
 }
+// Crear un nuevo participante activo
+export async function createActiveParticipant(req, res) {
+  try {
+const participantRepository = AppDataSource.getRepository(Participants);
+    const { rut, nombre, apellido, cargo, activo } = req.body; 
+    const newParticipant = participantRepository.create({
+      rut,
+      nombre,
+      apellido,
+      cargo,
+      activo: activo ?? true, // Por defecto, activo es true
+    });
+    const savedParticipant = await participantRepository.save(newParticipant);
+    res.status(201).json({ message: "Participante activo creado exitosamente.", data: savedParticipant });
+  } catch (error) { 
+    console.error("Error en añadir nuevo participante", error);
+    res.status(500).json({ message: "Error interno del servidor." });
+  }
+}
 
 // Actualizar un participante activo por ID
 export async function updateActiveParticipantById(req, res) {

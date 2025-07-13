@@ -1,15 +1,15 @@
 "use strict"
 import { Router } from "express";
-import { getActiveParticipants,getActiveParticipantById , updateActiveParticipantById, deleteActiveParticipantById } from "../controllers/activeParticipants.controller.js";
+import { getActiveParticipants,getActiveParticipantById ,createActiveParticipant, updateActiveParticipantById, deleteActiveParticipantById } from "../controllers/activeParticipants.controller.js";
 
 const router = Router();
 
 router.get("/", getActiveParticipants);
+router.get("/", createActiveParticipant);
 
-
-router.get("/", getActiveParticipantById);
-router.post("/", updateActiveParticipantById);
-router.put("/", deleteActiveParticipantById);
+router.get("/:id", getActiveParticipantById);
+router.post("/:id", updateActiveParticipantById);
+router.put("/:id", deleteActiveParticipantById);
 
 
 export default router;
