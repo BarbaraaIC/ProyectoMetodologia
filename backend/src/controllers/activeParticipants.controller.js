@@ -2,6 +2,7 @@
 
 import { AppDataSource } from "../config/configDb.js";
 import Participants from "../entity/activeParticipants.entity.js";
+import { activeParticipantSchema } from '../validations/activeParticipants.validation.js';
 
 // Obtener todos los participantes activos
 export async function getActiveParticipants(req, res) {
@@ -32,22 +33,38 @@ export async function getActiveParticipantById(req, res) {
     res.status(500).json({ message: "Error interno del servidor." });
   }
 }
+
 // Crear un nuevo participante activo
 export async function createActiveParticipant(req, res) {
+  // Validar datos antes de crear
+  const { error } = activeParticipantSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
   try {
-const participantRepository = AppDataSource.getRepository(Participants);
-    const  {rut, nombre, apellido, cargo, activo,user } = req.body; 
+    const participantRepository = AppDataSource.getRepository(Participants);
+    const { rut, nombre, apellido, cargo, activo, user } = req.body;
+
+    // Validación única para presidente
+    if (cargo.toLowerCase() === "presidente") {
+      const existingPresident = await participantRepository.findOne({ where: { cargo: "presidente" } });
+      if (existingPresident) {
+        return res.status(400).json({ message: "Ya existe un presidente. Elimine el actual para agregar uno nuevo." });
+      }
+    }
+
     const newParticipant = participantRepository.create({
       rut,
       nombre,
       apellido,
       cargo,
-      activo: activo ?? true, // Por defecto, activo es true
+      activo: activo ?? true,
       user,
     });
     const savedParticipant = await participantRepository.save(newParticipant);
     res.status(201).json({ message: "Participante activo creado exitosamente.", data: savedParticipant });
-  } catch (error) { 
+  } catch (error) {
     console.error("Error en añadir nuevo participante", error);
     res.status(500).json({ message: "Error interno del servidor." });
   }
