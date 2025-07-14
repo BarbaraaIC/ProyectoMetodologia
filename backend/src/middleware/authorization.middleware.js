@@ -1,5 +1,4 @@
 "use strict";
-import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
 // Función middleware para verificar si el usuario es administrador

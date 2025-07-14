@@ -1,42 +1,41 @@
 import { EntitySchema } from "typeorm";
 
-export const ParticipantsEntity = new EntitySchema({
-    name: "Participants",
-    tableName: "participants",
-    columns : {
-        id : {
-            type : Number,
-            primary : true,
-            generated : true,
-        },
-        rut: {
-            type: String,
-            unique: true,
-            nullable: false,
-        },
-        cargo: {
-            type: String,
-            nullable: true, 
-        },
-        activo: {
-            type: Boolean,
-            default: true, 
-        },
+export const ActiveParticipantsEntity = new EntitySchema({
+  name: "ActiveParticipants",
+  tableName: "participants",
+  columns: {
+    id: {
+      type: Number,
+      primary: true,
+      generated: true,
     },
-    relations: {
-        user: {
-            target: "User",
-            type: "many-to-one",
-            joinColumn: true,
-            nullable: false,
-            cascade: false,
-            eager: true,
-        },
-        votes: {
-            target: "Vote",
-            type: "one-to-many",
-            inverseSide: "active",
-        },
+    rut: {
+      type: String,
+      unique: true,
+      nullable: false,
     },
+    nombre: {
+      type: String,
+      nullable: false,
+    },
+    apellido: {
+      type: String,
+      nullable: false,
+    },
+    cargo: {
+      type: String,
+      nullable: true,
+    },
+    activo: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  relations: {
+    votes: {
+      target: "Vote",
+      type: "one-to-many",
+      inverseSide: "active",
+    },
+  },
 });
-export default ParticipantsEntity;

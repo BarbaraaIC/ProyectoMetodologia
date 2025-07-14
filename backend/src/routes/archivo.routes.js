@@ -1,7 +1,7 @@
 "use strict";
 import { Router } from "express";
 import { getArchivos,subidaArchivo } from "../controllers/archivo.controller.js";
-import { handleFileSizeLimit , upload } from "../middlewares/uploadArchive.middleware.js";
+import { handleFileSizeLimit , upload } from "../middleware/uploadArchive.middleware.js";
 
 const router = Router();
 
