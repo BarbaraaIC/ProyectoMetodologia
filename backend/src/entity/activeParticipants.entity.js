@@ -1,3 +1,5 @@
+"use strict"
+
 import { EntitySchema } from "typeorm";
 
 export const ParticipantsEntity = new EntitySchema({
@@ -39,11 +41,6 @@ export const ParticipantsEntity = new EntitySchema({
             unique: true, // Aseguramos que el email sea único
         },
     },
-  relations: {
-    votes: {
-      target: "Vote",
-      type: "one-to-many",
-      inverseSide: "active",
-    },
-  },
 });
+
+export default ParticipantsEntity;
