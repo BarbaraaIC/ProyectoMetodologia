@@ -32,16 +32,6 @@ export const ParticipantsEntity = new EntitySchema({
             nullable: false,
         },
     },
-        /*relations: {
-        user: {
-            target: "User",
-            type: "many-to-one",
-            joinColumn: true,
-            nullable: true,
-            cascade: false,
-            eager: true,
-        },
-    },*/
 });
 
 export default ParticipantsEntity;

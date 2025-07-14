@@ -3,7 +3,7 @@ import Joi from 'joi';
 // Valida que solo sean letras y espacios (sin símbolos ni números)
 
 
-const activeParticipantSchema = Joi.object({
+export const activeParticipantSchema = Joi.object({
     rut: Joi.string()
         .required()
     .pattern(/^\d{2}\.\d{3}\.\d{3}-[\dkK]$/)
@@ -78,8 +78,6 @@ apellido: Joi.string()
             'any.required': 'El estado activo es obligatorio.'
         })  
 });
-
-export { activeParticipantSchema };
 
 
 
