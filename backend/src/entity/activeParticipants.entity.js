@@ -31,6 +31,16 @@ export const ParticipantsEntity = new EntitySchema({
             type: String,
             nullable: false,
         },
+
+        password: {
+            type: String,
+            nullable: false,
+        },
+        email: {
+            type: String,
+            nullable: false,
+            unique: true, // Aseguramos que el email sea único
+        },
     },
 });
 

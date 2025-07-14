@@ -97,4 +97,13 @@ apellido: Joi.string()
         'string.email': 'El correo electrónico debe ser válido.',
         'string.pattern.base': 'El correo electrónico debe ser de tipo @gmail.com.'
     })
+<<<<<<< HEAD
 });
+=======
+});
+
+
+
+
+
+>>>>>>> francisco

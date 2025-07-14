@@ -12,7 +12,7 @@ const router = new Router();
 router.use("/auth", authRoutes);
 router.use("/pdf", pdfRoutes);
 router.use("/event", eventRoutes);
-router.use("/active", activeParticipantsRoutes);
+router.use("/participants", activeParticipantsRoutes);
 router.use("/attendance", attendanceRoutes);
 
 
