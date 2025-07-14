@@ -7,11 +7,11 @@ export async function generatePDF() {
     const doc = new PDFDocument({ margin: 30, size: 'A4' });
 
     // Tabla de candidatos postulados y votos
-    const candidatosRows = resultados.candidatos.map(c => [c.id, c.username, c.cargo, c.cantidad_votos]);
+    const candidatosRows = resultados.candidatos.map(c => [c.id, c.nombre, c.apellido, c.cargo, c.cantidad_votos]);
 
     const table = {
         title: { label: 'Informe de Votaciones', color: 'blue' },
-        headers: ['ID', 'Usuario', 'Cargo', 'Votos'],
+        headers: ['ID', 'Nombre', 'Apellido', 'Cargo', 'Votos'],
         rows: candidatosRows,
     };
 
