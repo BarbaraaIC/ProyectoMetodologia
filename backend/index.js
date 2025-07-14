@@ -28,6 +28,7 @@ async function setupServer() {
   app.use(morgan("dev"));
 
   // Configura las rutas de la API
+  app.use("/api/src/upload", express.static("src/upload"));
   app.use("/api", indexRoutes);
   app.use("/api", listRoutes);
 
