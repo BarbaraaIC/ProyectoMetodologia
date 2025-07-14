@@ -25,21 +25,20 @@ export const AttendanceEntity = new EntitySchema({
             onUpdate: () => "CURRENT_TIMESTAMP",
         },
     },
-        relations: {
-            participants: {
-            target: "Participants",
-            type: "many-to-one",
-            joinColumn: true,
-            nullable: false,
-            eager: true,
+    relations: {
+        participant: {
+        type: "many-to-one",
+        target: "Participants",
+        joinColumn: true,
+        eager: true, // opcional, para que cargue automáticamente
+        nullable: false,
         },
-        
         event: {
-            target: "Event",
-            type: "many-to-one",
-            joinColumn: true,
-            nullable: false,
-            eager: true,
+        type: "many-to-one",
+        target: "Event",
+        joinColumn: true,
+        eager: true,
+        nullable: false,
         },
     },
 });
