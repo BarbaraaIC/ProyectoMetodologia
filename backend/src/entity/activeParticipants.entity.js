@@ -22,13 +22,25 @@ export const ParticipantsEntity = new EntitySchema({
             type: Boolean,
             default: true, 
         },
+        rut: {
+            type: String,
+            nullable: false,
+        },
+        nombre: {
+            type: String,
+            nullable: false,
+        },
+        apellido: {
+            type: String,
+            nullable: false,
+        },
     },
     relations: {
         user: {
             target: "User",
             type: "many-to-one",
             joinColumn: true,
-            nullable: false,
+            nullable: true,
             cascade: false,
             eager: true,
         },
