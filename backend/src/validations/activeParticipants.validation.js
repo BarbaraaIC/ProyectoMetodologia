@@ -98,8 +98,3 @@ apellido: Joi.string()
         'string.pattern.base': 'El correo electrónico debe ser de tipo @gmail.com.'
     })
 });
-
-
-
-
-
