@@ -32,7 +32,7 @@ export const ParticipantsEntity = new EntitySchema({
             nullable: false,
         },
     },
-        relations: {
+        /*relations: {
         user: {
             target: "User",
             type: "many-to-one",
@@ -41,7 +41,7 @@ export const ParticipantsEntity = new EntitySchema({
             cascade: false,
             eager: true,
         },
-    },
+    },*/
 });
 
 export default ParticipantsEntity;
