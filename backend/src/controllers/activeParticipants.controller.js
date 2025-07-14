@@ -1,14 +1,15 @@
 "use strict";
 
 import { AppDataSource } from "../config/configDb.js";
-import Participants from "../entity/activeParticipants.entity.js";
+import { ActiveParticipantsEntity } from "../entity/activeParticipants.entity.js";
+
 import { activeParticipantSchema } from "../validations/activeParticipants.validation.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
 // Obtener todos los participantes activos
 export async function getActiveParticipants(req, res) {
   try {
-    const participantRepository = AppDataSource.getRepository(Participants);
+    const participantRepository = AppDataSource.getRepository(ActiveParticipantsEntity);
     const participants = await participantRepository.find();
     res.status(200).json({ message: "Participantes activos encontrados", data: participants });
   } catch (error) {
@@ -20,7 +21,7 @@ export async function getActiveParticipants(req, res) {
 // Obtener un participante activo por ID
 export async function getActiveParticipantById(req, res) {
   try {
-    const participantRepository = AppDataSource.getRepository(Participants);
+    const participantRepository = AppDataSource.getRepository(ActiveParticipantsEntity);
     const { id } = req.params;
     const participant = await participantRepository.findOne({ where: { id } });
 
@@ -42,7 +43,7 @@ export async function createActiveParticipant(req, res) {
     return res.status(400).json({ message: error.details[0].message });
   }
   try {
-    const participantRepository = AppDataSource.getRepository(Participants);
+    const participantRepository = AppDataSource.getRepository(ActiveParticipantsEntity);
     const { rut, nombre, apellido, cargo, activo, password, email } = req.body;
 
     // Validación única para presidente, secretario y tesorero
@@ -89,7 +90,7 @@ export async function createActiveParticipant(req, res) {
 // Actualizar un participante activo por ID
 export async function updateActiveParticipantById(req, res) {
   try {
-    const participantRepository = AppDataSource.getRepository(Participants);
+    const participantRepository = AppDataSource.getRepository(ActiveParticipantsEntity);
     const { id } = req.params;
     const { cargo, activo } = req.body;
 
@@ -114,7 +115,7 @@ export async function updateActiveParticipantById(req, res) {
 // Eliminar un participante activo por ID
 export async function deleteActiveParticipantById(req, res) {
   try {
-    const participantRepository = AppDataSource.getRepository(Participants);
+    const participantRepository = AppDataSource.getRepository(ActiveParticipantsEntity);
     const { id } = req.params;
     const participant = await participantRepository.findOne({ where: { id } });
 

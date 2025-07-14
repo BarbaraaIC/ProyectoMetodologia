@@ -1,10 +1,10 @@
 import { AppDataSource } from "../config/configDb.js";
 import { Vote } from "../entity/vote.entity.js";
-import { ParticipantsEntity} from "../entity/activeParticipants.entity.js";
+import { ActiveParticipantsEntity} from "../entity/activeParticipants.entity.js";
 
 export async function getResultadosVotacion() {
     // Obtiene todos los candidatos con sus usuarios y votos
-    const candidatosRaw = await AppDataSource.getRepository(ParticipantsEntity).find({
+    const candidatosRaw = await AppDataSource.getRepository(ActiveParticipantsEntity).find({
     relations: ["votes"],
     select: ["id", "nombre", "apellido", "cargo"]
     });

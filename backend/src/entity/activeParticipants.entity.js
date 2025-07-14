@@ -2,8 +2,8 @@
 
 import { EntitySchema } from "typeorm";
 
-export const ParticipantsEntity = new EntitySchema({
-    name: "Participants",
+export const ActiveParticipantsEntity = new EntitySchema({
+    name: "ActiveParticipants",
     tableName: "participants",
     columns : {
         id : {
@@ -11,15 +11,7 @@ export const ParticipantsEntity = new EntitySchema({
             primary : true,
             generated : true,
         },
-        cargo: {
-            type: String,
-            nullable: true, 
-        },
-        activo: {
-            type: Boolean,
-            default: true, 
-        },
-        rut: {
+         rut: {
             type: String,
             nullable: false,
         },
@@ -30,6 +22,14 @@ export const ParticipantsEntity = new EntitySchema({
         apellido: {
             type: String,
             nullable: false,
+        },
+         cargo: {
+            type: String,
+            nullable: true, 
+        },
+        activo: {
+            type: Boolean,
+            default: true, 
         },
         password: {
             type: String,
@@ -43,4 +43,3 @@ export const ParticipantsEntity = new EntitySchema({
     },
 });
 
-export default ParticipantsEntity;

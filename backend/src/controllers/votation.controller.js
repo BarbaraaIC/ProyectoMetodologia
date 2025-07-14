@@ -2,7 +2,7 @@
 import { Vote }from "../entity/vote.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import { getResultadosVotacion } from "../services/votation.service.js";
-import { ParticipantsEntity } from "../entity/activeParticipants.entity.js";
+import { ActiveParticipantsEntity } from "../entity/activeParticipants.entity.js";
 
 
 export async function postularCandidatos(req, res) {
@@ -13,7 +13,7 @@ export async function postularCandidatos(req, res) {
             return res.status(400).json({ message: "Faltan datos para la postulación." });
         }
 
-    const votationRepo = AppDataSource.getRepository(ParticipantsEntity);
+    const votationRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
 
         // Verificar si ya está postulado al mismo cargo
         const candidatoExistente = await votationRepo.findOneBy({ rut, cargo });
@@ -36,7 +36,7 @@ export async function postularCandidatos(req, res) {
 
 export async function mostrarCandidatos(req, res) {
 try {
-    const activeRepo = AppDataSource.getRepository(ParticipantsEntity);
+    const activeRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
     const candidatos = await activeRepo.find({relations: ["user"] });
     
     if (candidatos.length === 0) {
@@ -66,7 +66,7 @@ export async function emitirVoto(req, res) {
     }
 
     const voteRepo = AppDataSource.getRepository(Vote);
-    const activeRepo = AppDataSource.getRepository(ParticipantsEntity);
+    const activeRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
 
     // Verificar si ya voto
     const votoExistente = await voteRepo.findOneBy({ rut_votante });
