@@ -1,4 +1,4 @@
-"use strict";
+/*"use strict";
 
 import { EntitySchema } from "typeorm";
 
@@ -54,4 +54,4 @@ export const UserEntity = new EntitySchema({
         },
 });
 
-export default UserEntity;
+export default UserEntity;*/

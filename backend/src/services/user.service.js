@@ -1,5 +1,5 @@
 import { AppDataSource } from "../config/configDb.js";
-import { UserEntity } from "../entity/user.entity.js";
+//import { UserEntity } from "../entity/user.entity.js";
 
 export async function getUsersService(){
     try{

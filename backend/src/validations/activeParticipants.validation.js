@@ -26,7 +26,7 @@ nombre: Joi.string()
             return helpers.error('string.symbols');
         }
         const wordCount = value.trim().split(/\s+/).length;
-        if (wordCount < 1) { // Cambia a 2 si quieres mínimo dos palabras
+        if (wordCount < 1) { // minimo de 1 palabra
             return helpers.error('string.minWords');
         }
         return value;
@@ -51,7 +51,7 @@ apellido: Joi.string()
             return helpers.error('string.symbols');
         }
         const wordCount = value.trim().split(/\s+/).length;
-        if (wordCount < 1) { // Cambia a 2 si quieres mínimo dos palabras
+        if (wordCount < 1) { // minimo una palabra
             return helpers.error('string.minWords');
         }
         return value;
