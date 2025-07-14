@@ -3,16 +3,27 @@ import Event from "../entity/event.entity.js" ;
 import { AppDataSource } from "../config/configDb.js";
 import { eventValidation } from "../validations/event.validation.js";
 
+//-------------------------------------Eventos y Reuniones-------------------------------------------------
+
 export async function getEvents(req, res) {
     try {
-    // Obtener el repositorio de eventos y buscar todos los eventos
-    const eventRepository = AppDataSource.getRepository(Event);
-    const events = await eventRepository.find();
+        const eventRepository = AppDataSource.getRepository(Event);
+        const { tipo } = req.query;
 
-    res.status(200).json({ message: "Eventos encontrados: ", data: events });
+        let events;
+
+        // Para filtrar por tipo 
+        if (tipo) {
+            events = await eventRepository.find({ where: { tipo: tipo } });
+        } else {
+            //Muestra ambos tipos si no se envia el tipo en la query
+            events = await eventRepository.find();
+        }
+
+        res.status(200).json({ message: "Eventos encontrados:", data: events });
     } catch (error) {
-    console.error("Error en event.controller.js -> getEvents(): ", error);
-    res.status(500).json({ message: "Error interno del servidor." });
+        console.error("Error al obtener eventos:", error);
+        res.status(500).json({ message: "Error interno del servidor." });
     }
 }
 
@@ -30,7 +41,7 @@ export async function getEventById(req, res) {
 
     res.status(200).json({ message: "Evento encontrado: ", data: event });
     } catch (error) {
-    console.error("Error en event.controller.js -> getEventById(): ", error);
+    console.error("Error al obtener evento por ID:", error);
     res.status(500).json({ message: "Error interno del servidor." });
     }
 }
@@ -52,7 +63,7 @@ export async function createEvent(req, res) {
     res.status(201).json({message: "Evento creado con éxito",data: event});
 
     } catch (error) {
-    console.error("Error en event.controller.js -> createEvent(): ", error);
+    console.error("Error al crear evento: ", error);
     return res.status(500).json({message: "Error interno del servidor", error: error.message});
     }
 }
@@ -61,7 +72,7 @@ export async function updateEventById(req, res) {
     // Obtener el repositorio de evento y buscar un evento por ID
     const eventRepository = AppDataSource.getRepository(Event);
     const { id } = req.params;
-    const { titulo, descripcion, fecha, hora, lugar} = req.body;
+    const { titulo, descripcion, fecha, hora, lugar, tipo} = req.body;
     const event = await eventRepository.findOne({ where: { id } });
 
     // Si no se encuentra el evento, devolver un error 404
@@ -75,6 +86,7 @@ export async function updateEventById(req, res) {
     event.fecha = fecha || event.fecha;
     event.hora = hora || event.hora;
     event.lugar = lugar || event.lugar;
+    event.tipo = tipo || event.tipo;
 
     // Guardar los cambios en la base de datos
     await eventRepository.save(event);
@@ -83,7 +95,7 @@ export async function updateEventById(req, res) {
     .status(200)
     .json({ message: "Evento actualizado exitosamente.", data: event });
     } catch (error) {
-    console.error("Error en event.controller.js -> updateEventById(): ", error);
+    console.error("Error al actualizar evento: ", error);
     res.status(500).json({ message: "Error interno del servidor." });
     }
 }
@@ -105,7 +117,7 @@ export async function deleteEventById(req, res) {
 
     res.status(200).json({ message: "Evento eliminado exitosamente." });
     } catch (error) {
-    console.error("Error en event.controller.js -> deleteEventById(): ", error);
+    console.error("Error al eliminar evento: ", error);
     res.status(500).json({ message: "Error interno del servidor." });
     }
 }
