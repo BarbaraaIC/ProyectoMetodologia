@@ -3,7 +3,7 @@ import Joi from 'joi';
 // Valida que solo sean letras y espacios (sin símbolos ni números)
 
 
-const activeParticipantSchema = Joi.object({
+export const activeParticipantSchema = Joi.object({
     rut: Joi.string()
         .required()
     .pattern(/^\d{2}\.\d{3}\.\d{3}-[\dkK]$/)
@@ -76,16 +76,25 @@ apellido: Joi.string()
         .messages({ 
             'boolean.base': 'El estado activo debe ser un valor booleano.',
             'any.required': 'El estado activo es obligatorio.'
-        })  
+        }),
+    password: Joi.string()
+        .min(8)
+        .max(30)
+        .required()
+        .messages({
+            'string.empty': 'La contraseña es obligatoria.',
+            'any.required': 'La contraseña es obligatoria.',
+            'string.min': 'La contraseña debe tener al menos 8 caracteres.',
+            'string.max': 'La contraseña debe tener como máximo 30 caracteres.'
+        }),
+    email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .pattern(/^[\w.+-]+@gmail\.com$/)
+    .required()
+    .messages({
+        'string.empty': 'El correo electrónico es obligatorio.',
+        'any.required': 'El correo electrónico es obligatorio.',
+        'string.email': 'El correo electrónico debe ser válido.',
+        'string.pattern.base': 'El correo electrónico debe ser de tipo @gmail.com.'
+    })
 });
-
-<<<<<<< HEAD
-export { activeParticipantSchema };
-=======
-export { activeParticipantSchema };
-
-
-
-
-
->>>>>>> origin/francisco
