@@ -1,3 +1,4 @@
+"use strict"
 import { Router } from "express"
 import { login, register, logout } from "../controllers/auth.controller.js"
 
