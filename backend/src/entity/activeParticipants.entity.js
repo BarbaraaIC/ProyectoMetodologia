@@ -41,6 +41,11 @@ export const ParticipantsEntity = new EntitySchema({
             cascade: false,
             eager: true,
         },
+        attendances: {
+            target: "Attendance",
+            type: "one-to-many",
+            inverseSide: "participants",
+        },
     },
 });
 
