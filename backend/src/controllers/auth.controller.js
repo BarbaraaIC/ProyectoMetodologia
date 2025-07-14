@@ -1,6 +1,5 @@
 "use strict";
 
-//import User from "../entity/user.entity.js";
 import jwt from "jsonwebtoken";
 import { encryptPassword, comparePassword } from "../helpers/bcrypt.helper.js";
 import { AppDataSource } from "../config/configDb.js";
