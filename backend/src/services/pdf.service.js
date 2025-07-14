@@ -1,5 +1,4 @@
 import PDFDocument from 'pdfkit-table';
-import { getUsersService } from './user.service.js';
 import { getResultadosVotacion } from '../services/votation.service.js';
 
 export async function generatePDF() {
