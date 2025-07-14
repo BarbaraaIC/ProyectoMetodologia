@@ -59,6 +59,12 @@ export async function createActiveParticipant(req, res) {
     if (existingParticipant) {
       return res.status(400).json({ message: "Ya existe un participante con este RUT." });
     }
+    // Verificar si el correo ya existe
+    const existingEmail = await participantRepository.findOne({ where: { email } });
+    if (existingEmail) {
+      return res.status(400).json({ message: "Ya existe un participante con este correo electrónico." });
+    }
+
 
     // Encriptar la contraseña antes de guardar
     const hashedPassword = await encryptPassword(password);
