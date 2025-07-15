@@ -1,13 +1,30 @@
 import { AppDataSource } from "../config/configDb.js";
 import { Vote } from "../entity/vote.entity.js";
 import { ActiveParticipantsEntity} from "../entity/activeParticipants.entity.js";
+import { In } from "typeorm";
+
 
 export async function getResultadosVotacion() {
     // Obtiene todos los candidatos con sus usuarios y votos
-    const candidatosRaw = await AppDataSource.getRepository(ActiveParticipantsEntity).find({
+    /*const candidatosRaw = await AppDataSource.getRepository(ActiveParticipantsEntity).find({
     relations: ["votes"],
     select: ["id", "nombre", "apellido", "cargo"]
     });
+    */
+
+    
+
+const cargos = ["Presidente", "Tesorero", "Secretario"];
+
+const candidatosRaw= await AppDataSource.getRepository(ActiveParticipantsEntity).find({
+    relations: ["votes"],
+    select: ["id", "nombre", "apellido", "cargo"],
+    where: {
+        cargo: In(cargos)
+    }
+});
+
+
 
     // Crea una lista de candidatos
     const candidatos = candidatosRaw.map(candidato => {

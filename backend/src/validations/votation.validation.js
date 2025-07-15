@@ -17,35 +17,6 @@ export const votationValidation = Joi.object({
     "string.pattern.base": "Formato rut inválido. Debe ser xx.xxx.xxx-x.",
     }),
 
-    nombre: Joi.string()
-    .min(3)
-    .max(20)
-    .required()
-    .pattern(/^[a-zA-Z0-9_]+$/)
-    .messages({
-    'string.empty': 'El nombre es obligatorio.',
-        'any.required': 'El nombre es obligatorio.',
-        'string.pattern.base': 'El nombre solo puede contener letras y espacios.',
-        'string.min': 'El nombre debe tener al menos 3 caracteres.',
-        'string.max': 'El nombre debe tener como máximo 30 caracteres.',
-        'string.minWords': 'El nombre debe tener al menos 1 palabra.',
-        'string.symbols': 'El nombre no puede contener símbolos ni números.'
-    }),
-    apellido: Joi.string()
-    .min(3)
-    .max(20)
-    .required()
-    .pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
-    .messages({
-    'string.empty': 'El apellido es obligatorio.',
-        'any.required': 'El apellido es obligatorio.',
-        'string.pattern.base': 'El apellido solo puede contener letras y espacios.',
-        'string.min': 'El apellido debe tener al menos 3 caracteres.',
-        'string.max': 'El apellido debe tener como máximo 30 caracteres.',
-        'string.minWords': 'El apellido debe tener al menos 1 palabra.',
-        'string.symbols': 'El apellido no puede contener símbolos ni números.'
-    }),
-
     cargo: Joi.string()
     .valid("Presidente", "Secretario", "Tesorero")
     .required()
@@ -55,12 +26,9 @@ export const votationValidation = Joi.object({
     "string.empty": "El campo del cargo no puede estar vacío.",
     "any.required": "El cargo del usuario debe ser Presidente, Secretario o Tesorero."
     }),
-
+    
 })
-    .unknown(false)
-    .messages({
-        "object.unknown": "No se permiten campos adicionales",
-    });
+    
 
 export const emitirVotoValidation = Joi.object({
     rut_votante: Joi.string()

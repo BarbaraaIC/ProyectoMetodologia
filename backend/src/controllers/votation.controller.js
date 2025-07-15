@@ -4,7 +4,7 @@ import { AppDataSource } from "../config/configDb.js";
 import { getResultadosVotacion } from "../services/votation.service.js";
 import { ActiveParticipantsEntity } from "../entity/activeParticipants.entity.js";
 import { votationValidation } from "../validations/votation.validation.js";
-
+import { In } from "typeorm";
 
 export async function postularCandidatos(req, res) {
     try {
@@ -18,41 +18,55 @@ export async function postularCandidatos(req, res) {
 
     const votationRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
 
-    const { rut, nombre, apellido, cargo } = req.body;
-        // Verificar si ya está postulado al mismo cargo
-        const candidatoExistente = await votationRepo.findOneBy({ rut, cargo });
-        if (candidatoExistente) {
-            return res.status(400).json({ message: "Este miembro ya está postulado a este cargo." });
+    const { rut, cargo} = req.body;
+    
+    /* // Verificar si el correo ya existe
+    const existingEmail = await votationRepo.findOne({ where: { email } });
+    if (existingEmail) {
+        return res.status(400).json({ message: "Ya existe un participante con este correo electrónico." });
+    }*/
+    
+    const existingParticipant = await votationRepo.findOne({ where: { rut } });
+    if (existingParticipant) {
+        votationRepo.update(existingParticipant.id, { cargo });
+        const futuraDirectiva ={
+            id: existingParticipant.id,
+            nombre: existingParticipant.nombre|| "",
+            apellido: existingParticipant.apellido || "",
+            cargo: existingParticipant.cargo,
         }
+        return res.status(200).json({ message: `Participante ${futuraDirectiva.nombre} ${futuraDirectiva.apellido} actualizado a cargo: ${cargo}`});
+    }else{
+        return res.status(400).json({ message: "No existe un participante con este RUT." });
+    }
+    // Verificar si el rut ya existe
 
         // Crear nueva postulación con el usuario relacionado
-        const nuevoCandidato = votationRepo.create({ rut, nombre, apellido, cargo});
+        /*const nuevoCandidato = votationRepo.create({ rut, nombre, apellido, cargo, password, email});
         await votationRepo.save(nuevoCandidato);
 
         return res.status(201).json({ message: "Candidato postulado exitosamente." });
-
+*/
     } catch (error) {
         console.error("Error al postular:", error);
-        return res.status(500).json({ message: "Error interno del servidor." });
+        return res.status(500).json({ message: "Error interno del servidor.",error: error.message });
     }
 }
 
 
 export async function mostrarCandidatos(req, res) {
 try {
+    const cargos = ["Presidente", "Tesorero", "Secretario"];
     const activeRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
-    const candidatos = await activeRepo.find({relations: ["votes"] });
+    const candidatos = await activeRepo.find({relations: ["votes"],
+        where: {
+            cargo: In(cargos)
+        }
+    });
     
     if (candidatos.length === 0) {
     return res.status(400).json({ message: "No hay candidatos postulados." });
     }
-
-    const resultado = candidatos.map(c => ({
-        id: c.id,
-        nombre: c.user?.nombre|| "",
-        apellido: c.user?.apellido || "",
-        cargo: c.cargo,
-    }));
 
     return res.status(200).json({ message: "Candidatos Encontrados.", candidatos });
 } catch (error) {

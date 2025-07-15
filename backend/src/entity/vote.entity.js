@@ -26,6 +26,18 @@ export const Vote = new EntitySchema({
       type: String,
       nullable: false,
     },
+    activo: {
+      type: Boolean,
+      nullable: false,
+    },
+    email: {
+      type: String,
+      nullable: false,
+    },
+    password: {
+      type: String,
+      nullable: false,
+    },
     createdAt: {
       type: "timestamp",
       default: () => "CURRENT_TIMESTAMP",

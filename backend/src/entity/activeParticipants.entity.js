@@ -29,7 +29,7 @@ export const ActiveParticipantsEntity = new EntitySchema({
         },
         activo: {
             type: Boolean,
-            default: true, 
+            default: false, 
         },
         password: {
             type: String,
@@ -41,5 +41,11 @@ export const ActiveParticipantsEntity = new EntitySchema({
             unique: true, // Aseguramos que el email sea único
         },
     },
+    relations: {
+    votes: {
+      target: "Vote",
+      type: "one-to-many",
+      inverseSide: "active",
+    },
+  },
 });
-
