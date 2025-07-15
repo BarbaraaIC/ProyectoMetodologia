@@ -8,7 +8,7 @@ export async function getResultadosVotacion() {
     relations: ["votes"],
     select: ["id", "nombre", "apellido", "cargo"]
     });
-    
+
     // Crea una lista de candidatos
     const candidatos = candidatosRaw.map(candidato => {
     return {
