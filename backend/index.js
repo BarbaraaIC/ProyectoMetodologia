@@ -39,8 +39,6 @@ async function setupAPI() {
   try {
     // Conecta la base de datos
     await connectDB();
-    // Crea los usuarios iniciales
-    //await createUsers();
     // Configura el servidor
     await setupServer();
   } catch (error) {
