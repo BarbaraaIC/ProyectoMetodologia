@@ -43,6 +43,18 @@ export const emitirVotoValidation = Joi.object({
         "string.max": "El RUT del votante no puede exceder los 20 caracteres.",
         "string.empty": "El RUT del votante es obligatorio y debe ser el formato 22.222.222-2.",
     }),
+    rut_candidato: Joi.string()
+    .min(3)
+    .max(20)
+    .required()
+    .pattern(/^\d{2}\.\d{3}\.\d{3}-[\dkK]$/)
+    .messages({
+        "string.pattern.base":
+        "El RUT del candidato solo puede contener letras.",
+        "string.min": "El RUT del candidato debe tener al menos 3 caracteres.",
+        "string.max": "El RUT del candidato no puede exceder los 20 caracteres.",
+        "string.empty": "El RUT del candidato es obligatorio y debe ser el formato 22.222.222-2.",
+    }),
     nombre_candidato: Joi.string()
     .min(3)
     .max(20)
@@ -59,7 +71,7 @@ export const emitirVotoValidation = Joi.object({
     .min(3)
     .max(20)
     .required()
-    .pattern(/^[a-zA-Z0-9_]+$/)
+    .pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
     .messages({
         "string.pattern.base":
         "El apellido del candidato solo puede contener letras.",
