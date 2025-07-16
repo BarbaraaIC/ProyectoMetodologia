@@ -94,7 +94,12 @@ export async function updateActiveParticipantById(req, res) {
     if (!participant) {
       return res.status(404).json({ message: "Participante no encontrado." });
     }
-
+// Validar que el nuevo cargo sea uno permitido, si se está intentando actualizar
+    const cargosValidos = ["vecino", "presidente", "secretario", "tesorero"];
+    if (cargo && !cargosValidos.includes(cargo.toLowerCase())) {
+      return res.status(400).json({ message: `Cargo inválido. Solo se permiten: ${cargosValidos.join(", ")}.` });
+    }
+    
     participant.cargo = cargo ?? participant.cargo;
     participant.activo = activo ?? participant.activo;
 
