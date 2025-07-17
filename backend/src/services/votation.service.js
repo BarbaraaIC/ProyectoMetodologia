@@ -5,63 +5,65 @@ import { In } from "typeorm";
 
 
 export async function getResultadosVotacion() {
-    // Obtiene todos los candidatos con sus usuarios y votos
-    /*const candidatosRaw = await AppDataSource.getRepository(ActiveParticipantsEntity).find({
-    relations: ["votes"],
-    select: ["id", "nombre", "apellido", "cargo"]
-    });
-    */
-const cargos = ["Presidente", "Tesorero", "Secretario"];
+  const participanteRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
+  const voteRepo = AppDataSource.getRepository(Vote);
 
-const candidatosRaw= await AppDataSource.getRepository(ActiveParticipantsEntity).find({
-    relations: ["votes"],
-    select: ["rut", "nombre", "apellido", "cargo"],
-    where: {
-        cargo: In(cargos)
-    }
-});
-    // Crea una lista de candidatos
-    const candidatos = candidatosRaw.map(candidato => {
-    return {
-        rut: candidato.rut,
-        nombre: candidato.nombre,
-        apellido: candidato.apellido,
-        cargo: candidato.cargo,
-        cantidad_votos: candidato.votes ? candidato.votes.length : 0
-    };
-});
-    // Ordena los candidatos por cantidad de votos (de mayor a menor)
-    candidatos.sort((a, b) => b.cantidad_votos - a.cantidad_votos);
+  const cargos = ["Presidente", "Tesorero", "Secretario"];
 
-    // Obtiene todos los votos y saca el rut de cada votante
-    const votos = await AppDataSource.getRepository(Vote).find({ select: ["rut_votante"] });
-    const votantes = votos.map(voto => {
-        return {
-            rut: voto.rut_votante,
-            voto_emitido: true
-        };
-    });
-    // Devuelve los resultados
-    return { candidatos, votantes };
+  // Obtener todos los votos
+  const votos = await voteRepo.find();
+
+  // Contar votos por rut_candidato
+  const conteoVotos = votos.reduce((acc, voto) => {
+    acc[voto.rut_candidato] = (acc[voto.rut_candidato] || 0) + 1;
+    return acc;
+  }, {});
+
+  // Obtener todos los candidatos
+  const candidatosRaw = await participanteRepo.find({
+    where: { cargo: In(cargos) },
+  });
+
+  // Mapear candidatos con cantidad de votos
+  const candidatos = candidatosRaw.map(candidato => ({
+    rut: candidato.rut,
+    nombre: candidato.nombre,
+    apellido: candidato.apellido,
+    cargo: candidato.cargo,
+    cantidad_votos: conteoVotos[candidato.rut] || 0,
+  }));
+
+  // Ordenar por cantidad de votos descendente
+  candidatos.sort((a, b) => b.cantidad_votos - a.cantidad_votos);
+
+  // Obtener votantes únicos
+  const votantesUnicos = Array.from(new Set(votos.map(v => v.rut_votante))).map(rut => ({
+    rut,
+    voto_emitido: true,
+  }));
+
+  return { candidatos, votantes: votantesUnicos };
 }
 
+
+
+
 export async function getResultadosVotacionActivos() {
-    // Obtiene todos los participantes activos con sus votos
-    const participantesActivos = await AppDataSource.getRepository(ActiveParticipantsEntity).find({
+    const participanteRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
+
+    // Obtener todos los participantes activos con sus votos relacionados
+    const participantesActivos = await participanteRepo.find({
         relations: ["votes"],
         select: ["rut", "nombre", "apellido"]
     });
 
-    // Crea una lista de participantes activos
-    const votos = participantesActivos.map(participante => {
-        return {
-            rut: participante.rut,
-            nombre: participante.nombre,
-            apellido: participante.apellido,
-            voto: participante.votes.length > 0 ? "Votó" : "No votó"
-        };
-    });
+    // Mapear los resultados para indicar si votó o no
+    const votos = participantesActivos.map(participante => ({
+        rut: participante.rut,
+        nombre: participante.nombre,
+        apellido: participante.apellido,
+        voto: participante.votes && participante.votes.length > 0 ? "Votó" : "No votó"
+    }));
 
-    // Devuelve los resultados
     return { votos };
 }
