@@ -43,7 +43,18 @@ export const EventEntity= new EntitySchema({
             enum: ["evento", "reunion"],
             nullable: false,
         },
-
+        votacionAbierta: { //aqui nuevo
+        type: Boolean,
+        default: false,
+        },
+        votacionInicio: {
+        type: "timestamp",
+        nullable: true,
+        },
+        votacionFin: {
+        type: "timestamp",
+        nullable: true,
+        },               // aqui nuevo
         createdAt: {
             type: "timestamp",
             default: () => "CURRENT_TIMESTAMP",
