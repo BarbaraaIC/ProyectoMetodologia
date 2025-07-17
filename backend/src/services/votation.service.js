@@ -45,9 +45,6 @@ export async function getResultadosVotacion() {
   return { candidatos, votantes: votantesUnicos };
 }
 
-
-
-
 export async function getResultadosVotacionActivos() {
     const participanteRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
 
