@@ -42,6 +42,13 @@ export const ParticipantsEntity = new EntitySchema({
             unique: true, // Aseguramos que el email sea único
         },
     },
+    relations: {
+        attendances: {
+            type: "one-to-many",
+            target: "Attendance",
+            inverseSide: "participant",
+        },
+    },
 });
 
 export default ParticipantsEntity;

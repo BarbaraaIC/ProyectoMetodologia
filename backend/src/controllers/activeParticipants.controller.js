@@ -9,10 +9,12 @@ import { encryptPassword } from "../helpers/bcrypt.helper.js";
 export async function getActiveParticipants(req, res) {
   try {
     const participantRepository = AppDataSource.getRepository(Participants);
-    const participants = await participantRepository.find();
-    res.status(200).json({ message: "Participantes activos encontrados", data: participants });
+    const participants = await participantRepository.find({
+      where: { activo: true }, // ← Aquí filtramos
+    });
+    res.status(200).json({ message: "Vecinos activos encontrados", data: participants });
   } catch (error) {
-    console.error("Error en getActiveParticipants():", error);
+    console.error("Error al encontrar vecinos", error);
     res.status(500).json({ message: "Error interno del servidor." });
   }
 }

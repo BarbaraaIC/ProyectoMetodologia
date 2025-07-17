@@ -27,18 +27,18 @@ export const AttendanceEntity = new EntitySchema({
     },
     relations: {
         participant: {
-        type: "many-to-one",
-        target: "Participants",
-        joinColumn: true,
-        eager: true, // opcional, para que cargue automáticamente
-        nullable: false,
+            type: "many-to-one",
+            target: "Participants", 
+            joinColumn: { name: "participant_id" }, 
+            eager: true,
+            nullable: false,
         },
         event: {
-        type: "many-to-one",
-        target: "Event",
-        joinColumn: true,
-        eager: true,
-        nullable: false,
+            type: "many-to-one",
+            target: "Event", 
+            joinColumn: { name: "event_id" },
+            eager: true,
+            nullable: false,
         },
     },
 });
