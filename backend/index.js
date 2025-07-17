@@ -30,6 +30,10 @@ async function setupServer() {
   app.use("/api", indexRoutes);
 
   // Enciende el servidor
+  app.get("/test", (req, res) => {
+  res.send("Servidor activo");
+});
+
   app.listen(PORT, () => {
     console.log(`Servidor corriendo en ${HOST}:${PORT}`);
   });

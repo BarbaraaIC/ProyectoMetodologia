@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 // Middleware para autenticar JWT
 export function authenticateJwt(req, res, next) {
+  console.log("Middleware authenticateJwt ejecutado");
   // Conseguir el token del encabezado Authorization
   const authHeader = req.headers.authorization;
 
