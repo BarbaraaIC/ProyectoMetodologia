@@ -21,12 +21,7 @@ export async function postularCandidatos(req, res) {
 
     const { rut, cargo} = req.body;
     
-    /* // Verificar si el correo ya existe
-    const existingEmail = await votationRepo.findOne({ where: { email } });
-    if (existingEmail) {
-        return res.status(400).json({ message: "Ya existe un participante con este correo electrónico." });
-    }*/
-    
+   
     const existingParticipant = await votationRepo.findOne({ where: { rut } });
     if (existingParticipant) {
         votationRepo.update(existingParticipant.id, { cargo });
@@ -40,14 +35,6 @@ export async function postularCandidatos(req, res) {
     }else{
         return res.status(400).json({ message: "No existe un participante con este RUT." });
     }
-    // Verificar si el rut ya existe
-
-        // Crear nueva postulación con el usuario relacionado
-        /*const nuevoCandidato = votationRepo.create({ rut, nombre, apellido, cargo, password, email});
-        await votationRepo.save(nuevoCandidato);
-
-        return res.status(201).json({ message: "Candidato postulado exitosamente." });
-*/
     } catch (error) {
         console.error("Error al postular:", error);
         return res.status(500).json({ message: "Error interno del servidor.",error: error.message });
@@ -75,75 +62,6 @@ try {
 }
 }
 
-/*export async function emitirVoto(req, res) {
-    try {
-    const {body} = req;
-    const { error } = emitirVotoValidation.validate(body);
-        
-            if (error) {
-                return res.status(400).json({message: "Error de validación", error: error.message});
-            }
-    const {rut_votante, rut_candidato, nombre_candidato, apellido_candidato, cargo} = req.body;
-
-    if (!rut_votante || !rut_candidato|| !nombre_candidato || !apellido_candidato || !cargo) {
-    return res.status(400).json({ message: "Verifica los datos para emitir el voto." });
-    }
-    const rut = rut_votante;
-    const voteRepo = AppDataSource.getRepository(Vote);
-    const votationRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
-    const habilitadoVoto = await votationRepo.findOne({ where: { rut} });
-
-     // Verificar si ya voto
-    const votosExistentes = await voteRepo.find({ rut_votante });
-   // console.log("Votos existentes:", votosExistentes);
-    if (votosExistentes.length > 0) {
-            votosExistentes.forEach(voto => {
-            const votoVecino = {
-            rut_votante: voto.rut_votante,
-            rut_candidato: voto.rut_candidato,
-            nombre_candidato: voto.nombre_candidato || "",
-            apellido_candidato: voto.apellido_candidato || "",
-            cargo: voto.cargo || "",
-        };
-        console.log("nombre", votoVecino.nombre_candidato);
-        if(votoVecino.rut_votante === rut_votante && votoVecino.cargo === cargo) {
-            return res.status(400).json({ message: "Ya has votado por este cargo." });
-        }else{
-             // Verificar si el candidato existe
-    const candidato = await votationRepo.findOneBy({ rut: rut_candidato });
-    if (!candidato) {
-    return res.status(404).json({ message: "Candidato no encontrado." });
-    }
-    if (habilitadoVoto) {
-          // Crear el voto
-    const nuevoVoto = voteRepo.create({
-        rut_votante,
-        rut_candidato,
-        nombre_candidato: habilitadoVoto.nombre,
-        apellido_candidato: habilitadoVoto.apellido,
-        cargo: habilitadoVoto.cargo,
-    });
-
-    await voteRepo.save(nuevoVoto);
-
-    return res.status(201).json({ message: "Voto emitido exitosamente." });
-    }else{
-        return res.status(400).json({ message: "No existe un participante con este RUT." });
-    };
-        }
-    });
-
-    return res.status(400).json({ message: "Este votante ya ha emitido los tres votos." });
-    }
-    
-
-  } catch (error) {
-    console.error("Error al emitir el voto:", error);
-    return res.status(500).json({ message: "Error interno en el servidor" });
-  }
-}
-
-*/
 export async function emitirVoto(req, res) {
   try {
     const { body } = req;
@@ -171,26 +89,30 @@ export async function emitirVoto(req, res) {
     // Obtener votos existentes del votante
     const votosExistentes = await voteRepo.find({ where: { rut_votante } });
 
-    // Validar si ya votó por este cargo
-    const yaVotoPorEsteCargo = votosExistentes.some(voto => voto.rut_candidato === rut_candidato);
-    console.log("yaVotoPorEsteCargo:", yaVotoPorEsteCargo);
-    if (yaVotoPorEsteCargo) {
-        const infoYaVoto = votosExistentes.find(voto => voto.rut_candidato === rut_candidato);
-    
-      return res.status(400).json({ message: `Ya has votado por el cargo de ${infoYaVoto.cargo}.` });
-    }
-
     // Validar si ya emitió 3 votos
     if (votosExistentes.length >= 3) {
       return res.status(400).json({ message: "Este votante ya ha emitido los tres votos permitidos." });
     }
 
-    // Verificar si el candidato existe
     const candidato = await votationRepo.findOneBy({ rut: rut_candidato });
     if (!candidato) {
       return res.status(404).json({ message: "Candidato no encontrado." });
     }
+    if (candidato.cargo == "Vecino") {
+      return res.status(400).json({ message: "El usuario ingresado no es un candidato." });
+    }
 
+
+    // Validar si ya votó por este cargo
+    const yaVotoPorEsteCargo = votosExistentes.some(voto => voto.cargo === candidato.cargo);
+    console.log("yaVotoPorEsteCargo:", yaVotoPorEsteCargo);
+    if (yaVotoPorEsteCargo) {
+        const infoYaVoto = votosExistentes.find(voto => voto.cargo === candidato.cargo);
+    
+      return res.status(400).json({ message: `Ya has votado por el cargo de ${infoYaVoto.cargo}, ${infoYaVoto.nombre_candidato} ${infoYaVoto.apellido_candidato}.` });
+    }
+    
+    
     // Crear y guardar el nuevo voto
     const nuevoVoto = voteRepo.create({
         rut_votante,

@@ -14,6 +14,7 @@ export const ActiveParticipantsEntity = new EntitySchema({
          rut: {
             type: String,
             nullable: false,
+            unique: true, // Aseguramos que el RUT sea único
         },
         nombre: {
             type: String,
