@@ -37,11 +37,16 @@ export const Vote = new EntitySchema({
     },
   },
   relations: {
-    active: {
-      target: "ActiveParticipants",
-      type: "many-to-one",
-      joinColumn: true,
-      inverseSide: "votes",
+    
+active: {
+    target: "ActiveParticipants",
+    type: "many-to-one",
+    joinColumn: {
+      name: "rut_votante", // columna en la tabla Vote
+      referencedColumnName: "rut", // columna en ActiveParticipants
     },
+    inverseSide: "votes",
   },
+},
+
 });
