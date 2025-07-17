@@ -2,6 +2,7 @@
 import Event from "../entity/event.entity.js" ;
 import { AppDataSource } from "../config/configDb.js";
 import { eventValidation } from "../validations/event.validation.js";
+import cron from "node-cron";
 
 //-------------------------------------Eventos y Reuniones-------------------------------------------------
 
@@ -60,6 +61,40 @@ export async function createEvent(req, res) {
     const event = eventRepository.create(body);
 
     await eventRepository.save(event);
+
+    //evento apertura votacion//
+
+    if (body.tipo === "evento" && body.votacion === true && body.titulo === "votacion") {
+        const inicio = new Date();
+        const duracionHoras= body.duracionVotacion || 1800; // 30 min por defecto
+        const fin = new Date(inicio.getTime() + duracionHoras * 60 * 60 * 1000); // Convertir horas a milisegundos
+
+        event.votacionAbierta = true;
+        event.votacionInicio = inicio;
+        event.votacionFin = fin;
+
+        await eventRepository.save(event); 
+
+        const minuto = fin.getMinutes();
+        const hora = fin.getHours();
+        const dia = fin.getDate();
+        const mes = fin.getMonth() + 1;
+
+      const cronExpresion = `${minuto} ${hora} ${dia} ${mes} *`;
+
+        cron.schedule(cronExpresion, async () => {
+        const eventoActualizado = await eventRepository.findOne({ where: { id: event.id } });
+
+        if (eventoActualizado && eventoActualizado.votacionAbierta) {
+            eventoActualizado.votacionAbierta = false;
+            eventoActualizado.votacionFin = new Date();
+            await eventRepository.save(eventoActualizado);
+        console.log(`Votación cerrada automáticamente para el evento ${eventoActualizado.titulo}`);
+        }
+    });
+
+        console.log(`Cierre de votación programado para el evento ${event.id} a las ${hora}:${minuto} del ${dia}/${mes}`);
+    }
 
     res.status(201).json({message: "Evento creado con éxito",data: event});
 
