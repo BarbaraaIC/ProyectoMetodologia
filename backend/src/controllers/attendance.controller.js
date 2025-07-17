@@ -1,55 +1,99 @@
+"use strict";
+
 import { AppDataSource } from "../config/configDb.js";
 import Attendance from "../entity/attendance.entity.js";
-import Participants from "../entity/activeParticipants.entity.js";
+import {ActiveParticipantsEntity} from "../entity/activeParticipants.entity.js";
 import Event from "../entity/event.entity.js";
 
-// Registrar asistencia para un evento/reunión
-export async function registerAttendance(req, res) {
+export async function getActiveNeighbors(req, res) {
     try {
-        const attendanceRepo = AppDataSource.getRepository(Attendance);
-        const participantRepo = AppDataSource.getRepository(Participants);
-        const eventRepo = AppDataSource.getRepository(Event);
+        const participantRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
+        const activeParticipants = await participantRepo.find({
+        where: { activo: true },
+        });
 
-        const { eventId, asistencia } = req.body;
-        // asistencia: [{ participantId, presente }, ...]
-
-        // Verificar que el evento/reunión exista
-        const event = await eventRepo.findOne({ where: { id: eventId } });
-        if (!event) {
-        return res.status(404).json({ message: "Evento o reunión no encontrado" });
-        }
-
-        // Obtener solo participantes activos para validar
-        const activeParticipantIds = (await participantRepo.find({ where: { activo: true } })).map(p => p.id);
-
-        // Validar que los participantes enviados estén activos
-        const invalidParticipants = asistencia.filter(a => !activeParticipantIds.includes(a.participantId));
-        if (invalidParticipants.length > 0) {
-            return res.status(400).json({ message: "Algunos participantes no están activos y no se puede registrar su asistencia." });
-        }
-
-        // Guardar o actualizar asistencia para cada participante
-        for (const item of asistencia) {
-            let attendance = await attendanceRepo.findOne({
-                where: { participant: { id: item.participantId }, event: { id: eventId } },
-            });
-
-            if (!attendance) {
-                attendance = attendanceRepo.create({
-                participant: { id: item.participantId },
-                event: { id: eventId },
-                presente: item.presente,
-                });
-            } else {
-                attendance.presente = item.presente;
-            }
-
-            await attendanceRepo.save(attendance);
-        }
-
-        res.status(200).json({ message: "Asistencia registrada exitosamente" });
+        res.status(200).json(activeParticipants);
     } catch (error) {
-    console.error("Error al registrar asistencia:", error);
-    res.status(500).json({ message: "Error interno del servidor" });
+        console.error("Error al obtener vecinos activos:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+    }
+
+export async function getAllEvents(req, res) {
+    try {
+        const eventRepo = AppDataSource.getRepository(Event);
+        const events = await eventRepo.find();
+
+        res.status(200).json(events);
+    } catch (error) {
+        console.error("Error al obtener eventos:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+    }
+
+export async function registerAttendance(req, res) {
+    const { eventId, listaAsistencia } = req.body;
+
+    if (!eventId || !Array.isArray(listaAsistencia)) {
+        return res.status(400).json({ message: "Datos inválidos" });
+    }
+
+    const attendanceRepo = AppDataSource.getRepository(Attendance);
+    const eventRepo = AppDataSource.getRepository(Event);
+    const participantRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
+
+    try {
+        const event = await eventRepo.findOneBy({ id: parseInt(eventId) });
+        if (!event) {
+        return res.status(404).json({ message: "Evento no encontrado" });
+        }
+
+        for (const registro of listaAsistencia) {
+        const participant = await participantRepo.findOneBy({ id: registro.participantId });
+        if (!participant || !participant.activo) continue;
+
+        if (registro.asistenciaId) {
+            // Actualizar existente
+            let existing = await attendanceRepo.findOneBy({ id: registro.asistenciaId });
+            if (existing) {
+            existing.asistencia = registro.presente;
+            await attendanceRepo.save(existing);
+            }
+        } else {
+            // Crear nuevo
+            const nuevo = attendanceRepo.create({
+            asistencia: registro.presente,
+            participant,
+            event,
+            });
+            await attendanceRepo.save(nuevo);
+        }
+        }
+
+        res.status(200).json({ message: "Lista de asistencia registrada correctamente" });
+    } catch (error) {
+        console.error("Error al registrar asistencia:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
     }
 }
+
+export async function getAttendanceByEvent(req, res) {
+    const { eventId } = req.params;
+
+    const attendanceRepo = AppDataSource.getRepository(Attendance);
+
+    try {
+        const registros = await attendanceRepo.find({
+        where: {
+            event: { id: parseInt(eventId) },
+        },
+        relations: ["participant", "event"],
+        });
+
+        res.status(200).json(registros);
+    } catch (error) {
+        console.error("Error al obtener asistencia:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+}
+
