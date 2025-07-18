@@ -69,14 +69,12 @@ export async function createEvent(req, res) {
         const duracionHoras= body.duracionVotacion || 1800; // 30 min por defecto
         const fin = new Date(inicio.getTime() + duracionHoras * 60 * 60 * 1000); // Convertir horas a milisegundos
 
-      // Actualizar campos de votación
         event.votacionAbierta = true;
         event.votacionInicio = inicio;
         event.votacionFin = fin;
 
-      await eventRepository.save(event); // Guardar actualización
+        await eventRepository.save(event); 
 
-      // Programar cierre automático con node-cron
         const minuto = fin.getMinutes();
         const hora = fin.getHours();
         const dia = fin.getDate();
@@ -97,8 +95,6 @@ export async function createEvent(req, res) {
 
         console.log(`Cierre de votación programado para el evento ${event.id} a las ${hora}:${minuto} del ${dia}/${mes}`);
     }
-
-    //evento apertura votacion
 
     res.status(201).json({message: "Evento creado con éxito",data: event});
 
