@@ -25,6 +25,9 @@ async function setupServer() {
   // Configura el middleware de morgan para registrar las peticiones HTTP
   app.use(morgan("dev"));
 
+  //Acceder a archivos
+  app.use("/api/src/upload", express.static("src/upload"));
+
   // Configura las rutas de la API
   app.use("/api", indexRoutes);
 
