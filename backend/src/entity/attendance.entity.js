@@ -11,14 +11,32 @@ export const AttendanceEntity = new EntitySchema({
             primary: true,
             generated: true,
         },
+
+        rut: {
+            type: String,
+            nullable: false,
+        },
+
+        nombre: {
+            type: String,
+            nullable: false,
+        },
+
+        apellido: {
+        type: String,
+        nullable: false,
+        },
+        
         asistencia: {
             type: Boolean,
             nullable: false,
         },
+
         createdAt: {
             type: "timestamp",
             default: () => "CURRENT_TIMESTAMP",
         },
+
         updatedAt: {
             type: "timestamp",
             default: () => "CURRENT_TIMESTAMP",
@@ -28,7 +46,7 @@ export const AttendanceEntity = new EntitySchema({
     relations: {
         participant: {
             type: "many-to-one",
-            target: "Participants", 
+            target: "ActiveParticipants", 
             joinColumn: { name: "participant_id" }, 
             eager: true,
             nullable: false,

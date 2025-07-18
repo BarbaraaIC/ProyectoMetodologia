@@ -2,8 +2,8 @@
 
 import { EntitySchema } from "typeorm";
 
-export const ParticipantsEntity = new EntitySchema({
-    name: "Participants",
+export const ActiveParticipantsEntity = new EntitySchema({
+    name: "ActiveParticipants",
     tableName: "participants",
     columns : {
         id : {
@@ -11,17 +11,10 @@ export const ParticipantsEntity = new EntitySchema({
             primary : true,
             generated : true,
         },
-        cargo: {
-            type: String,
-            nullable: true, 
-        },
-        activo: {
-            type: Boolean,
-            default: true, 
-        },
         rut: {
             type: String,
             nullable: false,
+            unique: true, // Aseguramos que el RUT sea único
         },
         nombre: {
             type: String,
@@ -31,7 +24,14 @@ export const ParticipantsEntity = new EntitySchema({
             type: String,
             nullable: false,
         },
-
+        cargo: {
+            type: String,
+            nullable: true, 
+        },
+        activo: {
+            type: Boolean,
+            default: false, 
+        },
         password: {
             type: String,
             nullable: false,
@@ -42,13 +42,11 @@ export const ParticipantsEntity = new EntitySchema({
             unique: true, // Aseguramos que el email sea único
         },
     },
-    relations: {
-        attendances: {
-            type: "one-to-many",
-            target: "Attendance",
-            inverseSide: "participant",
+        relations: {
+        votes: {
+        target: "Vote",
+        type: "one-to-many",
+        inverseSide: "active",
         },
     },
 });
-
-export default ParticipantsEntity;
