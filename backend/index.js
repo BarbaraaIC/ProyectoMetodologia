@@ -45,6 +45,7 @@ async function setupAPI() {
     await connectDB();
     // Configura el servidor
     await setupServer();
+    
   } catch (error) {
     console.error("Error en index.js -> setupAPI(): ", error);
   }
