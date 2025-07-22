@@ -58,7 +58,7 @@ export const EventEntity= new EntitySchema({
     relations: {
         attendances: {
             type: "one-to-many",
-            target: "Attendance", // nombre de AttendanceEntity
+            target: "Attendance",
             inverseSide: "event",
         },
     },
