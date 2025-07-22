@@ -35,7 +35,7 @@ export async function createUsers() {
             await userRepository.save((
                 userRepository.create(user)
             ));
-           console.log(`Usuario '${user.username}' creado exitosamente.`);
+        console.log(`Usuario '${user.username}' creado exitosamente.`);
 
         }
     } catch (error) {

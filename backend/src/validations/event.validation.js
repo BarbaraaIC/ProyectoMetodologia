@@ -68,23 +68,23 @@ export const eventValidation= Joi.object({
     //agregue votacion
     votacion: Joi.boolean()
     .when("tipo", {
-      is: "evento",
-      then: Joi.optional().default(false),
-      otherwise: Joi.forbidden(),
+    is: "evento",
+    then: Joi.optional().default(false),
+    otherwise: Joi.forbidden(),
     }),
 
     duracionVotacion: Joi.number()
     .integer()
     .min(60)
     .when("votacion", {
-      is: true,
-      then: Joi.required().messages({
+    is: true,
+    then: Joi.required().messages({
         "number.base": "La duración debe ser un número.",
         "number.min": "La duración mínima de votación es de 1 hora (3600 segundos).",
         "number.max": "La duración máxima de votación es de 24 horas.",
         "any.required": "La duración de la votación es obligatoria si votación está activa.",
-      }),
-      otherwise: Joi.optional(),
+    }),
+    otherwise: Joi.optional(),
     }),
     //votacionInicio: Joi.date()
     //.required(),
@@ -98,7 +98,7 @@ export const eventValidation= Joi.object({
     "object.unknown": "No se permiten campos adicionales",
     });
 
-   /*export const eventValidationVotation = Joi.object({
+/*export const eventValidationVotation = Joi.object({
         votacionAbierta: Joi.boolean().optional(),
         votacionInicio: Joi.date().optional(),
         votacionFin: Joi.date().optional(), 

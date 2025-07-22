@@ -29,6 +29,9 @@ async function setupServer() {
   // Configura las rutas de la API
   app.use("/api", indexRoutes);
 
+  //Acceder a archivos
+  app.use("/api/src/upload", express.static("src/upload"));
+
   // Enciende el servidor
   app.get("/test", (req, res) => {
   res.send("Servidor activo");

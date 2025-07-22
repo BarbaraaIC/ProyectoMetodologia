@@ -62,18 +62,18 @@ try {
 }
 
 export async function emitirVoto(req, res) {
-  try {
+try {
     const { body } = req;
     const { error } = emitirVotoValidation.validate(body);
 
     if (error) {
-      return res.status(400).json({ message: "Error de validación", error: error.message });
+    return res.status(400).json({ message: "Error de validación", error: error.message });
     }
 
     const { rut_votante, rut_candidato, nombre_candidato, apellido_candidato, cargo } = body;
 
     if (!rut_votante || !rut_candidato || !nombre_candidato || !apellido_candidato || !cargo) {
-      return res.status(400).json({ message: "Verifica los datos para emitir el voto." });
+    return res.status(400).json({ message: "Verifica los datos para emitir el voto." });
     }
 
     const voteRepo = AppDataSource.getRepository(Vote);
@@ -82,7 +82,7 @@ export async function emitirVoto(req, res) {
     // Verificar si el votante está habilitado
     const habilitadoVoto = await votationRepo.findOne({ where: { rut: rut_votante } });
     if (!habilitadoVoto) {
-      return res.status(400).json({ message: "No existe un participante con este RUT." });
+    return res.status(400).json({ message: "No existe un participante con este RUT." });
     }
 
     // Obtener votos existentes del votante
@@ -90,15 +90,15 @@ export async function emitirVoto(req, res) {
 
     // Validar si ya emitió 3 votos
     if (votosExistentes.length >= 3) {
-      return res.status(400).json({ message: "Este votante ya ha emitido los tres votos permitidos." });
+    return res.status(400).json({ message: "Este votante ya ha emitido los tres votos permitidos." });
     }
 
     const candidato = await votationRepo.findOneBy({ rut: rut_candidato });
     if (!candidato) {
-      return res.status(404).json({ message: "Candidato no encontrado." });
+    return res.status(404).json({ message: "Candidato no encontrado." });
     }
     if (candidato.cargo == "Vecino") {
-      return res.status(400).json({ message: "El usuario ingresado no es un candidato." });
+    return res.status(400).json({ message: "El usuario ingresado no es un candidato." });
     }
 
 
@@ -108,7 +108,7 @@ export async function emitirVoto(req, res) {
     if (yaVotoPorEsteCargo) {
         const infoYaVoto = votosExistentes.find(voto => voto.cargo === candidato.cargo);
     
-      return res.status(400).json({ message: `Ya has votado por el cargo de ${infoYaVoto.cargo}, ${infoYaVoto.nombre_candidato} ${infoYaVoto.apellido_candidato}.` });
+    return res.status(400).json({ message: `Ya has votado por el cargo de ${infoYaVoto.cargo}, ${infoYaVoto.nombre_candidato} ${infoYaVoto.apellido_candidato}.` });
     }
     
     
@@ -125,10 +125,10 @@ export async function emitirVoto(req, res) {
 
     return res.status(201).json({ message: "Voto emitido exitosamente." });
 
-  } catch (error) {
+} catch (error) {
     console.error("Error al emitir el voto:", error);
     return res.status(500).json({ message: "Error interno en el servidor" });
-  }
+}
 }
 
 

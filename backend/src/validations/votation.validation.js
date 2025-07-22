@@ -146,4 +146,40 @@ export const resultadosVotacionValidation = Joi.object({
     "string.empty": "El cargo del usuario debe ser Presidente, Secretario o Tesorero.",
     "any.required": "El cargo del usuario debe ser Presidente, Secretario o Tesorero."
     }),
+    nombre_candidato: Joi.string()
+    .min(3)
+    .max(20)
+    .required()
+    .pattern(/^[a-zA-Z0-9_]+$/)
+    .messages({
+        "string.pattern.base":
+        "El nombre del candidato solo puede contener letras.",
+        "string.min": "El nombre del candidato debe tener al menos 3 caracteres.",
+        "string.max": "El nombre del candidato no puede exceder los 20 caracteres.",
+        "string.empty": "El nombre del candidato es obligatorio.",
+    }),
+    apellido_candidato: Joi.string()
+    .min(3)
+    .max(20)
+    .required()
+    .pattern(/^[a-zA-Z0-9_]+$/)
+    .messages({
+        "string.pattern.base":
+        "El apellido del candidato solo puede contener letras.",
+        "string.min": "El apellido del candidato debe tener al menos 3 caracteres.",
+        "string.max": "El apellido del candidato no puede exceder los 20 caracteres.",
+        "string.empty": "El apellido del candidato es obligatorio.",
+    }),
+    cargo: Joi.string()
+    .min(3)
+    .max(20)
+    .required()
+    .pattern(/^[a-zA-Z0-9_]+$/)
+    .messages({
+        "string.pattern.base":
+        "El cargo del candidato solo puede contener letras.",
+        "string.min": "El cargo del candidato debe tener al menos 3 caracteres.",
+        "string.max": "El cargo del candidato no puede exceder los 20 caracteres.",
+        "string.empty": "El cargo del candidato es obligatorio y debe ser Presidente, Secretario o Tesorero.",
+    }),
 })

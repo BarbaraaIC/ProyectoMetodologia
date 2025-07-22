@@ -8,10 +8,10 @@ import { createValidation, updateValidation } from "../validations/movimiento.va
 export async function getMovimientos(req, res) {
     
     try {
-       const movimientoRepository = AppDataSource.getRepository(Movimiento);
-       const movimientos = await movimientoRepository.find();
+    const movimientoRepository = AppDataSource.getRepository(Movimiento);
+    const movimientos = await movimientoRepository.find();
 
-       res.status(200).json({ message: "Movimientos encontrados", data: movimientos});
+    res.status(200).json({ message: "Movimientos encontrados", data: movimientos});
     } catch (error) {
         console.error("Error al obtener movimientos", error);
         res.status(500).json({ message: "Error al conseguir movimientos." });
