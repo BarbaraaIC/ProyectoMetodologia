@@ -42,11 +42,11 @@ export const ActiveParticipantsEntity = new EntitySchema({
             unique: true, // Aseguramos que el email sea único
         },
     },
-    relations: {
-    votes: {
-      target: "Vote",
-      type: "one-to-many",
-      inverseSide: "active",
+        relations: {
+        votes: {
+        target: "Vote",
+        type: "one-to-many",
+        inverseSide: "active",
+        },
     },
-  },
 });

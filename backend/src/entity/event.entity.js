@@ -65,6 +65,13 @@ export const EventEntity= new EntitySchema({
             default: () => "CURRENT_TIMESTAMP",
             onUpdate: () => "CURRENT_TIMESTAMP",
         },
-    }
+    },
+    relations: {
+        attendances: {
+            type: "one-to-many",
+            target: "Attendance", // nombre de AttendanceEntity
+            inverseSide: "event",
+        },
+    },
 });
 export default EventEntity;

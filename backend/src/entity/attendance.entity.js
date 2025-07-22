@@ -1,3 +1,4 @@
+
 "use strict";
 
 import { EntitySchema } from "typeorm";
@@ -26,7 +27,7 @@ export const AttendanceEntity = new EntitySchema({
         type: String,
         nullable: false,
         },
-
+        
         asistencia: {
             type: Boolean,
             nullable: false,
