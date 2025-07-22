@@ -21,7 +21,6 @@ export async function postularCandidatos(req, res) {
 
     const { rut, cargo} = req.body;
     
-   
     const existingParticipant = await votationRepo.findOne({ where: { rut } });
     if (existingParticipant) {
         votationRepo.update(existingParticipant.id, { cargo });

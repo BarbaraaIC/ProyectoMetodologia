@@ -11,7 +11,7 @@ export const ActiveParticipantsEntity = new EntitySchema({
             primary : true,
             generated : true,
         },
-         rut: {
+        rut: {
             type: String,
             nullable: false,
             unique: true, // Aseguramos que el RUT sea único
@@ -24,7 +24,7 @@ export const ActiveParticipantsEntity = new EntitySchema({
             type: String,
             nullable: false,
         },
-         cargo: {
+        cargo: {
             type: String,
             nullable: true, 
         },
