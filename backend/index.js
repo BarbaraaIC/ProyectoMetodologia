@@ -5,6 +5,7 @@ import morgan from "morgan";
 import indexRoutes from "./src/routes/index.routes.js";
 import { PORT, HOST } from "./src/config/configEnv.js";
 import { connectDB } from "./src/config/configDb.js";
+import { createUsers } from "./src/config/initDb.js";
 
 async function setupServer() {
   // Crea la instancia de Express
@@ -25,11 +26,11 @@ async function setupServer() {
   // Configura el middleware de morgan para registrar las peticiones HTTP
   app.use(morgan("dev"));
 
-  //Acceder a archivos
-  app.use("/api/src/upload", express.static("src/upload"));
-
   // Configura las rutas de la API
   app.use("/api", indexRoutes);
+
+  //Acceder a archivos
+  app.use("/api/src/upload", express.static("src/upload"));
 
   // Enciende el servidor
   app.get("/test", (req, res) => {
@@ -46,8 +47,6 @@ async function setupAPI() {
   try {
     // Conecta la base de datos
     await connectDB();
-    // Crea los usuarios iniciales
-    //await createUsers();
       // Crea los usuarios iniciales
     await createUsers();
     // Configura el servidor
