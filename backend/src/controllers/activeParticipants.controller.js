@@ -2,7 +2,6 @@
 
 import { AppDataSource } from "../config/configDb.js";
 import { ActiveParticipantsEntity } from "../entity/activeParticipants.entity.js";
-
 import { activeParticipantSchema } from "../validations/activeParticipants.validation.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
@@ -46,13 +45,9 @@ export async function createActiveParticipant(req, res) {
     const participantRepository = AppDataSource.getRepository(ActiveParticipantsEntity);
     const { rut, nombre, apellido, cargo, activo, password, email } = req.body;
 
-    // Validación única para presidente, secretario y tesorero
-    const cargosUnicos = ["presidente", "secretario", "tesorero"];
-    if (cargosUnicos.includes(cargo.toLowerCase())) {
-      const existing = await participantRepository.findOne({ where: { cargo: cargo.toLowerCase() } });
-      if (existing) {
-        return res.status(400).json({ message: `Ya existe un ${cargo.toLowerCase()}. Elimine el actual para agregar uno nuevo.` });
-      }
+    // Validación para ingresar cargo como vecino solamente
+    if (cargo.toLowerCase() !== "vecino") {
+      return res.status(400).json({ message: "El cargo solo puede ser 'vecino' al momento de crear un participante." });
     }
 
     // Verificar si el RUT ya existe
@@ -99,7 +94,12 @@ export async function updateActiveParticipantById(req, res) {
     if (!participant) {
       return res.status(404).json({ message: "Participante no encontrado." });
     }
-
+// Validar que el nuevo cargo sea uno permitido, si se está intentando actualizar
+    const cargosValidos = ["vecino", "presidente", "secretario", "tesorero"];
+    if (cargo && !cargosValidos.includes(cargo.toLowerCase())) {
+      return res.status(400).json({ message: `Cargo inválido. Solo se permiten: ${cargosValidos.join(", ")}.` });
+    }
+    
     participant.cargo = cargo ?? participant.cargo;
     participant.activo = activo ?? participant.activo;
 
