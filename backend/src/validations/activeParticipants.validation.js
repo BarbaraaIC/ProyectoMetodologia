@@ -3,25 +3,25 @@ import Joi from 'joi';
 // Valida que solo sean letras y espacios (sin símbolos ni números)
 
 
-const activeParticipantSchema = Joi.object({
+export const activeParticipantSchema = Joi.object({
     rut: Joi.string()
         .required()
     .pattern(/^\d{2}\.\d{3}\.\d{3}-[\dkK]$/)
     .min(11)
     .max(12)
     .messages({
-      "string.empty": "El rut no puede estar vacío.",
-      "string.base": "El rut debe ser de tipo string.",
-      "string.min": "El rut debe tener exactamente 10 caracteres.",
-      "string.max": "El rut debe tener exactamente 12 caracteres.",
-      "string.pattern.base": "Formato rut inválido. Debe ser xx.xxx.xxx-x.",
+        "string.empty": "El rut no puede estar vacío.",
+        "string.base": "El rut debe ser de tipo string.",
+        "string.min": "El rut debe tener exactamente 10 caracteres.",
+        "string.max": "El rut debe tener exactamente 12 caracteres.",
+        "string.pattern.base": "Formato rut inválido. Debe ser xx.xxx.xxx-x.",
         }),
-nombre: Joi.string()
-    .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
-    .min(3)
-    .max(30)
-    .required()
-    .custom((value, helpers) => {
+    nombre: Joi.string()
+        .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+        .min(3)
+        .max(30)
+        .required()
+        .custom((value, helpers) => {
         if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(value)) {
             return helpers.error('string.symbols');
         }
@@ -76,7 +76,25 @@ apellido: Joi.string()
         .messages({ 
             'boolean.base': 'El estado activo debe ser un valor booleano.',
             'any.required': 'El estado activo es obligatorio.'
-        })  
+        }),
+    password: Joi.string()
+        .min(8)
+        .max(30)
+        .required()
+        .messages({
+            'string.empty': 'La contraseña es obligatoria.',
+            'any.required': 'La contraseña es obligatoria.',
+            'string.min': 'La contraseña debe tener al menos 8 caracteres.',
+            'string.max': 'La contraseña debe tener como máximo 30 caracteres.'
+        }),
+    email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .pattern(/^[\w.+-]+@gmail\.com$/)
+    .required()
+    .messages({
+        'string.empty': 'El correo electrónico es obligatorio.',
+        'any.required': 'El correo electrónico es obligatorio.',
+        'string.email': 'El correo electrónico debe ser válido.',
+        'string.pattern.base': 'El correo electrónico debe ser de tipo @gmail.com.'
+    })
 });
-
-export { activeParticipantSchema };
