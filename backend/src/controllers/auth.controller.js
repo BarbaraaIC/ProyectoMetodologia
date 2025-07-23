@@ -1,5 +1,6 @@
 "use strict";
 
+import User from "../entity/user.entity.js";
 import jwt from "jsonwebtoken";
 import { encryptPassword, comparePassword } from "../helpers/bcrypt.helper.js";
 import { AppDataSource } from "../config/configDb.js";
@@ -8,8 +9,6 @@ import {
   registerValidation,
   loginValidation,
 } from "../validations/auth.validation.js";
-
-// Controlador de autenticación
 
 export async function register(req, res) {
   try {
@@ -63,6 +62,7 @@ export async function login(req, res) {
   try {
     // Obtener el repositorio de usuarios y validar los datos de entrada
     const userRepository = AppDataSource.getRepository(User);
+    // console.log(req);
     const { email, password } = req.body;
     const { error } = loginValidation.validate(req.body);
     if (error) return res.status(400).json({ message: error.message });
