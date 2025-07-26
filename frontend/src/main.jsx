@@ -9,6 +9,7 @@ import Error404 from '@pages/Error404'
 import Users from '@pages/Users'
 import Profile from '@pages/Profile'
 import ProtectedRoute from '@components/ProtectedRoute'
+import Votation from '@pages/Votation'
 
 const router = createBrowserRouter([
   {
@@ -28,9 +29,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/votation",
+        element: <Votation/>
       }
     ],
   },
