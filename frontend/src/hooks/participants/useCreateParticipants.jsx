@@ -70,6 +70,11 @@ export const useCreateParticipants = (fetchParticipants) => {
 
             const response = await CreateParticipants(formValues);
             if(response) {
+                Swal.fire({
+                    title: "Participante añadido exitosamente!",
+                    icon: "success",
+                    confirmButtonText: "Aceptar",
+                })
                 await fetchParticipants();
             }
 
