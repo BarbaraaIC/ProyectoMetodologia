@@ -1,0 +1,21 @@
+.votation-banner{
+    justify-content: center;
+}
+
+.votation-page{
+    margin-top: 0px;
+    padding: 20px;
+}
+
+.votation-table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.books-table th,
+.books-table td{
+    padding: 12px;
+    text-align: left;
+}
+
