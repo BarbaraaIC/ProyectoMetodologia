@@ -12,7 +12,6 @@ const Participants = () => {
     const {handleCreateParticipants} = useCreateParticipants(fetchParticipants);
     useEffect(() => {
         fetchParticipants();
-        console.log(participants);
     },[]);
 
     return (
