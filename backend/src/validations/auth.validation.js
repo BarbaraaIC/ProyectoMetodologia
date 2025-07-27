@@ -24,13 +24,17 @@ export const registerValidation = Joi.object({
       "string.max": "El nombre de usuario no puede exceder los 30 caracteres.",
       "string.empty": "El nombre de usuario es obligatorio.",
     }),
-  rut: Joi.string()
-    .required()
+   rut: Joi.string()
+        .required()
     .pattern(/^\d{2}\.\d{3}\.\d{3}-[\dkK]$/)
+    .min(11)
+    .max(12)
     .messages({
-      "string.empty": "El rut no puede estar vacío.",
-      "string.base": "El rut debe ser de tipo string.",
-      "string.pattern.base": "Formato rut inválido. Debe ser xx.xxx.xxx-x.",
+        "string.empty": "El rut no puede estar vacío.",
+        "string.base": "El rut debe ser de tipo string.",
+        "string.min": "El rut debe tener exactamente 10 caracteres.",
+        "string.max": "El rut debe tener exactamente 12 caracteres.",
+        "string.pattern.base": "Formato rut inválido. Debe ser xx.xxx.xxx-x.",
     }),
   email: Joi.string()
     .email()

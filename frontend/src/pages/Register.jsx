@@ -21,7 +21,6 @@ const Register = () => {
     }
     return (
         <main className="page-root">
-<<<<<<< HEAD
         <div className="lucky-cat-container">
             <img src={luckyCat} alt="Lucky Cat" className="lucky-cat" />
         </div>
@@ -29,15 +28,6 @@ const Register = () => {
             <LoginRegisterForm mode="register" onSubmit={registerSubmit} />
         </div>
     </main>
-=======
-            <div className="lucky-cat-container">
-                <img src={luckyCat} alt="Lucky Cat" className="lucky-cat" />
-            </div>
-            <div className="login-register-container">
-                <LoginRegisterForm mode="register" onSubmit={registerSubmit} />
-            </div>
-        </main>
->>>>>>> f7aad9e897300538d62466b55206dbc40824e4aa
     )
 }
 

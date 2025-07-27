@@ -2,6 +2,7 @@
 import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
+
 export async function getUsers(req, res) {
   try {
     // Obtener el repositorio de usuarios y buscar todos los usuarios

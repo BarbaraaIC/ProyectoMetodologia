@@ -15,14 +15,14 @@ export async function createUsers() {
         const users = [
             {
                 username: "Administrador",
-                rut: "12345678-9",
+                rut: "12.345.678-9",
                 email: "admin@gmail.com",
                 password: await encryptPassword("admin123"),
                 role: "administrador"
             },
             {
                 username: "Usuario",
-                rut: "98765432-1",
+                rut: "98.765.432-1",
                 email: "usuario@gmail.com",
                 password: await encryptPassword("usuario123"),
                 role: "usuario"
