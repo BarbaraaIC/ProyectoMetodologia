@@ -1,8 +1,8 @@
 import '@styles/event.css';
 import { useEffect } from 'react';
-import useEditEvent from '@hooks/eventsMeetings/useEditEvent';
-import useGetEvent from '@hooks/eventsMeetings/useGetEvent';
-import useDeleteEventById from '@hooks/eventsMeetings/useDeleteEvent';
+import useEditEvent from '@hooks/eventos/useEditEvent';
+import useGetEvent from '@hooks/eventos/useGetEvent';
+import useDeleteEventById from '@hooks/eventos/useDeleteEvent';
 
 
 const Event = () => {
@@ -36,7 +36,6 @@ const Event = () => {
                     {Array.isArray(events) && events.length > 0 ? (
                         events.map((event) => (
                             <tr key={event.id}>
-                                <td>{event.id}</td>
                                 <td>{event.titulo}</td>
                                 <td>{event.descripcion}</td>
                                 <td>{event.fecha}</td>
