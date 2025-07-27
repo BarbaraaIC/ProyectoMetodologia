@@ -6,8 +6,6 @@ import cron from "node-cron";
 
 //-------------------------------------Eventos y Reuniones-------------------------------------------------
 
-//-------------------------------------Eventos y Reuniones-------------------------------------------------
-
 export async function getEvents(req, res) {
     try {
         const eventRepository = AppDataSource.getRepository(Event);

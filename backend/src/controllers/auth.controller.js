@@ -5,14 +5,7 @@ import jwt from "jsonwebtoken";
 import { encryptPassword, comparePassword } from "../helpers/bcrypt.helper.js";
 import { AppDataSource } from "../config/configDb.js";
 import { SESSION_SECRET } from "../config/configEnv.js";
-<<<<<<< HEAD
-import {
-  registerValidation,
-  loginValidation,
-} from "../validations/auth.validation.js";
-=======
 import { registerValidation, loginValidation } from "../validations/auth.validation.js";
->>>>>>> cbfd1b932bd6bdf796001a7b8d50691bf99e8788
 
 export async function register(req, res) {
   try {

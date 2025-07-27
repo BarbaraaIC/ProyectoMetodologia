@@ -6,19 +6,17 @@ const Votation = () => {
           <h2>Candidatos Postulados</h2>
           <table className="showResult-votation">
             <thead>
-             <tr>
-              <th>Rut</th>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Cargo</th>
-              <th>Votos</th>
-             </tr>
+              <tr>
+                <th>Rut</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cargo</th>
+                <th>Votos</th>
+              </tr>
             </thead>
             <tbody>
               {Array.isArray()}
             </tbody>
-         
-
           </table>
         </div>
   )
