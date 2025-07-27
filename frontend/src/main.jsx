@@ -9,6 +9,7 @@ import Error404 from '@pages/Error404'
 import Users from '@pages/Users'
 import Profile from '@pages/Profile'
 import ProtectedRoute from '@components/ProtectedRoute'
+import Participants from '@pages/Participants'
 import Votation from '@pages/Votation'
 
 const router = createBrowserRouter([

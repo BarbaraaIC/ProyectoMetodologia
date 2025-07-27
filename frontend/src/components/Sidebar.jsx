@@ -4,6 +4,7 @@ import { FaHome, FaUsers, FaSignOutAlt } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { TiPrinter } from "react-icons/ti";
 import "@styles/Sidebar.css";
+import { FaPeopleRoof } from "react-icons/fa6";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -30,6 +31,13 @@ const Sidebar = () => {
               <FaHome className="icon"/> Inicio
             </NavLink>
           </li>
+          {userRole === "administrador" && (
+            <li>
+              <NavLink to= "/Participants">
+              <FaPeopleRoof className="icon"/> Participantes
+              </NavLink>
+            </li>
+          )}
           {userRole === "administrador" && (
             <li>
               <NavLink to="/users">

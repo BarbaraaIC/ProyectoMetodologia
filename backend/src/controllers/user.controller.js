@@ -1,6 +1,7 @@
 "use strict";
-//import User from "../entity/user.entity.js";
+import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
+
 
 export async function getUsers(req, res) {
   try {
