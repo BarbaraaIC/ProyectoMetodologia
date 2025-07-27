@@ -10,6 +10,7 @@ import Users from '@pages/Users'
 import Profile from '@pages/Profile'
 import ProtectedRoute from '@components/ProtectedRoute'
 import Votation from '@pages/Votation'
+import Event from '@pages/Event'
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
         path: "/home",
         element: <Home />,
       },
+
       {
         path: "/users",
         element: (
@@ -29,11 +31,21 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      
+
+      {
+        path: "/event",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador"]}>
+            <Event />
+          </ProtectedRoute>
+        ),
+      },
+
       {
         path: "/profile",
         element: <Profile />,
       },
+
       {
         path: "/votation",
         element: <Votation/>
