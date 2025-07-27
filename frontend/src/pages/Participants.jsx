@@ -2,12 +2,14 @@ import "@styles/Participants.css";
 import useGetParticipants  from "@hooks/participants/useGetParticipants.jsx";
 import useDeleteParticipants from "@hooks/participants/useDeleteParticipants.jsx";
 import useEditParticipants from "@hooks/participants/useEditParticipants.jsx";
+import useCreateParticipants from "@hooks/participants/useCreateParticipants.jsx";
 import { useEffect } from "react";
 
 const Participants = () => {
     const { participants, fetchParticipants } = useGetParticipants();
     const {handleDeleteParticipants} = useDeleteParticipants(fetchParticipants);
     const {handleEditParticipants} = useEditParticipants(fetchParticipants);
+    const {handleCreateParticipants} = useCreateParticipants(fetchParticipants);
     useEffect(() => {
         fetchParticipants();
         console.log(participants);
@@ -15,7 +17,11 @@ const Participants = () => {
 
     return (
         <div className="participants-page">
-            <h2>Lista de Participantes</h2>    
+            <div className = "participants-header">
+            <h2>Lista de Participantes</h2>   
+            <button className="participants-addbtn" onClick={()=> handleCreateParticipants()}>Añadir</button>
+            </div>
+
             <table className="participants-table">
                 <thead>
                     <tr>
