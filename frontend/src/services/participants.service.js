@@ -28,13 +28,12 @@ export async function EditParticipants(participantId,participantData){
     }
 }
 
-
 export async function CreateParticipants(participantData) {
     try{
         const response = await axios.post("/participants/", participantData);
         return response.data;
     }catch(error) {
-        console.error("Error al crear un nuevo participante");
+        console.error("Error al crear un nuevo participante",error);
     }
     
 }

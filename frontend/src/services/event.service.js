@@ -1,6 +1,5 @@
 import axios from '@services/root.service.js';
 
-//Obtener eventos
 export async function getEvents() {
     try{
         const response = await axios.get('/event');
@@ -9,17 +8,7 @@ export async function getEvents() {
         console.error("Error al obtener eventos: ", error);
     }
 }
-/*
-export async function getEventById(id) {
-    try{
-        const response = await axios.get(/event/${id});
-        return response.data;
-    }catch (error) {
-        console.error('Error al obtener evento por Id: ', error);
-    }
-}
-*/
-//Crear evento
+
 export async function createEvent(data) {
     try {
         const response = await axios.post('/event',data);

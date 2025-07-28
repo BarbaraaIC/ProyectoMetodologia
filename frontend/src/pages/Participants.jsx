@@ -10,6 +10,8 @@ const Participants = () => {
     const {handleDeleteParticipants} = useDeleteParticipants(fetchParticipants);
     const {handleEditParticipants} = useEditParticipants(fetchParticipants);
     const {handleCreateParticipants} = useCreateParticipants(fetchParticipants);
+    
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         fetchParticipants();
         console.log(participants);
