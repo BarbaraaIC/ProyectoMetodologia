@@ -34,7 +34,7 @@ export async function CreateParticipants(participantData) {
         const response = await axios.post("/participants/", participantData);
         return response.data;
     }catch(error) {
-        console.error("Error al crear un nuevo participante");
+        console.error("Error al crear un nuevo participante",error);
     }
     
 }

@@ -1,16 +1,17 @@
-.participants-table {
+
+.candidatos-table{
   width: 100%;
   border-collapse: collapse;
   margin-top:20px;
 }
 
-.participants-header{
+.candidatos-header{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.participants-addbtn{
+.candidatos-addbtn{
   padding: 6px 12px;
   margin: 5px;
   background: #fb9c92;
@@ -21,19 +22,19 @@
   font-size: 1.2rem;
 }
 
-.participants-addbtn:hover{
+.candidatos-addbtn:hover{
   background: #fd8072;
   transition: background 0,3s;
 }
 
-
-.participants-table th,
-.participants-table td {
+.candidatos-table th,
+.candidatos-table td {
   padding: 12px;
   border: 1px solid #ccc;
   text-align: left;
 }
-.participants-table th {
+
+.candidatos-table th {
   background: #333;
   color: #fff;
   border-bottom: 4px solid #9ea7af;
@@ -44,16 +45,16 @@
   vertical-align: middle;
 }
 
-.participants-table th:first-child {
+.candidatos-table th:first-child {
   border-top-left-radius:3px;
 }
 
-.participants-table th:last-child {
+.candidatos-table th:last-child {
   border-top-right-radius:3px;
   border-right:none;
 }
 
-.participants-table tr {
+.candidatos-table tr {
   border-top: 1px solid #C1C3D1;
   border-bottom: 1px solid #C1C3D1;
   color:#000;
@@ -131,7 +132,7 @@ td.text-right {
   text-align: right;
 }
 
-.participants-table button {
+.candidatos-table button {
   padding: 6px 12px;
   margin: 5px;
   color: white;
@@ -140,22 +141,6 @@ td.text-right {
   cursor: pointer;
 }
 
-.participants-table button.edit {
+.candidatos-table button.emitir {
   background-color: #4caf50;
-}
-
-.participants-table button.delete {
-  background-color: #f44336;
-}
-
-.participants-table button.edit:hover {
-  background-color: #45a049;
-}
-
-.participants-table button.delete:hover {
-  background-color: #e53935;
-}
-
-.participants-table button:active {
-  background-color: #388e3c;
 }

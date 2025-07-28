@@ -56,6 +56,12 @@ const Sidebar = () => {
 
             </NavLink>
           </li>
+          <li>
+            <NavLink to= "/listVotation">
+              <TiPrinter className="icon"/> ListadoVotacion
+
+            </NavLink>
+          </li>
           <li style={{ height: "70%" }}/>
           <li className="logout">
             <NavLink to="/login" onClick={logoutSubmit}>

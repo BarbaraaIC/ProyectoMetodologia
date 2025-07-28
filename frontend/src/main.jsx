@@ -11,6 +11,7 @@ import Profile from '@pages/Profile'
 import ProtectedRoute from '@components/ProtectedRoute'
 import Participants from '@pages/Participants'
 import Votation from '@pages/Votation'
+import Listvotation from "./pages/ListVotation";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "/Participants",
+        element: <Participants />
+      },
       
       {
         path: "/profile",
@@ -38,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/votation",
         element: <Votation/>
+      },
+      {
+        path: "/listvotation",
+        element: <Listvotation/>
       }
     ],
   },
