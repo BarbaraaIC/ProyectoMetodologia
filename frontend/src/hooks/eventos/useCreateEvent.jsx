@@ -60,7 +60,7 @@ async function addCreateEvent(){
         };
     }
 
-    return null; //si se cancela
+    return null; 
 } 
 export const useCreateEvent = (fetchEvents) => {
     const handleCreateEvent = async () => {

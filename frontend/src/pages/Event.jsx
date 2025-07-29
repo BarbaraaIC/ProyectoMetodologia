@@ -20,9 +20,9 @@ const Event = () => {
     console.log('eventos recibidos:', events);
     return (
         <div className="event-page"> 
-            <div className = "participants-header">
+            <div className = "event-header">
                 <h2>Eventos</h2>   
-                <button className="event-addbtn" onClick={()=> handleCreateEvent()}>Añadir</button>
+                <button className="agregar" onClick={()=> handleCreateEvent()}>Añadir</button>
                 </div>
             <table className="event-table">
                 <thead>

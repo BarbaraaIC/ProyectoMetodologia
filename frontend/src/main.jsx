@@ -12,6 +12,7 @@ import ProtectedRoute from '@components/ProtectedRoute'
 import Votation from '@pages/Votation'
 import Event from '@pages/Event'
 import Participants from '@pages/Participants'
+import Attendance from '@pages/Attendance.jsx';
 
 const router = createBrowserRouter([
   {
@@ -41,7 +42,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
+      {
+        path: "/attendance",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador"]}>
+            <Attendance />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "/profile",
         element: <Profile />,
