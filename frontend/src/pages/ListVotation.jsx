@@ -1,12 +1,13 @@
 import "@styles/listVotation.css";
 import { useEffect } from "react";
 import useGetCandidatos from "@hooks/votation/useGetCandidatos.jsx";
+import usePostEmitirVoto from "@hooks/votation/usePostEmitirVoto.jsx";
 const Candidatos = () => {
     const { candidatos, fetchCandidatos} = useGetCandidatos();
+    const {handlePostEmitirVoto} = usePostEmitirVoto(fetchCandidatos);
 
     useEffect(() => {
         fetchCandidatos();
-        console.log(candidatos);
     }, [])
 
     console.log(Array.isArray(candidatos))
@@ -33,7 +34,7 @@ const Candidatos = () => {
                                 <td>{candidato.apellido}</td>
                                 <td>{candidato.cargo}</td>
                                 <td>
-                                    <button className="emitir">EmitirVoto</button>
+                                    <button className="emitir" onClick={() =>handlePostEmitirVoto()}>EmitirVoto</button>
                                 </td>
                             </tr>
                             
