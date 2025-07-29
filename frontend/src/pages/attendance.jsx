@@ -1,50 +1,74 @@
-import '@styles/attendance.css';
-import { useEffect } from 'react';
-import useGetEvent from '@hooks/eventos/useGetEvent';
-import useRegisterAttendance from '@hooks/attendance/useRegisterAttendance';
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { getEvents } from "@services/event.service";
+import { GetParticipants } from "@services/participants.service";
+import { registerAttendance } from "@services/attendance.service.js";
 
-const Attendance = () => {
-    const { events, fetchEvents } = useGetEvent();
-    const { handleRegisterAttendance } = useRegisterAttendance(fetchEvents);
+const AttendancePage = () => {
+    const [events, setEvents] = useState([]);
+    const { participants } = GetParticipants();
 
-    /* eslint-disable react-hooks/exhaustive-deps */
+    const fetchEvents = async () => {
+        const data = await getEvents();
+        setEvents(data);
+    };
+
+    const handleRegisterAttendance = async (eventId) => {
+        try {
+        if (!participants?.length) {
+            Swal.fire("No hay participantes disponibles", "", "info");
+            return;
+        }
+
+        const activeParticipants = participants.filter(p => p.isActive);
+
+        if (!activeParticipants.length) {
+            Swal.fire("No hay participantes activos", "", "info");
+            return;
+        }
+
+        const asistencias = activeParticipants.map(participant => ({
+            participantId: participant.id,
+            timestamp: new Date()
+        }));
+
+        const response = await registerAttendance({ eventId, asistencias });
+
+        if (response?.success || response?.status === 200) {
+            Swal.fire({
+            title: "Asistencia registrada con éxito",
+            icon: "success",
+            confirmButtonText: "Aceptar"
+            });
+            await fetchEvents();
+        } else {
+            throw new Error("No se recibió confirmación del servidor");
+        }
+
+        } catch (error) {
+        console.error("Error al registrar asistencia:", error);
+        Swal.fire("Error", "No se pudo registrar la asistencia", "error");
+        }
+    };
+
     useEffect(() => {
         fetchEvents();
     }, []);
 
     return (
-        <div className="attendance-page">
-        <h2>Asistencia</h2>
-        <table className = "attendance-table">
-            <thead>
-            <tr>
-                <th>Título</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Acción</th>
-            </tr>
-            </thead>
-            <tbody>
-            {Array.isArray(events) && events.length > 0 ? (
-                events.map(event => (
-                <tr key={event.id}>
-                    <td>{event.titulo}</td>
-                    <td>{event.fecha}</td>
-                    <td>{event.hora}</td>
-                    <td>
-                    <button className = "asistencia" onClick={() => handleRegisterAttendance(event.id)}>Registrar asistencia</button>
-                    </td>
-                </tr>
-                ))
-            ) : (
-                <tr>
-                <td colSpan="4">No hay eventos disponibles</td>
-                </tr>
-            )}
-            </tbody>
-        </table>
+        <div style={{ padding: "2rem" }}>
+        <h2>Registro de Asistencia</h2>
+        {events.map(event => (
+            <div key={event.id} style={{ border: "1px solid #ccc", padding: "1rem", marginBottom: "1rem" }}>
+            <h3>{event.name}</h3>
+            <p>{new Date(event.date).toLocaleString()}</p>
+            <button onClick={() => handleRegisterAttendance(event.id)}>
+                Registrar Asistencia
+            </button>
+            </div>
+        ))}
         </div>
     );
 };
 
-export default Attendance;
+export default AttendancePage;

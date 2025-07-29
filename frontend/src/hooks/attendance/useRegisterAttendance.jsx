@@ -1,6 +1,5 @@
 import Swal from "sweetalert2";
 import { registerAttendance } from "@services/attendance.service.js";
-import { addRegisterAttendance } from "@utils/addRegisterAttendance";
 import { GetParticipants } from "@services/participants.service.js";
 
 export const useRegisterAttendance = (fetchEvents) => {
@@ -8,25 +7,42 @@ export const useRegisterAttendance = (fetchEvents) => {
 
     const handleRegisterAttendance = async (eventId) => {
         try {
-        const activeParticipants = participants;
+            if (!participants?.length) {
+                Swal.fire("No hay participantes disponibles", "", "info");
+                return;
+            }
 
-        const asistencia = await addRegisterAttendance(activeParticipants);
-        if (!asistencia) return;
+            const activeParticipants = participants.filter(p => p.isActive);
 
-        const response = await registerAttendance({ eventId, asistencias: asistencia });
+            if (!activeParticipants.length) {
+                Swal.fire("No hay participantes activos", "", "info");
+                return;
+            }
 
-        if (response) {
-            Swal.fire({
-            title: "Asistencia registrada con éxito",
-            icon: "success",
-            confirmButtonText: "Aceptar"
+            const asistencias = activeParticipants.map(participant => ({
+                participantId: participant.id,
+                timestamp: new Date()
+            }));
+
+            const response = await registerAttendance({
+                eventId,
+                asistencias
             });
-            await fetchEvents?.(); 
-        }
+
+            if (response?.success || response?.status === 200) {
+                Swal.fire({
+                title: "Asistencia registrada con éxito",
+                icon: "success",
+                confirmButtonText: "Aceptar"
+                });
+                await fetchEvents?.();
+            } else {
+                throw new Error("No se recibió confirmación del servidor");
+            }
 
         } catch (error) {
-        console.error("Error al registrar asistencia:", error);
-        Swal.fire("Error", "No se pudo registrar la asistencia", "error");
+            console.error("Error al registrar asistencia:", error);
+            Swal.fire("Error", "No se pudo registrar la asistencia", "error");
         }
     };
 
