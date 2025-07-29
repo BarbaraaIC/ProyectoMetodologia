@@ -12,6 +12,9 @@ import ProtectedRoute from '@components/ProtectedRoute'
 import Participants from '@pages/Participants'
 import Votation from '@pages/Votation'
 import Listvotation from "./pages/ListVotation";
+import Event from '@pages/Event'
+import Attendance from '@pages/Attendance.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -23,6 +26,7 @@ const router = createBrowserRouter([
         path: "/home",
         element: <Home />,
       },
+
       {
         path: "/users",
         element: (
@@ -35,7 +39,23 @@ const router = createBrowserRouter([
         path: "/Participants",
         element: <Participants />
       },
-      
+      {
+        path: "/event",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador"]}>
+            <Event />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/attendance",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador"]}>
+            <Attendance />
+          </ProtectedRoute>
+        ),
+      },
+
       {
         path: "/profile",
         element: <Profile />,

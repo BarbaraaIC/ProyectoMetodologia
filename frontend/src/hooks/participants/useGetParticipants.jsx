@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { GetParticipants } from '@services/participants.service.js';
+
 export const useGetParticipants = () => {
     const [participants, setParticipants] = useState([]);
     
