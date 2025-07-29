@@ -42,6 +42,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+
       {
         path: "/attendance",
         element: (
@@ -50,10 +51,12 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+
       {
         path: "/profile",
         element: <Profile />,
       },
+      
       {
         path: "/Participants",
         element: <Participants />

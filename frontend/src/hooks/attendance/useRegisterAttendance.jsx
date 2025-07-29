@@ -1,52 +1,27 @@
-import Swal from "sweetalert2";
-import { registerAttendance } from "@services/attendance.service.js";
-import { GetParticipants } from "@services/participants.service.js";
+// src/hooks/attendance/useRegisterAttendance.js
+import { useState } from 'react';
+import { registerAttendance } from '@services/attendance.service';
 
-export const useRegisterAttendance = (fetchEvents) => {
-    const { participants } = GetParticipants();
+const useRegisterAttendance = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    const handleRegisterAttendance = async (eventId) => {
+    const submitAttendance = async (attendanceData) => {
+        setLoading(true);
+        setError(null);
+
         try {
-            if (!participants?.length) {
-                Swal.fire("No hay participantes disponibles", "", "info");
-                return;
-            }
-
-            const activeParticipants = participants.filter(p => p.isActive);
-
-            if (!activeParticipants.length) {
-                Swal.fire("No hay participantes activos", "", "info");
-                return;
-            }
-
-            const asistencias = activeParticipants.map(participant => ({
-                participantId: participant.id,
-                timestamp: new Date()
-            }));
-
-            const response = await registerAttendance({
-                eventId,
-                asistencias
-            });
-
-            if (response?.success || response?.status === 200) {
-                Swal.fire({
-                title: "Asistencia registrada con éxito",
-                icon: "success",
-                confirmButtonText: "Aceptar"
-                });
-                await fetchEvents?.();
-            } else {
-                throw new Error("No se recibió confirmación del servidor");
-            }
-
-        } catch (error) {
-            console.error("Error al registrar asistencia:", error);
-            Swal.fire("Error", "No se pudo registrar la asistencia", "error");
+        const response = await registerAttendance(attendanceData);
+        return response;
+        } catch (err) {
+        console.error('Error al registrar asistencia:', err);
+        setError(err);
+        } finally {
+        setLoading(false);
         }
     };
 
-    return { handleRegisterAttendance };
+    return { submitAttendance, loading, error };
 };
 
 export default useRegisterAttendance;

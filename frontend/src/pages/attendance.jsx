@@ -1,74 +1,150 @@
-import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { getEvents } from "@services/event.service";
-import { GetParticipants } from "@services/participants.service";
-import { registerAttendance } from "@services/attendance.service.js";
+import '@styles/attendance.css';
+import { useEffect, useState } from 'react';
+import useGetEvents from '@hooks/eventos/useGetEvent';
+import useRegisterAttendance from '@hooks/attendance/useRegisterAttendance';
+import { GetParticipants } from '@services/participants.service';
 
-const AttendancePage = () => {
-    const [events, setEvents] = useState([]);
-    const { participants } = GetParticipants();
+const Attendance = () => {
+    const { events, fetchEvents } = useGetEvents();
+    const { submitAttendance } = useRegisterAttendance();
 
-    const fetchEvents = async () => {
-        const data = await getEvents();
-        setEvents(data);
-    };
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [participants, setParticipants] = useState([]); // Inicializado vacío
+    const [attendanceData, setAttendanceData] = useState({});
 
-    const handleRegisterAttendance = async (eventId) => {
-        try {
-        if (!participants?.length) {
-            Swal.fire("No hay participantes disponibles", "", "info");
-            return;
-        }
-
-        const activeParticipants = participants.filter(p => p.isActive);
-
-        if (!activeParticipants.length) {
-            Swal.fire("No hay participantes activos", "", "info");
-            return;
-        }
-
-        const asistencias = activeParticipants.map(participant => ({
-            participantId: participant.id,
-            timestamp: new Date()
-        }));
-
-        const response = await registerAttendance({ eventId, asistencias });
-
-        if (response?.success || response?.status === 200) {
-            Swal.fire({
-            title: "Asistencia registrada con éxito",
-            icon: "success",
-            confirmButtonText: "Aceptar"
-            });
-            await fetchEvents();
-        } else {
-            throw new Error("No se recibió confirmación del servidor");
-        }
-
-        } catch (error) {
-        console.error("Error al registrar asistencia:", error);
-        Swal.fire("Error", "No se pudo registrar la asistencia", "error");
-        }
-    };
-
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         fetchEvents();
     }, []);
 
+    const handleRegisterClick = async (eventId, event) => {
+    setSelectedEvent(event);
+        try {
+            const response = await GetParticipants();
+            // response es el objeto con { message, data: [...] }
+            if (response && Array.isArray(response.data)) {
+            setParticipants(response.data);
+            } else {
+            setParticipants([]);
+            console.error('La respuesta no contiene un array en data:', response);
+            }
+            setAttendanceData({});
+        } catch (error) {
+            console.error('Error al cargar participantes:', error);
+            setParticipants([]);
+        }
+    };
+
+    const handleAttendanceChange = (participantId, value) => {
+        setAttendanceData((prev) => ({
+        ...prev,
+        [participantId]: value,
+        }));
+    };
+
+    const handleSubmit = async () => {
+        const asistencias = participants.map((p) => ({
+        participanteId: p.id,
+        asistencia: attendanceData[p.id] === 'presente',
+        }));
+
+        const dataToSend = {
+        eventId: selectedEvent.id,
+        asistencias,
+        };
+
+        try {
+        const response = await submitAttendance(dataToSend);
+        if (response) {
+            alert('Asistencia registrada correctamente');
+            setSelectedEvent(null); // oculta el formulario después de guardar
+        } else {
+            alert('Error al registrar la asistencia');
+        }
+        } catch (error) {
+        alert('Error al registrar la asistencia');
+        console.error(error);
+        }
+    };
+
     return (
-        <div style={{ padding: "2rem" }}>
-        <h2>Registro de Asistencia</h2>
-        {events.map(event => (
-            <div key={event.id} style={{ border: "1px solid #ccc", padding: "1rem", marginBottom: "1rem" }}>
-            <h3>{event.name}</h3>
-            <p>{new Date(event.date).toLocaleString()}</p>
-            <button onClick={() => handleRegisterAttendance(event.id)}>
-                Registrar Asistencia
-            </button>
+        <div className="attendance-page">
+        <div className="attendance-header">
+            <h2>Registro de Asistencia</h2>
+        </div>
+
+        <table className="attendance-table">
+            <thead>
+            <tr>
+                <th>Evento</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            {Array.isArray(events) && events.length > 0 ? (
+                events.map((event) => (
+                <tr key={event.id}>
+                    <td>{event.titulo}</td>
+                    <td>{event.fecha}</td>
+                    <td>{event.hora}</td>
+                    <td>
+                    <button onClick={() => handleRegisterClick(event.id, event)}>
+                        Lista Asistencia
+                    </button>
+                    </td>
+                </tr>
+                ))
+            ) : (
+                <tr>
+                <td colSpan="4">No hay eventos disponibles</td>
+                </tr>
+            )}
+            </tbody>
+        </table>
+
+        {selectedEvent && (
+            <div className="attendance-form">
+            <h3>Asistencia para: {selectedEvent.titulo}</h3>
+            <table className="attendance-table">
+                <thead>
+                <tr>
+                    <th>Participante</th>
+                    <th>Asistencia</th>
+                </tr>
+                </thead>
+                <tbody>
+                {Array.isArray(participants) && participants.length > 0 ? (
+                    participants.map((p) => (
+                    <tr key={p.id}>
+                        <td>{p.nombre} {p.apellido}</td>
+                        <td>
+                        <select
+                            onChange={(e) =>
+                            handleAttendanceChange(p.id, e.target.value)
+                            }
+                            value={attendanceData[p.id] || ''}
+                        >
+                            <option value="">Seleccionar</option>
+                            <option value="presente">Presente</option>
+                            <option value="ausente">Ausente</option>
+                        </select>
+                        </td>
+                    </tr>
+                    ))
+                ) : (
+                    <tr>
+                    <td colSpan="2">No hay participantes disponibles</td>
+                    </tr>
+                )}
+                </tbody>
+            </table>
+            <button onClick={handleSubmit}>Guardar Asistencia</button>
             </div>
-        ))}
+        )}
         </div>
     );
 };
 
-export default AttendancePage;
+export default Attendance;
