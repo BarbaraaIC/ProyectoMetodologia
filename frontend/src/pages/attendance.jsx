@@ -9,7 +9,7 @@ const Attendance = () => {
     const { submitAttendance } = useRegisterAttendance();
 
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [participants, setParticipants] = useState([]); // Inicializado vacío
+    const [participants, setParticipants] = useState([]); 
     const [attendanceData, setAttendanceData] = useState({});
 
     /* eslint-disable react-hooks/exhaustive-deps */
@@ -21,7 +21,6 @@ const Attendance = () => {
     setSelectedEvent(event);
         try {
             const response = await GetParticipants();
-            // response es el objeto con { message, data: [...] }
             if (response && Array.isArray(response.data)) {
             setParticipants(response.data);
             } else {
@@ -57,7 +56,7 @@ const Attendance = () => {
         const response = await submitAttendance(dataToSend);
         if (response) {
             alert('Asistencia registrada correctamente');
-            setSelectedEvent(null); // oculta el formulario después de guardar
+            setSelectedEvent(null); 
         } else {
             alert('Error al registrar la asistencia');
         }
@@ -69,80 +68,78 @@ const Attendance = () => {
 
     return (
         <div className="attendance-page">
-        <div className="attendance-header">
-            <h2>Registro de Asistencia</h2>
-        </div>
-
-        <table className="attendance-table">
-            <thead>
-            <tr>
-                <th>Evento</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Acción</th>
-            </tr>
-            </thead>
-            <tbody>
-            {Array.isArray(events) && events.length > 0 ? (
-                events.map((event) => (
-                <tr key={event.id}>
-                    <td>{event.titulo}</td>
-                    <td>{event.fecha}</td>
-                    <td>{event.hora}</td>
-                    <td>
-                    <button onClick={() => handleRegisterClick(event.id, event)}>
-                        Lista Asistencia
-                    </button>
-                    </td>
-                </tr>
-                ))
-            ) : (
-                <tr>
-                <td colSpan="4">No hay eventos disponibles</td>
-                </tr>
-            )}
-            </tbody>
-        </table>
-
-        {selectedEvent && (
-            <div className="attendance-form">
-            <h3>Asistencia para: {selectedEvent.titulo}</h3>
+            <div className="attendance-header">
+                <h2>Asistencia</h2>
+            </div>
             <table className="attendance-table">
                 <thead>
-                <tr>
-                    <th>Participante</th>
-                    <th>Asistencia</th>
-                </tr>
+                    <tr>
+                        <th>Evento</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Acción</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {Array.isArray(participants) && participants.length > 0 ? (
-                    participants.map((p) => (
-                    <tr key={p.id}>
-                        <td>{p.nombre} {p.apellido}</td>
-                        <td>
-                        <select
-                            onChange={(e) =>
-                            handleAttendanceChange(p.id, e.target.value)
-                            }
-                            value={attendanceData[p.id] || ''}
-                        >
-                            <option value="">Seleccionar</option>
-                            <option value="presente">Presente</option>
-                            <option value="ausente">Ausente</option>
-                        </select>
-                        </td>
-                    </tr>
-                    ))
-                ) : (
-                    <tr>
-                    <td colSpan="2">No hay participantes disponibles</td>
-                    </tr>
-                )}
+                    {Array.isArray(events) && events.length > 0 ? (
+                        events.map((event) => (
+                        <tr key={event.id}>
+                            <td>{event.titulo}</td>
+                            <td>{event.fecha}</td>
+                            <td>{event.hora}</td>
+                            <td>
+                                <button onClick={() => handleRegisterClick(event.id, event)}>Lista Asistencia</button>
+                            </td>
+                        </tr>
+                        ))
+                    ) : (
+                        <tr>
+                        <td colSpan="4">No hay eventos disponibles</td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
-            <button onClick={handleSubmit}>Guardar Asistencia</button>
-            </div>
-        )}
+            {selectedEvent && (
+                <div className="attendance-page">
+                    <div className = "attendance-header">
+                        <h2>Asistencia {selectedEvent.titulo}</h2>   
+                            <button className="Guardar" onClick={handleSubmit}>Guardar Asistencia</button>
+                    </div>
+                    <table className="attendance-table">
+                        <thead>
+                            <tr>
+                                <th>Rut</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Asistencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Array.isArray(participants) && participants.length > 0 ? (
+                                participants.map((p) => (
+                                <tr key={p.id}>
+                                    <td>{p.rut}</td>
+                                    <td>{p.nombre}</td>
+                                    <td>{p.apellido}</td>
+                                    <td>
+                                    <select onChange={(e) => handleAttendanceChange(p.id, e.target.value)}
+                                        value={attendanceData[p.id] || ''}>
+                                        <option value="">Seleccionar</option>
+                                        <option value="presente">Presente</option>
+                                        <option value="ausente">Ausente</option>
+                                    </select>
+                                    </td>
+                                </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                <td colSpan="4">No hay participantes disponibles</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     );
 };
