@@ -58,6 +58,7 @@ async function addCreateEvent() {
         return {
             titulo, descripcion, fecha,  hora,  lugar, tipo,  votacion,  duracionVotacion: votacion ? parseInt(durRaw, 10) : null
         };
+        
         }
     });
 

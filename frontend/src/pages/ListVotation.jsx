@@ -6,6 +6,7 @@ const Candidatos = () => {
     const { candidatos, fetchCandidatos} = useGetCandidatos();
     const {handlePostEmitirVoto} = usePostEmitirVoto(fetchCandidatos);
 
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         fetchCandidatos();
     }, [])
