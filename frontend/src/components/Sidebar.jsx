@@ -45,11 +45,7 @@ const Sidebar = () => {
               </NavLink>
             </li>
           )}
-          <li>
-            <NavLink to="/profile">
-              <CgProfile className="icon"/> Perfil
-            </NavLink>
-          </li>
+          
           <li>
             <NavLink to= "/votation">
               <TiPrinter className="icon"/>  Votaciones
@@ -59,6 +55,11 @@ const Sidebar = () => {
             <NavLink to= "/listVotation">
               <TiPrinter className="icon"/> ListadoVotacion
 
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/profile">
+              <CgProfile className="icon"/> Perfil
             </NavLink>
           </li>
           <li style={{ height: "70%" }}/>
