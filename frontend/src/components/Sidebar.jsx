@@ -59,7 +59,7 @@ const Sidebar = () => {
               </NavLink>
             </li>
           )}
-          {(userRole === "usuarios" || userRole === "user") && (
+          {(userRole === "usuario" || userRole === "user") && (
             <li>
               <NavLink to="/view-event">
                 <FaCalendarAlt className="icon"/> Eventos

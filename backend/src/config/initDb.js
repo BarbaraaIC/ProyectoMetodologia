@@ -25,7 +25,7 @@ export async function createUsers() {
                 rut: "98.765.432-1",
                 email: "usuario@gmail.com",
                 password: await encryptPassword("usuario123"),
-                role: "user"
+                role: "usuario"
             }
         ]
 
