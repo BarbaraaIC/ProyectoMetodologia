@@ -79,13 +79,22 @@ const Sidebar = () => {
 
             </NavLink>
           </li>
-          <li>
+          {(userRole === "administrador" || userRole === "tesorero" || userRole === "secretario") && (
+            <li>
             <NavLink to= "/movimientos">
               <FaCoins className="icon"/> Finanzas
 
             </NavLink>
           </li>
-
+          )}
+           {(userRole === "usuario" || userRole === "user") && (
+            <li>
+              <NavLink to="/view-movimientos">
+                <FaCoins className="icon"/> Registros Monetarios
+              </NavLink>
+            </li>
+          )}
+        
           {(userRole === "administrador" || userRole === "vecino") && (
             <li>
               <NavLink to="/Archivo">

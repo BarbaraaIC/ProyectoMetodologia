@@ -17,6 +17,7 @@ import Attendance from '@pages/Attendance.jsx';
 import ViewEvent from "@pages/ViewEvent";
 import Movimientos from "@pages/Movimientos";
 import Archivo from '@pages/Archivo';
+import ViewMovimientos from "./pages/ViewMovimientos";
 
 
 const router = createBrowserRouter([
@@ -64,6 +65,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["users", "usuario"]}>
             <ViewEvent />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/view-movimientos",
+        element: (
+          <ProtectedRoute allowedRoles={["users", "usuario"]}>
+            <ViewMovimientos />
           </ProtectedRoute>
         ),
       },
