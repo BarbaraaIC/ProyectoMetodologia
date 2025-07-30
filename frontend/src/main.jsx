@@ -60,7 +60,7 @@ const router = createBrowserRouter([
       {
         path: "/view-event",
         element: (
-          <ProtectedRoute allowedRoles={["users"]}>
+          <ProtectedRoute allowedRoles={["user", "usuario"]}>
             <ViewEvent />
           </ProtectedRoute>
         ),

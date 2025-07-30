@@ -19,7 +19,6 @@ async function EditParticipantsAlert(){
         return {cargo: participantCargo};
 }
 
-
 export const useEditParticipants = (fetchParticipants) => {
     const handleEditParticipants = async (participantId) => {
         try{
