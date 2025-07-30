@@ -1,4 +1,4 @@
-import { EditParticipants } from "@services/participants.service.js";
+import   { EditParticipants }   from "@services/participants.service.js";
 import Swal from "sweetalert2";
 
 
@@ -20,13 +20,18 @@ async function EditParticipantsAlert(){
 }
 
 
-export const useEditParticipants = (fetchParticipants) =>{
+export const useEditParticipants = (fetchParticipants) => {
     const handleEditParticipants = async (participantId) => {
         try{
             const  participantCargo  = await EditParticipantsAlert();
             if (participantCargo) {
                 const response = await EditParticipants(participantId,participantCargo)
                 if (response) {
+                     Swal.fire({
+                                        title: "Cargo modificado exitosamente!",
+                                        icon: "success",
+                                        confirmButtonText: "Aceptar",
+                                    })
                     await fetchParticipants();
                 }
             }
@@ -34,6 +39,8 @@ export const useEditParticipants = (fetchParticipants) =>{
             console.error( "Error al editar al participante", error);
         }
     };
-    return { handleEditParticipants};
+    return { handleEditParticipants };
 };
-export default useEditParticipants;
+
+
+export default useEditParticipants; 

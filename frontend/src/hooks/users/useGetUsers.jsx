@@ -8,6 +8,7 @@ export const useGetUsers = () => {
         try {
             const data = await getUsers();
             dataLogged(data);
+            console.log("Usuarios obtenidos:", data);
             setUsers(data);
         } catch (error) {
             console.error("Error consiguiendo usuarios:", error);

@@ -14,7 +14,6 @@ const Participants = () => {
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         fetchParticipants();
-        console.log(participants);
     },[]);
 
     return (
