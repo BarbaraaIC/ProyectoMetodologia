@@ -65,6 +65,11 @@ const Sidebar = () => {
               <TiPrinter className="icon"/>  Votaciones
             </NavLink>
           </li>
+          <li>
+            <NavLink to= "/view-event">
+              <FaCalendarAlt className="icon"/>  Eventos
+            </NavLink>
+          </li>
           <li style={{ height: "70%" }}/>
           <li className="logout">
             <NavLink to="/login" onClick={logoutSubmit}>

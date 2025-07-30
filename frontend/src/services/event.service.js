@@ -1,9 +1,11 @@
 import axios from '@services/root.service.js';
+import { formatEventData } from '../helpers/formatData.helper';
 
 export async function getEvents() {
     try{
-        const response = await axios.get('/event');
-        return response.data.data;
+        const { data } = await axios.get('/event');
+        const formattedData = data.data.map(formatEventData);
+        return formattedData;
     }catch(error){
         console.error("Error al obtener eventos: ", error);
     }

@@ -13,6 +13,7 @@ import Votation from '@pages/Votation'
 import Event from '@pages/Event'
 import Participants from '@pages/Participants'
 import Attendance from '@pages/Attendance.jsx';
+import ViewEvent from "@pages/ViewEvent";
 
 const router = createBrowserRouter([
   {
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profile />,
       },
-      
+
       {
         path: "/Participants",
         element: <Participants />
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "/votation",
         element: <Votation/>
+      },
+      {
+        path: "/view-event",
+        element: <ViewEvent/>
       },
     ],
   },
