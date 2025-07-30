@@ -30,14 +30,14 @@ const Sidebar = () => {
               <FaHome className="icon"/> Inicio
             </NavLink>
           </li>
-          {userRole === "administrador" && (
+          {(userRole === "administrador" || userRole === "secretario" || userRole === "presidente" || userRole === "tesorero") && (
             <li>
               <NavLink to= "/Participants">
               <FaPeopleRoof className="icon"/> Participantes
               </NavLink>
             </li>
           )}
-          {userRole === "administrador" && (
+          {(userRole === "administrador" || userRole === "secretario" || userRole === "presidente" || userRole === "tesorero") && (
             <li>
               <NavLink to="/users">
                 <FaUsers className="icon"/> Usuarios
