@@ -14,6 +14,7 @@ import Votation from '@pages/Votation'
 import Listvotation from "./pages/ListVotation";
 import Event from '@pages/Event'
 import Attendance from '@pages/Attendance.jsx';
+import ViewEvent from "@pages/ViewEvent";
 
 
 const router = createBrowserRouter([
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
       {
         path: "/event",
         element: (
-          <ProtectedRoute allowedRoles={["administrador"]}>
+          <ProtectedRoute allowedRoles={["administrador", "secretario", "presidente", "tesorero"]}>
             <Event />
           </ProtectedRoute>
         ),
@@ -51,17 +52,24 @@ const router = createBrowserRouter([
       {
         path: "/attendance",
         element: (
-          <ProtectedRoute allowedRoles={["administrador"]}>
+          <ProtectedRoute allowedRoles={["administrador", "secretario", "presidente", "tesorero"]}>
             <Attendance />
           </ProtectedRoute>
         ),
       },
-
+      {
+        path: "/view-event",
+        element: (
+          <ProtectedRoute allowedRoles={["users"]}>
+            <ViewEvent />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "/profile",
         element: <Profile />,
       },
-      
+
       {
         path: "/votation",
         element: <Votation/>
