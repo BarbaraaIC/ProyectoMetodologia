@@ -37,30 +37,36 @@ export async function getMovimientoById(req, res) {
 export async function createMovimiento(req, res) {
     try {
         const movimientoRepository = AppDataSource.getRepository(Movimiento);
-        const { tipo, monto, categoria, descripcion, comprobanteUrl } = req.body; 
-        const { error } = createValidation.validate(req.body);
-        if (error) 
-            return res
-        .status(400).
-        json({ message: "Error al crear el movimiento", error: error});
-    
+        const { tipo, monto, categoria, descripcion } = req.body;
+
+        // Validación (puedes ajustar para que no requiera comprobanteUrl)
+        const { error } = createValidation.validate({ tipo, monto, categoria, descripcion });
+        if (error)
+            return res.status(400).json({ message: "Error al crear el movimiento", error: error });
+
+        // Si hay archivo, guarda la ruta, si no, deja null
+        let comprobanteUrl = null;
+        if (req.file) {
+            comprobanteUrl = `/uploads/${req.file.filename}`;
+        }
+
         const newMovimiento = movimientoRepository.create({
-            tipo, 
+            tipo,
             monto,
             categoria,
             descripcion,
             comprobanteUrl,
         });
-            await movimientoRepository.save(newMovimiento);
+        await movimientoRepository.save(newMovimiento);
 
-            res.status(201).json({
-                message: "Movimiento creado exitosamente",
-                data: newMovimiento,
-            });
+        res.status(201).json({
+            message: "Movimiento creado exitosamente",
+            data: newMovimiento,
+        });
 
-        } catch (error) {
+    } catch (error) {
         console.error("Error al crear movimiento", error);
-        res.status(500).json({message: "Error al crear movimiento."});
+        res.status(500).json({ message: "Error al crear movimiento." });
     }
 }
 

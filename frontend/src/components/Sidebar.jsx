@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "@services/auth.service.js";
-import { FaHome, FaUsers, FaSignOutAlt, FaCalendarAlt, FaCheck } from "react-icons/fa";
+import { FaHome, FaUsers, FaSignOutAlt, FaCalendarAlt, FaCheck, FaCoins } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { TiPrinter } from "react-icons/ti";
 import "@styles/Sidebar.css";
@@ -75,6 +75,12 @@ const Sidebar = () => {
           <li>
             <NavLink to= "/listVotation">
               <TiPrinter className="icon"/> ListadoVotacion
+
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to= "/movimientos">
+              <FaCoins className="icon"/> Finanzas
 
             </NavLink>
           </li>

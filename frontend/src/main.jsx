@@ -15,6 +15,7 @@ import Listvotation from "./pages/ListVotation";
 import Event from '@pages/Event'
 import Attendance from '@pages/Attendance.jsx';
 import ViewEvent from "@pages/ViewEvent";
+import Movimientos from "@pages/Movimientos";
 
 
 const router = createBrowserRouter([
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: "/votation",
         element: <Votation/>
+      },
+       {
+        path: "/Movimientos",
+        element: <Movimientos />
       },
       {
         path: "/listvotation",
