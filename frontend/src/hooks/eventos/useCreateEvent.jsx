@@ -51,7 +51,7 @@ async function addCreateEvent() {
             return false;
         }
         if (votacion && (!durRaw || parseInt(durRaw, 10) < 1)) {
-            Swal.showValidationMessage("Duración de votación inválida (mínimo 1 hora)");
+            Swal.showValidationMessage("Duración de votación inválida (mínimo 30min)");
             return false;
         }
 

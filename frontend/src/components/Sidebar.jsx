@@ -23,7 +23,7 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <h2>Metodología de Desarrollo</h2>
+      <h2>Junta Vecinos</h2>
       <nav>
         <ul>
           <li>
