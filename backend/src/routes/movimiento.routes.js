@@ -16,7 +16,7 @@ router.get("/", getMovimientos);
 router.get("/:id", getMovimientoById);
 
 router.post("/", isAdmin, upload.single("comprobante"), createMovimiento);
-router.put("/:id", isAdmin, updateMovimiento);
+router.put("/:id", isAdmin, upload.single("comprobante"), updateMovimiento);
 router.delete("/:id", isAdmin, deleteMovimiento)
 
 
