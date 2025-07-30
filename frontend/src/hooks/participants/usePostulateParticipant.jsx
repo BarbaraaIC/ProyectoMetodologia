@@ -1,7 +1,7 @@
 import { postulateParticipant } from "@services/participants.service.js";
 import Swal from "sweetalert2";
 
-async function showPostulationAlert() {
+async function PostulationAlert() {
   const { value: selectedCargo } = await Swal.fire({
     title: "Postular participante",
     input: "select",
@@ -24,14 +24,14 @@ async function showPostulationAlert() {
 export function usePostulateParticipant(fetchParticipants) {
   const handlePostulateParticipant = async (participantId) => {
     try {
-      const payload = await showPostulationAlert();
-      if (!payload) return;
+      const formValues = await PostulationAlert();
+      if (!formValues) return;
 
-      const response = await postulateParticipant(participantId, payload);
+      const response = await postulateParticipant(participantId, formValues);
       if (response) {
         await Swal.fire({
           title: "Postulación exitosa",
-          text: `Participante postulado a ${payload.cargo}`,
+          text: `Participante postulado a ${formValues.cargo}`,
           icon: "success",
           confirmButtonText: "Aceptar",
         });
