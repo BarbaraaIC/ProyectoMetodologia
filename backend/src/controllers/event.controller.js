@@ -6,8 +6,6 @@ import cron from "node-cron";
 
 //-------------------------------------Eventos y Reuniones-------------------------------------------------
 
-//-------------------------------------Eventos y Reuniones-------------------------------------------------
-
 export async function getEvents(req, res) {
     try {
         const eventRepository = AppDataSource.getRepository(Event);
@@ -68,7 +66,7 @@ export async function createEvent(req, res) {
 
     if (body.tipo === "evento" && body.votacion === true && body.titulo === "votacion") {
         const inicio = new Date();
-        const duracionHoras= body.duracionVotacion || 1800; // 30 min por defecto
+        const duracionHoras= body.duracionVotacion || 24; // 30 min por defecto
         const fin = new Date(inicio.getTime() + duracionHoras * 60 * 60 * 1000); // Convertir horas a milisegundos
 
         event.votacionAbierta = true;

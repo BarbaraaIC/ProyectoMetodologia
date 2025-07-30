@@ -10,6 +10,8 @@ const Participants = () => {
     const {handleDeleteParticipants} = useDeleteParticipants(fetchParticipants);
     const {handleEditParticipants} = useEditParticipants(fetchParticipants);
     const {handleCreateParticipants} = useCreateParticipants(fetchParticipants);
+    
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         fetchParticipants();
     },[]);
@@ -32,29 +34,29 @@ const Participants = () => {
                         <th>Acciones</th>
                     </tr>
                 </thead>
-        <tbody>
-           {Array.isArray(participants) && participants.length > 0 ? (
-            participants.map((participant) => (
-                <tr key={participant.id}>
-                    <td>{participant.rut}</td>
-                    <td>{participant.nombre}</td>
-                    <td>{participant.apellido}</td>
-                    <td>{participant.email}</td>
-                    <td>{participant.cargo}</td>
-                    <td>
-                        <button className="edit" onClick={()=>handleEditParticipants(participant.id)}>Editar</button>
-                        <button className="delete" onClick={()=> handleDeleteParticipants(participant.id)}>Eliminar</button>
-                    </td>
-                </tr>
-            ))
-           ) : (
-            <tr>
-                <td colSpan="4">No hay participantes disponibles</td>
-            </tr>
-           )
+            <tbody>
+                {Array.isArray(participants) && participants.length > 0 ? (
+                    participants.map((participant) => (
+                        <tr key={participant.id}>
+                            <td>{participant.rut}</td>
+                            <td>{participant.nombre}</td>
+                            <td>{participant.apellido}</td>
+                            <td>{participant.email}</td>
+                            <td>{participant.cargo}</td>
+                            <td>
+                                <button className="edit" onClick={()=>handleEditParticipants(participant.id)}>Editar</button>
+                                <button className="delete" onClick={()=> handleDeleteParticipants(participant.id)}>Eliminar</button>
+                            </td>
+                        </tr>
+                    ))
+                ) : (
+                    <tr>
+                        <td colSpan="4">No hay participantes disponibles</td>
+                    </tr>
+                )
 
-           }
-             </tbody>
+                }
+            </tbody>
         </table>
     </div>
     )
