@@ -21,7 +21,7 @@ async function addCreateEvent() {
         <input id="swal2-lugar" class="swal2-input" placeholder="Lugar del evento">
 
         <label>Tipo</label>
-        <input id="swal2-tipo" class="swal2-input" placeholder="evento o reunión">
+        <input id="swal2-tipo" class="swal2-input" placeholder="evento o reunion">
 
         <div style="margin-top:1em">
             <label>
