@@ -5,7 +5,7 @@ const useRegisterAttendance = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const submitAttendance = async (attendanceData) => {
+    const handleRegisterAttendance = async (attendanceData) => {
         setLoading(true);
         setError(null);
 
@@ -20,7 +20,7 @@ const useRegisterAttendance = () => {
         }
     };
 
-    return { submitAttendance, loading, error };
+    return { handleRegisterAttendance, loading, error };
 };
 
 export default useRegisterAttendance;

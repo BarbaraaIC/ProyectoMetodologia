@@ -6,7 +6,7 @@ import { GetParticipants } from '@services/participants.service';
 
 const Attendance = () => {
     const { events, fetchEvents } = useGetEvents();
-    const { submitAttendance } = useRegisterAttendance();
+    const { handleRegisterAttendance } = useRegisterAttendance();
 
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [participants, setParticipants] = useState([]); 
@@ -41,7 +41,7 @@ const Attendance = () => {
         }));
     };
 
-    const handleSubmit = async () => {
+    const handleSaveAttendance = async () => {
         const asistencias = participants.map((p) => ({
         participanteId: p.id,
         asistencia: attendanceData[p.id] === 'presente',
@@ -53,7 +53,7 @@ const Attendance = () => {
         };
 
         try {
-        const response = await submitAttendance(dataToSend);
+        const response = await handleRegisterAttendance(dataToSend);
         if (response) {
             alert('Asistencia registrada correctamente');
             setSelectedEvent(null); 
@@ -103,7 +103,7 @@ const Attendance = () => {
                 <div className="attendance-page">
                     <div className = "attendance-header">
                         <h2>Asistencia {selectedEvent.titulo}</h2>   
-                            <button className="Guardar" onClick={handleSubmit}>Guardar Asistencia</button>
+                            <button className="Guardar" onClick={handleSaveAttendance}>Guardar Asistencia</button>
                     </div>
                     <table className="attendance-table">
                         <thead>
