@@ -15,6 +15,30 @@
     text-align: left;
 }
 
+.attendance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0;
+}
+
+.Guardar {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.attendance-page button {
+    background-color: rgb(24, 184, 45);
+    color: rgb(255, 255, 255);
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 .attendance-table th {
     background: #333;
     color: #fff;

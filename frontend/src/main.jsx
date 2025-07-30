@@ -47,6 +47,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+
       {
         path: "/attendance",
         element: (
@@ -60,6 +61,7 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profile />,
       },
+      
       {
         path: "/votation",
         element: <Votation/>
