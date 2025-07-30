@@ -54,17 +54,6 @@ export async function getResultadosVotacionActivos() {
         select: ["rut", "nombre", "apellido"]
     });
     
-    // Crea una lista de candidatos
-    const candidatos = candidatosRaw.map(candidato => {
-    return {
-        id: candidato.id,
-        nombre: candidato.nombre,
-        apellido: candidato.apellido,
-        cargo: candidato.cargo,
-        cantidad_votos: candidato.votes ? candidato.votes.length : 0
-    };
-});
-
     // Mapear los resultados para indicar si votó o no
     const votos = participantesActivos.map(participante => ({
         rut: participante.rut,

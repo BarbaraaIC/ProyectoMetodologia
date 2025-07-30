@@ -1,6 +1,7 @@
 "use strict"
 import { Router } from "express";
-import { getActiveParticipants,getActiveParticipantById ,createActiveParticipant, updateActiveParticipantById, deleteActiveParticipantById } from "../controllers/activeParticipants.controller.js";
+import { getActiveParticipants,getActiveParticipantById ,createActiveParticipant, 
+updateActiveParticipantById, deleteActiveParticipantById } from "../controllers/activeParticipants.controller.js";
 
 const router = Router();
 

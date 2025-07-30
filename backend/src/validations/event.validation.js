@@ -10,7 +10,7 @@ export const eventValidation= Joi.object({
     .messages({
     "string.pattern.base":
     "El titulo del evento puede contener letras, números, guiones bajos, espacios y comas.",
-    "string.min": "El titulo del evento debe tener al menos 3 caracteres.",
+    "string.min": "El titulo del evento debe tener al menos 5 caracteres.",
     "string.max": "El titulo del evento no puede exceder los 100 caracteres.",
     "string.empty": "El titulo del evento es obligatorio.",
     }),
@@ -67,10 +67,10 @@ export const eventValidation= Joi.object({
     }),
     //agregue votacion
     votacion: Joi.boolean()
-    .when("tipo", {
-    is: "evento",
-    then: Joi.optional().default(false),
-    otherwise: Joi.forbidden(),
+    .optional()
+    .default(false)
+    .messages({
+        "boolean.base": "El campo 'votacion' debe ser verdadero o falso."
     }),
 
     duracionVotacion: Joi.number()

@@ -9,8 +9,16 @@ import Error404 from '@pages/Error404'
 import Users from '@pages/Users'
 import Profile from '@pages/Profile'
 import ProtectedRoute from '@components/ProtectedRoute'
+import Participants from '@pages/Participants'
 import Votation from '@pages/Votation'
+import Listvotation from "./pages/ListVotation";
 import Event from '@pages/Event'
+import Attendance from '@pages/Attendance.jsx';
+import ViewEvent from "@pages/ViewEvent";
+import Movimientos from "@pages/Movimientos";
+import Archivo from '@pages/Archivo';
+import ViewMovimientos from "./pages/ViewMovimientos";
+
 
 const router = createBrowserRouter([
   {
@@ -26,21 +34,48 @@ const router = createBrowserRouter([
       {
         path: "/users",
         element: (
-          <ProtectedRoute allowedRoles={["administrador"]}>
+          <ProtectedRoute allowedRoles={["administrador", "secretario", "presidente", "tesorero"]}>
             <Users />
           </ProtectedRoute>
         ),
       },
-
+      {
+        path: "/Participants",
+        element: <Participants />
+      },
       {
         path: "/event",
         element: (
-          <ProtectedRoute allowedRoles={["administrador"]}>
+          <ProtectedRoute allowedRoles={["administrador", "secretario", "presidente", "tesorero"]}>
             <Event />
           </ProtectedRoute>
         ),
       },
 
+      {
+        path: "/attendance",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador", "secretario", "presidente", "tesorero"]}>
+            <Attendance />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/view-event",
+        element: (
+          <ProtectedRoute allowedRoles={["users", "usuario"]}>
+            <ViewEvent />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/view-movimientos",
+        element: (
+          <ProtectedRoute allowedRoles={["users", "usuario"]}>
+            <ViewMovimientos />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "/profile",
         element: <Profile />,
@@ -49,6 +84,18 @@ const router = createBrowserRouter([
       {
         path: "/votation",
         element: <Votation/>
+      },
+       {
+        path: "/Movimientos",
+        element: <Movimientos />
+      },
+      {
+      path: "/Archivo",
+      element: <Archivo />
+      },
+      {
+        path: "/listvotation",
+        element: <Listvotation/>
       }
     ],
   },

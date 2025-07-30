@@ -1,25 +1,16 @@
 import axios from '@services/root.service.js';
+import { formatEventData } from '../helpers/formatData.helper';
 
-//Obtener eventos
 export async function getEvents() {
     try{
-        const response = await axios.get('/event');
-        return response.data.data;
+        const { data } = await axios.get('/event');
+        const formattedData = data.data.map(formatEventData);
+        return formattedData;
     }catch(error){
         console.error("Error al obtener eventos: ", error);
     }
 }
-/*
-export async function getEventById(id) {
-    try{
-        const response = await axios.get(/event/${id});
-        return response.data;
-    }catch (error) {
-        console.error('Error al obtener evento por Id: ', error);
-    }
-}
-*/
-//Crear evento
+
 export async function createEvent(data) {
     try {
         const response = await axios.post('/event',data);

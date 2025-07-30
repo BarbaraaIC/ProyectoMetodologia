@@ -83,9 +83,9 @@ async function showEditEventModal(event) {
             return false;
         }
 
-        const tiposValidos = ["evento", "reunión", "Evento", "Reunion"];
+        const tiposValidos = ["evento", "reunion"];
         if (!tiposValidos.includes(tipo)) {
-            Swal.showValidationMessage("El evento solo puede ser de tipo evento o reunión");
+            Swal.showValidationMessage("El evento solo puede ser de tipo evento o reunion");
             return false;
         }
 

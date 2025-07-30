@@ -1,21 +1,26 @@
-.votation-banner{
-    justify-content: center;
-}
 
 .votation-page{
     margin-top: 0px;
-    padding: 20px;
+    padding: 15px;
+    text-align: left;
 }
 
 .votation-table{
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    color:black;
+   
 }
 
-.books-table th,
-.books-table td{
+.votation-page .votation-table td {
     padding: 12px;
     text-align: left;
+    background-color: rgb(255, 250, 181) ;
 }
 
+.votation-table button{
+    background-color: rgb(170, 250, 170);
+    border-radius: 5px;
+}
+ 

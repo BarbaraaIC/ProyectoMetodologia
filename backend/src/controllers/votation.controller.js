@@ -43,7 +43,7 @@ export async function postularCandidatos(req, res) {
 
 export async function mostrarCandidatos(req, res) {
 try {
-    const cargos = ["Presidente", "Tesorero", "Secretario"];
+    const cargos = ["presidente", "tesorero", "secretario", "Presidente", "Tesorero", "Secretario"];
     const activeRepo = AppDataSource.getRepository(ActiveParticipantsEntity);
     const candidatos = await activeRepo.find({relations: ["votes"],
         where: {

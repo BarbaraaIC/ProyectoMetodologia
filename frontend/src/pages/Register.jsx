@@ -21,13 +21,13 @@ const Register = () => {
     }
     return (
         <main className="page-root">
-            <div className="lucky-cat-container">
-                <img src={luckyCat} alt="Lucky Cat" className="lucky-cat" />
-            </div>
-            <div className="login-register-container">
-                <LoginRegisterForm mode="register" onSubmit={registerSubmit} />
-            </div>
-        </main>
+        <div className="lucky-cat-container">
+            <img src={luckyCat} alt="Lucky Cat" className="lucky-cat" />
+        </div>
+        <div className="login-register-container">
+            <LoginRegisterForm mode="register" onSubmit={registerSubmit} />
+        </div>
+    </main>
     )
 }
 

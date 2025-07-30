@@ -15,6 +15,35 @@
     text-align: left;
 }
 
+.event-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event-header button {
+    padding: 6px 12px;
+    margin: 5px;
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.agregar {
+    background-color: rgb(24, 184, 45);
+    color: rgb(6, 167, 6);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.agregar:hover {
+    background-color: green;
+    color: white;
+}
+
 .event-table th {
     background: #333;
     color: #fff;
@@ -45,7 +74,24 @@
     font-weight:normal;
     text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
 }
+.divs {
+    display: flex;
+    flex-direction: column;
+}
 
+.descriptionArea {
+    height: 2.625em;
+    justify-content: center;
+    padding: 2em;
+    width: 75%;
+    margin-left: 40px;
+    /* esto no es lo optimo */
+    font-size: 1.125em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    color: rgb(84, 84, 84);
+}
 tr:hover td {
     background:#4E5066;
     color:#FFFFFF;
@@ -142,4 +188,7 @@ td.text-right {
 
 .event-table button:active {
     background-color: #388e3c;
+}
+.event-table button.añadir {
+    background-color: #2b882e;
 }

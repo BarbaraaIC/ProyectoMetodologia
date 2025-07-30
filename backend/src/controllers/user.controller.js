@@ -2,12 +2,15 @@
 import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
+
 export async function getUsers(req, res) {
   try {
+    console.log("estoy aqui");
     // Obtener el repositorio de usuarios y buscar todos los usuarios
     const userRepository = AppDataSource.getRepository(User);
+    console.log(userRepository);
     const users = await userRepository.find();
-
+    console.log("Usuarios obtenidos:", users);
     res.status(200).json({ message: "Usuarios encontrados: ", data: users });
   } catch (error) {
     console.error("Error en user.controller.js -> getUsers(): ", error);
@@ -39,7 +42,7 @@ export async function updateUserById(req, res) {
     // Obtener el repositorio de usuarios y buscar un usuario por ID
     const userRepository = AppDataSource.getRepository(User);
     const { id } = req.params;
-    const { username, email, rut } = req.body;
+    const { username, email, rut ,role } = req.body;
     const user = await userRepository.findOne({ where: { id } });
 
     // Si no se encuentra el usuario, devolver un error 404
@@ -51,6 +54,7 @@ export async function updateUserById(req, res) {
     user.username = username || user.username;
     user.email = email || user.email;
     user.rut = rut || user.rut;
+    user.role = role || user.role;
 
     // Guardar los cambios en la base de datos
     await userRepository.save(user);

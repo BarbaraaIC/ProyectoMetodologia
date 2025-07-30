@@ -3,10 +3,12 @@ import { useEffect } from 'react';
 import useEditEvent from '@hooks/eventos/useEditEvent';
 import useGetEvent from '@hooks/eventos/useGetEvent';
 import useDeleteEventById from '@hooks/eventos/useDeleteEvent';
+import useCreateEvent from '@hooks/eventos/useCreateEvent';
 
 
 const Event = () => {
     const { events, fetchEvents } = useGetEvent();
+    const {handleCreateEvent}= useCreateEvent(fetchEvents);
     const { handleEditEvent } = useEditEvent(fetchEvents);
     const { handleDeleteEvent } = useDeleteEventById(fetchEvents);
     
@@ -18,11 +20,13 @@ const Event = () => {
     console.log('eventos recibidos:', events);
     return (
         <div className="event-page"> 
-            <h2>Eventos</h2>
+            <div className = "event-header">
+                <h2>Eventos</h2>   
+                <button className="agregar" onClick={()=> handleCreateEvent()}>Añadir</button>
+                </div>
             <table className="event-table">
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Título</th>
                         <th>Descripción</th>
                         <th>Fecha</th>
@@ -50,7 +54,7 @@ const Event = () => {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="8">No hay eventos disponibles</td>
+                            <td colSpan="9">No hay eventos disponibles</td>
                         </tr>
                     )}
                 </tbody>

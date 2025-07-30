@@ -51,7 +51,7 @@ tr:hover td {
   color:#FFFFFF;
   border-top: 1px solid #22262e;
 }
- 
+
 tr:first-child {
   border-top:none;
 }
@@ -59,11 +59,11 @@ tr:first-child {
 tr:last-child {
   border-bottom:none;
 }
- 
+
 tr:nth-child(odd) td {
   background:#EBEBEB;
 }
- 
+
 tr:nth-child(odd):hover td {
   background:#4E5066;
 }
@@ -71,11 +71,11 @@ tr:nth-child(odd):hover td {
 tr:last-child td:first-child {
   border-bottom-left-radius:3px;
 }
- 
+
 tr:last-child td:last-child {
   border-bottom-right-radius:3px;
 }
- 
+
 td {
   background:#FFFFFF;
   padding:20px;

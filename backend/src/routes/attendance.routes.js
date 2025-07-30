@@ -1,10 +1,10 @@
 "use strict"
 
 import { Router } from "express";
-import { registerAttendance} from "../controllers/attendance.controller.js"
+import { registerAttendance } from "../controllers/attendance.controller.js"
 
 const router = new Router()
 
-router.post("/register", registerAttendance);
+router.post("/", registerAttendance);
 
 export default router;
