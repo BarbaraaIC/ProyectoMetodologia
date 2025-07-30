@@ -4,6 +4,7 @@ import { FaHome, FaUsers, FaSignOutAlt } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import "@styles/Sidebar.css";
 import { FaPeopleRoof } from "react-icons/fa6";
+import { SiGoogledocs } from "react-icons/si";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -44,6 +45,11 @@ const Sidebar = () => {
               </NavLink>
             </li>
           )}
+          <li>
+              <NavLink to="/archivo">
+                <SiGoogledocs className="icon"/> Documentos
+              </NavLink>
+          </li>
           <li>
             <NavLink to="/profile">
               <CgProfile className="icon"/> Perfil

@@ -10,6 +10,7 @@ import Users from '@pages/Users'
 import Profile from '@pages/Profile'
 import ProtectedRoute from '@components/ProtectedRoute'
 import Participants from '@pages/Participants'
+import Archivo from '@pages/Archivo'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             <Users />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/archivo",
+        element: <Archivo/>
       },
       {
         path: "/profile",

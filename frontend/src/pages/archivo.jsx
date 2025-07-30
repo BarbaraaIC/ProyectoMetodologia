@@ -1,14 +1,14 @@
 import "@styles/archivo.css";
-import useGetArchivo from "../hooks/archivo/useGetArchivo.jsx";
+import useGetArchivo from "@hooks/archivos/useGetArchivo.jsx";
+import { useEffect } from "react";
 
-const archivo = () => {
-  const { archivo, fetchArchivo } = useGetArchivo();
-  
+const Archivo = () => {
+  const { archivos, fetchArchivos } = useGetArchivo();
 
   /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    fetchArchivo();
-  }, []);
+    useEffect(() => {
+        fetchArchivos();
+  }, [])
 
 
   return (
@@ -17,20 +17,21 @@ const archivo = () => {
       <table className="arch-table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Nombre del archivo</th>
             <th>Fecha de subida</th>
             <th>Link</th>
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(archivo) && archivo.length > 0 ? (
-            archivo.map((archivo) => {
-              <tr key={archivo.id}>
-                <td>{archivo.nombre}</td>
-                <td>{archivo.createdAt}</td>
-                <td>{archivo.archivo}</td>
-                </tr>;
+          {Array.isArray(archivos) && archivos.length > 0 ? (
+            archivos.map((archive) => {
+                return (
+                    <tr key={archive.id}>
+                    <td>{archive.nombre}</td>
+                    <td>{archive.createdAt}</td>
+                    <td>{archive.archivo}</td>
+                </tr>
+                )
             })
           ) : (
             <tr>
@@ -43,4 +44,4 @@ const archivo = () => {
   );
 };
 
-export default archivo;
+export default Archivo;
