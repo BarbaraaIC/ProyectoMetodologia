@@ -11,19 +11,19 @@ async function addCreateEvent(){
         </div>
         <div>
         <label for="swal2-descripcion">Descripcion</label>
-        <input id="swal2-descripcion" class="swal2-input" placeholder="Descripcion del evento">
+        <input id="swal2-descripcion" class="swal2-input" placeholder="Descripcion del evento o reunion">
         </div>
         <div>
         <label for="swal2-fecha">Fecha</label>
-        <input id="swal2-fecha" class="swal2-input" placeholder="Fecha de evento">
+        <input id="swal2-fecha" class="swal2-input" placeholder="Formato YYYY-MM-DD">
         </div>
         <div>
         <label for="swal2-hora">Hora</label>
-        <input id="swal2-hora" class="swal2-input" placeholder="Hora del evento">
+        <input id="swal2-hora" class="swal2-input" placeholder="Formato HH:MM">
         </div>
         <div>
         <label for="swal2-lugar">Lugar</label>
-        <input id="swal2-lugar" class="swal2-input" placeholder="Lugar del evento">
+        <input id="swal2-lugar" class="swal2-input" placeholder="Lugar o direccion">
         </div>
         <div>
         <label for="swal2-tipo">Tipo</label>

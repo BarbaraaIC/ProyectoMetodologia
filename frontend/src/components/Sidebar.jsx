@@ -45,6 +45,27 @@ const Sidebar = () => {
               </NavLink>
             </li>
           )}
+          {(userRole === "administrador" || userRole === "secretario" || userRole === "presidente" || userRole === "tesorero") && (
+            <li>
+              <NavLink to="/event">
+                <FaCalendarAlt className="icon"/> Eventos y Reuniones
+              </NavLink>
+            </li>
+          )}
+          {(userRole === "administrador" || userRole === "secretario" || userRole === "presidente" || userRole === "tesorero") && (
+            <li>
+              <NavLink to="/attendance">
+                <FaCheck className="icon"/> Asistencia
+              </NavLink>
+            </li>
+          )}
+          {(userRole === "usuarios" || userRole === "user") && (
+            <li>
+              <NavLink to="/view-event">
+                <FaCalendarAlt className="icon"/> Eventos
+              </NavLink>
+            </li>
+          )}
           <li>
             <NavLink to="/profile">
               <CgProfile className="icon"/> Perfil
@@ -53,11 +74,6 @@ const Sidebar = () => {
           <li>
             <NavLink to= "/votation">
               <TiPrinter className="icon"/>  Votaciones
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to= "/view-event">
-              <FaCalendarAlt className="icon"/>  Eventos
             </NavLink>
           </li>
           <li style={{ height: "70%" }}/>

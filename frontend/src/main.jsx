@@ -38,7 +38,7 @@ const router = createBrowserRouter([
       {
         path: "/event",
         element: (
-          <ProtectedRoute allowedRoles={["administrador"]}>
+          <ProtectedRoute allowedRoles={["administrador", "secretario", "presidente", "tesorero"]}>
             <Event />
           </ProtectedRoute>
         ),
@@ -47,12 +47,19 @@ const router = createBrowserRouter([
       {
         path: "/attendance",
         element: (
-          <ProtectedRoute allowedRoles={["administrador"]}>
+          <ProtectedRoute allowedRoles={["administrador", "secretario", "presidente", "tesorero"]}>
             <Attendance />
           </ProtectedRoute>
         ),
       },
-
+      {
+        path: "/view-event",
+        element: (
+          <ProtectedRoute allowedRoles={["users"]}>
+            <ViewEvent />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "/profile",
         element: <Profile />,
@@ -66,10 +73,6 @@ const router = createBrowserRouter([
       {
         path: "/votation",
         element: <Votation/>
-      },
-      {
-        path: "/view-event",
-        element: <ViewEvent/>
       },
     ],
   },
