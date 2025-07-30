@@ -80,7 +80,7 @@ export const emitirVotoValidation = Joi.object({
         "string.empty": "El apellido del candidato es obligatorio.",
     }),
     cargo: Joi.string()
-    .valid("Presidente", "Secretario", "Tesorero")
+    .valid("Presidente", "Secretario", "Tesorero", "presidente", "secretario", "tesorero")
     .min(3)
     .max(20)
     .required()
