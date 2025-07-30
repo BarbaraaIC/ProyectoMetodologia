@@ -1,4 +1,3 @@
-// src/hooks/attendance/useRegisterAttendance.js
 import { useState } from 'react';
 import { registerAttendance } from '@services/attendance.service';
 

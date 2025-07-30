@@ -31,29 +31,40 @@ const Sidebar = () => {
               <FaHome className="icon"/> Inicio
             </NavLink>
           </li>
-          {userRole === "administrador" && (
-            <>
-              <li>
-                <NavLink to="/users">
-                  <FaUsers className="icon"/> Usuarios
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/event">
-                  <FaCalendarAlt className="icon"/> Eventos y Reuniones
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/Participants">
-                  <FaPeopleRoof className="icon"/> Participantes
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/Attendance">
-                  <FaCheck className="icon"/> Asistencia
-                </NavLink>
-              </li>
-            </>
+          {(userRole === "administrador" || userRole === "secretario" || userRole === "presidente" || userRole === "tesorero") && (
+            <li>
+              <NavLink to= "/Participants">
+              <FaPeopleRoof className="icon"/> Participantes
+              </NavLink>
+            </li>
+          )}
+          {(userRole === "administrador" || userRole === "secretario" || userRole === "presidente" || userRole === "tesorero") && (
+            <li>
+              <NavLink to="/users">
+                <FaUsers className="icon"/> Usuarios
+              </NavLink>
+            </li>
+          )}
+          {(userRole === "administrador" || userRole === "secretario" || userRole === "presidente" || userRole === "tesorero") && (
+            <li>
+              <NavLink to="/event">
+                <FaCalendarAlt className="icon"/> Eventos y Reuniones
+              </NavLink>
+            </li>
+          )}
+          {(userRole === "administrador" || userRole === "secretario" || userRole === "presidente" || userRole === "tesorero") && (
+            <li>
+              <NavLink to="/attendance">
+                <FaCheck className="icon"/> Asistencia
+              </NavLink>
+            </li>
+          )}
+          {(userRole === "usuarios" || userRole === "user") && (
+            <li>
+              <NavLink to="/view-event">
+                <FaCalendarAlt className="icon"/> Eventos
+              </NavLink>
+            </li>
           )}
           <li>
             <NavLink to="/profile">

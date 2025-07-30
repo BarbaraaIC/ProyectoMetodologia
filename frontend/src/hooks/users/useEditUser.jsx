@@ -13,6 +13,10 @@ async function editUserInfo(user) {
       <label for="swal2-input2">Correo electrónico</label>
       <input id="swal2-input2" class="swal2-input" placeholder="Correo electrónico" value = "${user.email}">
     </div>
+    <div>
+      <label for="swal2-input3">Rol</label>
+      <input id="swal2-input3" class="swal2-input" placeholder=" Rol" value = "${user.role}">
+    </div>
         `,
     focusConfirm: false,
     showCancelButton: true,
@@ -20,6 +24,7 @@ async function editUserInfo(user) {
     preConfirm: () => {
       const username = document.getElementById("swal2-input1").value;
       const email = document.getElementById("swal2-input2").value;
+      const role = document.getElementById("swal2-input3").value;
 
       if (!username || !email) {
         Swal.showValidationMessage("Por favor, completa todos los campos");
@@ -53,13 +58,20 @@ async function editUserInfo(user) {
         );
         return false;
       }
-      return { username, email };
+      if (!role || role.length < 3 || role.length > 20) {
+        Swal.showValidationMessage(
+          "El rol debe tener entre 3 y 20 caracteres"
+        );
+        return false;
+      }
+      return { username, email, role };
     },
   });
   if (formValues) {
     return {
       username: formValues.username,
       email: formValues.email,
+      role: formValues.role,
     };
   }
 }
