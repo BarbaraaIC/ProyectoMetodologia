@@ -16,6 +16,7 @@ import Event from '@pages/Event'
 import Attendance from '@pages/Attendance.jsx';
 import ViewEvent from "@pages/ViewEvent";
 import Movimientos from "@pages/Movimientos";
+import Archivo from '@pages/Archivo';
 
 
 const router = createBrowserRouter([
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
        {
         path: "/Movimientos",
         element: <Movimientos />
+      },
+      {
+      path: "/Archivo",
+      element: <Archivo />
       },
       {
         path: "/listvotation",
