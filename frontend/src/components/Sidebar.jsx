@@ -23,7 +23,7 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <h2>Metodología de Desarrollo</h2>
+      <h2>Junta Vecinos</h2>
       <nav>
         <ul>
           <li>
@@ -74,6 +74,12 @@ const Sidebar = () => {
           <li>
             <NavLink to= "/votation">
               <TiPrinter className="icon"/>  Votaciones
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to= "/listVotation">
+              <TiPrinter className="icon"/> ListadoVotacion
+
             </NavLink>
           </li>
           <li style={{ height: "70%" }}/>

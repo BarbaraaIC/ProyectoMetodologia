@@ -1,88 +1,98 @@
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 import { createEvent } from "@services/event.service.js";
 
-async function addCreateEvent(){
-    const {value: formValues } = await Swal.fire({
+async function addCreateEvent() {
+    const { isConfirmed, value } = await Swal.fire({
         title: "Añadir evento",
-        html:`
-        <div>
-        <label for="swal2-titulo">Titulo</label>
-        <input id="swal2-titulo" class="swal2-input" placeholder="Titulo del evento o reunion">
+        html: `
+        <label>Título</label>
+        <input id="swal2-titulo" class="swal2-input" placeholder="Título del evento">
+
+        <label>Descripción</label>
+        <input id="swal2-descripcion" class="swal2-input" placeholder="Descripción">
+
+        <label>Fecha</label>
+        <input id="swal2-fecha" type="date" class="swal2-input">
+
+        <label>Hora</label>
+        <input id="swal2-hora" type="time" class="swal2-input">
+
+        <label>Lugar</label>
+        <input id="swal2-lugar" class="swal2-input" placeholder="Lugar del evento">
+
+        <label>Tipo</label>
+        <input id="swal2-tipo" class="swal2-input" placeholder="evento o reunión">
+
+        <div style="margin-top:1em">
+            <label>
+            <input type="checkbox" id="swal2-votacion" />
+            Incluir votación
+            </label>
         </div>
-        <div>
-        <label for="swal2-descripcion">Descripcion</label>
-        <input id="swal2-descripcion" class="swal2-input" placeholder="Descripcion del evento o reunion">
-        </div>
-        <div>
-        <label for="swal2-fecha">Fecha</label>
-        <input id="swal2-fecha" class="swal2-input" placeholder="Formato YYYY-MM-DD">
-        </div>
-        <div>
-        <label for="swal2-hora">Hora</label>
-        <input id="swal2-hora" class="swal2-input" placeholder="Formato HH:MM">
-        </div>
-        <div>
-        <label for="swal2-lugar">Lugar</label>
-        <input id="swal2-lugar" class="swal2-input" placeholder="Lugar o direccion">
-        </div>
-        <div>
-        <label for="swal2-tipo">Tipo</label>
-        <input id="swal2-tipo" class="swal2-input" placeholder="evento o reunion">
-        </div>
+
+        <label>Duración votación (hrs)</label>
+        <input id="swal2-duracion" type="number" min="1" class="swal2-input" placeholder="Ej: 24">
         `,
-        focusConfirm: false,
-        showCancelButton: true,
-        confirmButtonText: "Añadir",
-        preConfirm: () => {
-            const titulo = document.getElementById("swal2-titulo").value ;
-            const descripcion = document.getElementById("swal2-descripcion").value ;
-            const fecha = document.getElementById("swal2-fecha").value ;
-            const hora = document.getElementById("swal2-hora").value ;
-            const lugar = document.getElementById("swal2-lugar").value;
-            const tipo = document.getElementById("swal2-tipo").value ;
+    focusConfirm: false,
+    showCancelButton: true,
+    confirmButtonText: "Añadir",
+    preConfirm: () => {
+    const titulo = document.getElementById("swal2-titulo").value;
+    const descripcion = document.getElementById("swal2-descripcion").value;
+    const fecha = document.getElementById("swal2-fecha").value;
+    const hora  = document.getElementById("swal2-hora").value;
+    const lugar = document.getElementById("swal2-lugar").value;
+    const tipo  = document.getElementById("swal2-tipo").value;
+    const votacion = document.getElementById("swal2-votacion").checked;
+    const durRaw = document.getElementById("swal2-duracion").value;
 
-            if(!titulo || !descripcion || !fecha || !hora || !lugar|| !tipo){
-                Swal.showValidationMessage("Porfavor, Complete todos los campos");
-                return false;
-            }
+        if (!titulo || !descripcion || !fecha || !hora || !lugar || !tipo) {
+            Swal.showValidationMessage("Por favor completa todos los campos");
+            return false;
+        }
+        if (votacion && (!durRaw || parseInt(durRaw, 10) < 1)) {
+            Swal.showValidationMessage("Duración de votación inválida (mínimo 30min)");
+            return false;
+        }
 
-            return {titulo, descripcion, fecha, hora, lugar, tipo};
-        }, 
-    });
-    if(formValues){
-        return{
-            titulo: formValues.titulo,
-            descripcion: formValues.descripcion,
-            fecha: formValues.fecha,
-            hora: formValues.hora,
-            lugar: formValues.lugar,
-            tipo: formValues.tipo,
+        return {
+            titulo, descripcion, fecha,  hora,  lugar, tipo,  votacion,  duracionVotacion: votacion ? parseInt(durRaw, 10) : null
         };
+        }
+    });
+
+    if (!isConfirmed || !value) {
+        return null;
+    }
+    return value;
     }
 
-    return null; 
-} 
-export const useCreateEvent = (fetchEvents) => {
+    export const useCreateEvent = (fetchEvents) => {
     const handleCreateEvent = async () => {
-        try{
-            const formValues = await addCreateEvent();
-            if(!formValues) return;
+        try {
+        const formValues = await addCreateEvent();
+        if (!formValues) {
+            return;
+        }
 
-            const response = await createEvent(formValues);
-            if(response) {
-                Swal.fire({
-                    title: "Evento creado exitosamente!",
-                    icon: "success",
-                    confirmButtonText: "Aceptar",
-                })
-                await fetchEvents();
-            }
+        await createEvent(formValues);
 
-        }catch(error){
-        console.error ("Error al crear un evento:", error);
-        } 
-    };   
-    return {handleCreateEvent}
-};
+        await Swal.fire({
+            title: "Evento creado exitosamente!",
+            icon: "success",
+            confirmButtonText: "Aceptar"
+        });
+        await fetchEvents();
+        } catch (error) {
+        console.error("Error al crear un evento:", error);
+        Swal.fire({
+            title: "Error",
+            icon: "error"
+        });
+        }
+    };
 
-export default useCreateEvent;
+    return { handleCreateEvent };
+    };
+
+    export default useCreateEvent;

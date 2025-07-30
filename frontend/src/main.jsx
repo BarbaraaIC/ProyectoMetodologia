@@ -9,11 +9,13 @@ import Error404 from '@pages/Error404'
 import Users from '@pages/Users'
 import Profile from '@pages/Profile'
 import ProtectedRoute from '@components/ProtectedRoute'
-import Votation from '@pages/Votation'
-import Event from '@pages/Event'
 import Participants from '@pages/Participants'
+import Votation from '@pages/Votation'
+import Listvotation from "./pages/ListVotation";
+import Event from '@pages/Event'
 import Attendance from '@pages/Attendance.jsx';
 import ViewEvent from "@pages/ViewEvent";
+
 
 const router = createBrowserRouter([
   {
@@ -34,7 +36,10 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
+      {
+        path: "/Participants",
+        element: <Participants />
+      },
       {
         path: "/event",
         element: (
@@ -66,14 +71,13 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/Participants",
-        element: <Participants />
-      },
-
-      {
         path: "/votation",
         element: <Votation/>
       },
+      {
+        path: "/listvotation",
+        element: <Listvotation/>
+      }
     ],
   },
   {
