@@ -1,5 +1,6 @@
 "use strict";
 
+import User from "../entity/user.entity.js";
 import jwt from "jsonwebtoken";
 import { encryptPassword, comparePassword } from "../helpers/bcrypt.helper.js";
 import { AppDataSource } from "../config/configDb.js";
@@ -8,8 +9,6 @@ import {
   registerValidation,
   loginValidation,
 } from "../validations/auth.validation.js";
-
-// Controlador de autenticación
 
 export async function register(req, res) {
   try {
@@ -26,10 +25,11 @@ export async function register(req, res) {
     if (existingEmailUser)
       return res.status(409).json({ message: "Correo ya registrado." });
 
+    //Verificar si el rut ya existen
     const existingRutUser = await userRepository.findOne({ where: { rut } });
     if (existingRutUser)
       return res.status(409).json({ message: "Rut ya registrado." });
-
+    //Verificar si el nombre de usuario ya existe
     const existingUsernameUser = await userRepository.findOne({
       where: { username },
     });
@@ -37,6 +37,8 @@ export async function register(req, res) {
       return res
         .status(409)
         .json({ message: "Nombre de usuario ya registrado." });
+
+        
 
     // Crear un nuevo usuario y guardar en la base de datos
     const newUser = userRepository.create({
@@ -63,6 +65,7 @@ export async function login(req, res) {
   try {
     // Obtener el repositorio de usuarios y validar los datos de entrada
     const userRepository = AppDataSource.getRepository(User);
+    // console.log(req);
     const { email, password } = req.body;
     const { error } = loginValidation.validate(req.body);
     if (error) return res.status(400).json({ message: error.message });
