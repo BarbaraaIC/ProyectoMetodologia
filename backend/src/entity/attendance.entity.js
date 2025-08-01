@@ -32,17 +32,6 @@ export const AttendanceEntity = new EntitySchema({
             type: Boolean,
             nullable: false,
         },
-
-        createdAt: {
-            type: "timestamp",
-            default: () => "CURRENT_TIMESTAMP",
-        },
-
-        updatedAt: {
-            type: "timestamp",
-            default: () => "CURRENT_TIMESTAMP",
-            onUpdate: () => "CURRENT_TIMESTAMP",
-        },
     },
     relations: {
         participant: {

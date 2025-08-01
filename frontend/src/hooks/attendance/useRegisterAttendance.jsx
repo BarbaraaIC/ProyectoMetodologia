@@ -5,22 +5,22 @@ const useRegisterAttendance = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const submitAttendance = async (attendanceData) => {
+    const handleRegisterAttendance = async (attendanceData) => {
         setLoading(true);
         setError(null);
 
         try {
         const response = await registerAttendance(attendanceData);
         return response;
-        } catch (err) {
-        console.error('Error al registrar asistencia:', err);
-        setError(err);
+        } catch (error) {
+        console.error('Error al registrar asistencia:', error);
+        setError(error);
         } finally {
         setLoading(false);
         }
     };
 
-    return { submitAttendance, loading, error };
+    return { handleRegisterAttendance , loading, error };
 };
 
 export default useRegisterAttendance;

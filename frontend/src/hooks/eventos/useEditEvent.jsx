@@ -59,7 +59,7 @@ async function showEditEventModal(event) {
             return false;
         }
 
-        if (titulo.length < 3 || titulo.length > 60) {
+        if (descripcion.length < 3 || descripcion.length > 60) {
             Swal.showValidationMessage(
                 "La descripción del evento debe tener entre 3 y 60 caracteres"
             );

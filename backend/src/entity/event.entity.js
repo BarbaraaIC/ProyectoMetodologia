@@ -55,16 +55,6 @@ export const EventEntity= new EntitySchema({
         type: "timestamp",
         nullable: true,
         },               // aqui nuevo
-        createdAt: {
-            type: "timestamp",
-            default: () => "CURRENT_TIMESTAMP",
-        },
-
-        updatedAt: {
-            type: "timestamp",
-            default: () => "CURRENT_TIMESTAMP",
-            onUpdate: () => "CURRENT_TIMESTAMP",
-        },
     },
     relations: {
         attendances: {
