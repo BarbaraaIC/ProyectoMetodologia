@@ -87,26 +87,27 @@ const Sidebar = () => {
             </NavLink>
           </li>
           )}
-          {(userRole === "usuario" || userRole === "user") && (
+          {(userRole === "usuario" || userRole === "user" || userRole === "presidente" || userRole === "vecino") && (
             <li>
               <NavLink to="/view-movimientos">
                 <FaCoins className="icon"/> Registros Monetarios
               </NavLink>
             </li>
           )}
-          <li>
-              <NavLink to="/Varchivo">
-                <SiGoogledocs className="icon"/> Agregar Documentos
-              </NavLink>
-          </li>
-          {(userRole === "administrador" || userRole === "vecino") && (
+          {(userRole === "administrador" || userRole === "presidente" || userRole === "tesorero" || userRole === "secretario" || userRole === "vecino" || userRole === "user" || userRole === "usuario") && (
             <li>
               <NavLink to="/Archivo">
                 <SiGoogledocs className="icon"/> Documentos
               </NavLink>
             </li>
           )}
-          
+          {(userRole === "administrador" || userRole === "presidente" || userRole === "tesorero" || userRole === "secretario") && (
+          <li>
+              <NavLink to="/Varchivo">
+                <SiGoogledocs className="icon"/> Agregar Documentos
+              </NavLink>
+          </li>
+          )}
           <li>
             <NavLink to="/profile">
               <CgProfile className="icon"/> Perfil

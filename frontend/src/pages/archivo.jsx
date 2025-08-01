@@ -29,7 +29,11 @@ const Archivo = () => {
                     <tr key={archive.id}>
                     <td>{archive.nombre}</td>
                     <td>{archive.createdAt}</td>
-                    <td>{archive.archivo}</td>
+                    <td>
+                      <a href={archive.archivo} target="_blank" rel="noopener noreferrer">
+                        Ver Documento
+                      </a>
+                    </td>
                 </tr>
                 )
             })
