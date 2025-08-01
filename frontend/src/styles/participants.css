@@ -148,9 +148,7 @@ td.text-right {
   background-color: #f44336;
 }
 
-.participants-table button.edit:hover {
-  background-color: #45a049;
-}
+
 
 .participants-table button.delete:hover {
   background-color: #e53935;

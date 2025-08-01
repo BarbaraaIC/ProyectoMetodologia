@@ -25,7 +25,7 @@ async function confirmAlert() {
 async function confirmError() {
   await Swal.fire({
     title: "Error",
-    text: "No se pudo eliminar al",
+    text: "No se pudo eliminar al participante",
     icon: "error",
     confirmButtonText: "Aceptar",
   });

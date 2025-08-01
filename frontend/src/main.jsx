@@ -64,16 +64,8 @@ const router = createBrowserRouter([
       {
         path: "/view-event",
         element: (
-          <ProtectedRoute allowedRoles={["user", "usuario"]}>
+          <ProtectedRoute allowedRoles={["user", "usuario", "vecino"]}>
             <ViewEvent />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "/view-movimientos",
-        element: (
-          <ProtectedRoute allowedRoles={["user", "usuario", "presidente"]}>
-            <ViewMovimientos />
           </ProtectedRoute>
         ),
       },
@@ -81,7 +73,6 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profile />,
       },
-
       {
         path: "/votation",
         element: <Votation/>
@@ -91,13 +82,29 @@ const router = createBrowserRouter([
         element: <Movimientos />
       },
       {
-        path: "/Varchivo",
-        element: <ViewArchivo/>
+        path: "/view-movimientos",
+        element: (
+          <ProtectedRoute allowedRoles={["user", "usuario", "presidente", "vecino"]}>
+            <ViewMovimientos />
+          </ProtectedRoute>
+        ),
       },
       {
-      path: "/Archivo",
-      element: <Archivo />
-      },
+        path: "/Archivo",
+        element: (
+          <ProtectedRoute allowedRoles={["vecino", "administrador", "user", "usuario", "presidente", "tesorero", "secretario"]}>
+            <Archivo />
+          </ProtectedRoute>
+        ),
+        },
+        {
+        path: "/Varchivo",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador","presidente", "tesorero", "secretario"]}>
+            <ViewArchivo />
+          </ProtectedRoute>
+        ),
+        },
       {
         path: "/listvotation",
         element: <Listvotation/>

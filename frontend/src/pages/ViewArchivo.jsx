@@ -15,9 +15,11 @@ const ViewArchivo = () => {
 
   return (
     <div className="arch-page">
+      <div className="arch-header">
       <h2>Lista de Documentos</h2>
+      <button className="arch-addbtn" onClick={()=> archivoData()}>Añadir Documento</button>
+      </div>
       <table className="arch-table">
-        <button className="arch-addbtn" onClick={()=> archivoData()}>Añadir Documento</button>
         <thead>
           <tr>
             <th>Nombre del archivo</th>
