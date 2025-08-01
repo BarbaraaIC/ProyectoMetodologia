@@ -89,9 +89,13 @@ const router = createBrowserRouter([
         path: "/Movimientos",
         element: <Movimientos />
       },
-      {
-      path: "/Archivo",
-      element: <Archivo />
+     {
+        path: "/Archivo",
+        element: (
+          <ProtectedRoute allowedRoles={["vecino", "administrador", "user", "usuario"]}>
+            <Archivo />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/listvotation",
