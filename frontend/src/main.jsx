@@ -63,7 +63,7 @@ const router = createBrowserRouter([
       {
         path: "/view-event",
         element: (
-          <ProtectedRoute allowedRoles={["users", "usuario"]}>
+          <ProtectedRoute allowedRoles={["user", "usuario"]}>
             <ViewEvent />
           </ProtectedRoute>
         ),
@@ -71,7 +71,7 @@ const router = createBrowserRouter([
       {
         path: "/view-movimientos",
         element: (
-          <ProtectedRoute allowedRoles={["users", "usuario"]}>
+          <ProtectedRoute allowedRoles={["user", "usuario", "presidente"]}>
             <ViewMovimientos />
           </ProtectedRoute>
         ),
