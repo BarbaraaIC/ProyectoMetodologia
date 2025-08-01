@@ -37,63 +37,68 @@ export async function getMovimientoById(req, res) {
 export async function createMovimiento(req, res) {
     try {
         const movimientoRepository = AppDataSource.getRepository(Movimiento);
-        const { tipo, monto, categoria, descripcion, comprobanteUrl } = req.body; 
-        const { error } = createValidation.validate(req.body);
-        if (error) 
-            return res
-        .status(400).
-        json({ message: "Error al crear el movimiento", error: error});
-    
+        const { tipo, monto, categoria, descripcion } = req.body;
+
+        // Validación (puedes ajustar para que no requiera comprobanteUrl)
+        const { error } = createValidation.validate({ tipo, monto, categoria, descripcion });
+        if (error)
+            return res.status(400).json({ message: "Error al crear el movimiento", error: error });
+
+        // Si hay archivo, guarda la ruta, si no, deja null
+        let comprobanteUrl = null;
+        if (req.file) {
+            comprobanteUrl = `/uploads/${req.file.filename}`;
+        }
+
         const newMovimiento = movimientoRepository.create({
-            tipo, 
+            tipo,
             monto,
             categoria,
             descripcion,
             comprobanteUrl,
         });
-            await movimientoRepository.save(newMovimiento);
+        await movimientoRepository.save(newMovimiento);
 
-            res.status(201).json({
-                message: "Movimiento creado exitosamente",
-                data: newMovimiento,
-            });
+        res.status(201).json({
+            message: "Movimiento creado exitosamente",
+            data: newMovimiento,
+        });
 
-        } catch (error) {
+    } catch (error) {
         console.error("Error al crear movimiento", error);
-        res.status(500).json({message: "Error al crear movimiento."});
+        res.status(500).json({ message: "Error al crear movimiento." });
     }
 }
 
 export async function updateMovimiento(req, res) {
-    try {
-        const movimientoRepository = AppDataSource.getRepository(Movimiento);
-        const { id } = req.params;
-        const { tipo, monto, categoria, descripcion, comprobanteUrl } = req.body;
-        const movimiento = await movimientoRepository.findOne({ where: { id } }); 
+  try {
+    const movimientoRepository = AppDataSource.getRepository(Movimiento);
+    const { id } = req.params;
+    const { tipo, monto, categoria, descripcion } = req.body;
 
-        if (!movimiento) return res.status(404).json({ message: "Movimiento no encontrado" });
-
-        const { error } = updateValidation.validate(req.body)
-        if (error) return res.status(400).json({ message: error.message });
-
-        movimiento.tipo = tipo || movimiento.tipo;
-        movimiento.monto = monto || movimiento.monto;
-        movimiento.categoria = categoria || movimiento.categoria;
-        movimiento.descripcion = descripcion || movimiento.descripcion;
-        movimiento.comprobanteUrl = comprobanteUrl || movimiento.comprobanteUrl;
-
-        await movimientoRepository.save(movimiento);
-
-        res.status(200).json({
-            message: "Movimiento actualizado correctamente",
-            data: movimiento,
-        });
-    } catch (error) {
-        console.error("Error al actualizar movimiento: ", error);
-        res.status(500).json({ message: "Error al actualizar movimiento." });
+    const movimiento = await movimientoRepository.findOneBy({ id });
+    if (!movimiento) {
+      return res.status(404).json({ message: "Movimiento no encontrado" });
     }
-}
 
+    movimiento.tipo = tipo;
+    movimiento.monto = monto;
+    movimiento.categoria = categoria;
+    movimiento.descripcion = descripcion;
+
+    // Si hay nuevo archivo, actualiza comprobanteUrl
+    if (req.file) {
+      movimiento.comprobanteUrl = `/uploads/${req.file.filename}`;
+    }
+
+    await movimientoRepository.save(movimiento);
+
+    res.status(200).json({ message: "Movimiento actualizado correctamente", data: movimiento });
+  } catch (error) {
+    console.error("Error al actualizar movimiento", error);
+    res.status(500).json({ message: "Error al actualizar movimiento." });
+  }
+}
 
 export async function deleteMovimiento(req, res) {
     try {

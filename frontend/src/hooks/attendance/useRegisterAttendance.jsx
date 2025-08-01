@@ -20,7 +20,11 @@ const useRegisterAttendance = () => {
         }
     };
 
+<<<<<<< HEAD
     return { handleRegisterAttendance , loading, error };
+=======
+    return { handleRegisterAttendance, loading, error };
+>>>>>>> fa4eb504283f9a1e0bf13fda225c2bda0f12046b
 };
 
 export default useRegisterAttendance;

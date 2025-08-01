@@ -53,7 +53,7 @@ const Attendance = () => {
         };
 
         try {
-        const response = await handleRegisterAttendance (dataToSend);
+        const response = await handleRegisterAttendance(dataToSend);
         if (response) {
             alert('Asistencia registrada correctamente');
             setSelectedEvent(null); 
