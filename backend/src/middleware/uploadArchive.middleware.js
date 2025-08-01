@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     // Reemplazo de espacios en blanco en por guiones en los nombres de los archivos
     const fileName = file.originalname.replace(/\s+/g, "-");
-    cb(null, fileName);
+    cb(null, fileName + ".pdf");
   }
 });
 
