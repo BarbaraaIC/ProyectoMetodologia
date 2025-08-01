@@ -4,12 +4,14 @@ import useDeleteParticipants from "@hooks/participants/useDeleteParticipants.jsx
 import useEditParticipants from "@hooks/participants/useEditParticipants.jsx";
 import useCreateParticipants from "@hooks/participants/useCreateParticipants.jsx";
 import { useEffect } from "react";
+import usePostulateParticipant from "@hooks/participants/usePostulateParticipant.jsx";
 
 const Participants = () => {
     const { participants, fetchParticipants } = useGetParticipants();
     const {handleDeleteParticipants} = useDeleteParticipants(fetchParticipants);
     const {handleEditParticipants} = useEditParticipants(fetchParticipants);
     const {handleCreateParticipants} = useCreateParticipants(fetchParticipants);
+    const {handlePostulateParticipant} = usePostulateParticipant(fetchParticipants);
     
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
@@ -46,6 +48,7 @@ const Participants = () => {
                             <td>
                                 <button className="edit" onClick={()=>handleEditParticipants(participant.id)}>Editar</button>
                                 <button className="delete" onClick={()=> handleDeleteParticipants(participant.id)}>Eliminar</button>
+                                <button className="edit" onClick={()=> handlePostulateParticipant(participant.id)}>Postulacion</button>
                             </td>
                         </tr>
                     ))

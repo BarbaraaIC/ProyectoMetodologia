@@ -28,6 +28,15 @@ export async function EditParticipants(participantId,participantData){
     }
 }
 
+export async function postulateParticipant(participantId, participantData) {
+  try {
+    const response = await axios.put(`/participants/${participantId}`,participantData);
+    return response.data;
+  } catch (error) {
+    console.error("Error al postular participante", error);
+  }
+}
+
 export async function CreateParticipants(participantData) {
     try{
         const response = await axios.post("/participants/", participantData);
