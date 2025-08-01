@@ -18,6 +18,7 @@ import ViewEvent from "@pages/ViewEvent";
 import Movimientos from "@pages/Movimientos";
 import Archivo from '@pages/Archivo';
 import ViewMovimientos from "./pages/ViewMovimientos";
+import ViewArchivo from '@pages/ViewArchivo';
 
 
 const router = createBrowserRouter([
@@ -85,18 +86,26 @@ const router = createBrowserRouter([
         path: "/votation",
         element: <Votation/>
       },
-       {
+      {
         path: "/Movimientos",
         element: <Movimientos />
       },
-     {
+      {
         path: "/Archivo",
         element: (
           <ProtectedRoute allowedRoles={["vecino", "administrador", "user", "usuario"]}>
             <Archivo />
           </ProtectedRoute>
         ),
-      },
+        },
+        {
+        path: "/Varchivo",
+        element: (
+          <ProtectedRoute allowedRoles={["administrador","presidente", "tesorero", "secretario"]}>
+            <ViewArchivorchivo />
+          </ProtectedRoute>
+        ),
+        },
       {
         path: "/listvotation",
         element: <Listvotation/>
