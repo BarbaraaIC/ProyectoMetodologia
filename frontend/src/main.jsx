@@ -102,7 +102,7 @@ const router = createBrowserRouter([
         path: "/Varchivo",
         element: (
           <ProtectedRoute allowedRoles={["administrador","presidente", "tesorero", "secretario"]}>
-            <ViewArchivorchivo />
+            <ViewArchivo />
           </ProtectedRoute>
         ),
         },
