@@ -9,10 +9,17 @@
     justify-content: center;
     height: 100vh;
     text-align: center;
+    width: 100%;
 }
 
 .icon {
     font-size: 5rem;
     color: #333;
     margin-top: 1rem;
+}
+.home-banner h1 {
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
