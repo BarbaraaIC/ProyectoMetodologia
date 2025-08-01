@@ -64,10 +64,22 @@ const router = createBrowserRouter([
       {
         path: "/view-event",
         element: (
-          <ProtectedRoute allowedRoles={["user", "usuario"]}>
+          <ProtectedRoute allowedRoles={["user", "usuario", "vecino"]}>
             <ViewEvent />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/votation",
+        element: <Votation/>
+      },
+      {
+        path: "/Movimientos",
+        element: <Movimientos />
       },
       {
         path: "/view-movimientos",
@@ -78,22 +90,9 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/profile",
-        element: <Profile />,
-      },
-
-      {
-        path: "/votation",
-        element: <Votation/>
-      },
-      {
-        path: "/Movimientos",
-        element: <Movimientos />
-      },
-      {
         path: "/Archivo",
         element: (
-          <ProtectedRoute allowedRoles={["vecino", "administrador", "user", "usuario"]}>
+          <ProtectedRoute allowedRoles={["vecino", "administrador", "user", "usuario", "presidente", "tesorero", "secretario"]}>
             <Archivo />
           </ProtectedRoute>
         ),
@@ -101,7 +100,7 @@ const router = createBrowserRouter([
         {
         path: "/Varchivo",
         element: (
-          <ProtectedRoute allowedRoles={["administrador","presidente", "tesorero", "secretario", "vecino", "user", "usuario"]}>
+          <ProtectedRoute allowedRoles={["administrador","presidente", "tesorero", "secretario"]}>
             <ViewArchivo />
           </ProtectedRoute>
         ),
