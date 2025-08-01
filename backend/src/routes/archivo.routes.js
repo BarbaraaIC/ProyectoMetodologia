@@ -8,5 +8,5 @@ const router = Router();
 
 router
     .post("/", upload.single("archivo"), handleFileSizeLimit, subidaArchivo)
-    .get("/",isVecino, getArchivos)
+    .get("/", getArchivos)
 export default router;

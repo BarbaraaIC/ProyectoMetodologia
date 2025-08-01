@@ -87,14 +87,18 @@ const Sidebar = () => {
             </NavLink>
           </li>
           )}
-           {(userRole === "usuario" || userRole === "user") && (
+          {(userRole === "usuario" || userRole === "user") && (
             <li>
               <NavLink to="/view-movimientos">
                 <FaCoins className="icon"/> Registros Monetarios
               </NavLink>
             </li>
           )}
-        
+          <li>
+              <NavLink to="/Varchivo">
+                <SiGoogledocs className="icon"/> Agregar Documentos
+              </NavLink>
+          </li>
           {(userRole === "administrador" || userRole === "vecino") && (
             <li>
               <NavLink to="/Archivo">

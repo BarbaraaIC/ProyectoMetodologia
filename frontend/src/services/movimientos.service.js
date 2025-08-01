@@ -37,7 +37,7 @@ export async function editMovimiento(movimientoId, formData) {
 }
 
 export async function CreateMovimiento(movimientoData) {
-     try {
+    try {
     const token = localStorage.getItem("token");
 
     const response = await axios.post(`/movimientos/`, movimientoData, {

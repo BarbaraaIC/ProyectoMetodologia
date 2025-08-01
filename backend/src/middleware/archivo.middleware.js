@@ -17,7 +17,7 @@ export async function isVecino(req, res, next) {
         .status(403)
         .json({
           message:
-            "Error al acceder al recurso. Se requiere un rol de Encargado de Evento para realizar esta acción.",
+            "Error al acceder al recurso. Se requiere un rol de Vecino para realizar esta acción.",
         });
     }
     next();
